@@ -1,0 +1,40 @@
+@import '../../../../Components/GlobalStyle/GlobalStyle.scss';
+$menu-height: 30px;
+.wrapper {
+ 
+}
+.menu {
+    display: flex; 
+    height: $menu-height;
+    background: #303030;
+    justify-content: end;
+    padding: 0 60px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    margin-left: 17px; 
+}
+
+.menu-item, .icon, .link {
+    cursor: pointer;
+    color: #fff;
+    &:hover .link {
+        color: #f15e2c;
+    }
+}
+
+.icon + .link {
+    margin-left: 7px;
+} 
+
+.link {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.icon {
+    font-size: 1.8rem;
+}
