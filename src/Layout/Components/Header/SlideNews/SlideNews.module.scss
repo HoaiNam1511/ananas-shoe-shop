@@ -1,0 +1,45 @@
+.wrapper {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+}
+
+
+.slick-arrow {
+
+}
+
+.slick {
+    max-width: 500px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.slick-list {
+    font-size: 1.65rem;
+    font-style: italic;
+    font-weight: 300;
+    color: #555;
+    white-space: nowrap;
+    transition: ease 1000ms,
+}
+
+.slick-arrow {
+    display: flex;
+    background-color: transparent;
+    border: transparent;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.slick-icon {
+    font-size: 2.6rem;
+    color: #888;
+}
+
+.slick-item {
+    display: inline-block; 
+    width: 100%;
+}

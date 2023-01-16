@@ -3,6 +3,7 @@ import styles from "./Header.module.scss";
 
 import Menu from "./Menu/Menu";
 import Navbar from "./Navbar/Navbar";
+import SlideNew from "./SlideNews/SlideNews";
 
 const cx = classNames.bind(styles);
 function Header() {
@@ -10,6 +11,7 @@ function Header() {
         <div className={cx("header")}>
             <Menu></Menu>
             <Navbar></Navbar>
+            <SlideNew></SlideNew>
         </div>
     );
 }

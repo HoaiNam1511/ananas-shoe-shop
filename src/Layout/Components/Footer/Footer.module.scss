@@ -1,0 +1,54 @@
+.footer {
+    display: flex;
+    background-color: #4c4c4c;
+    padding: 60px 0px 60px 0px;
+    overflow: hidden;
+}
+
+.search-shop {
+   
+
+}
+
+.footer-info {
+    width: 100%;
+}
+
+.footer-block {
+    width: 25%;
+}
+
+.footer-container-1 {
+    display: flex;
+}
+
+.footer-list_header {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+    cursor: default;
+}
+
+.list {
+    margin-bottom: 30px;
+}
+
+.title_header  {
+    font-weight: 600;
+    cursor: default;
+}
+
+.link {
+    display: block;
+    text-decoration: none;
+    font-weight: 400;
+    &:hover {
+        color: #f15e2c;
+    }
+}
+
+.title_header, .link  {
+    font-size: 1.6rem;
+    color: #cccccc;
+    line-height: 1.7;
+}
