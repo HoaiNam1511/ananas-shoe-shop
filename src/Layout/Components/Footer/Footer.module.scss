@@ -4,12 +4,25 @@
     padding: 60px 0px 60px 0px;
     overflow: hidden;
 }
-
+//Search shop
 .search-shop {
-   
-
+    text-align: center;
 }
 
+.btn-search-shop {
+    background-color: #f15e2c;
+    border: #f15e2c 1px solid;
+    color: #fff;
+    font-size: 2.3rem;
+    width: 279px;
+    height: 40px;
+    font-weight: 700;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+//Contact
 .footer-info {
     width: 100%;
 }
@@ -18,8 +31,16 @@
     width: 25%;
 }
 
-.footer-container-1 {
+.footer-container {
     display: flex;
+}
+
+.footer-container:nth-last-child(2) {
+    margin-top: 25px;
+}
+
+.footer-container:nth-last-child(1) {
+    margin-top: 40px;
 }
 
 .footer-list_header {
@@ -30,25 +51,69 @@
 }
 
 .list {
-    margin-bottom: 30px;
-}
 
-.title_header  {
-    font-weight: 600;
-    cursor: default;
 }
 
 .link {
-    display: block;
     text-decoration: none;
     font-weight: 400;
+    font-size: 1.6rem;
+    color: #cccccc;
+    line-height: 1.7;
     &:hover {
         color: #f15e2c;
     }
 }
 
-.title_header, .link  {
-    font-size: 1.6rem;
-    color: #cccccc;
-    line-height: 1.7;
+//Social
+.social {
+    display: inline-block;
+}
+
+.social + .social {
+    margin-left: 5px;
+}
+
+.social-icon {
+    font-size: 4rem;
+}
+
+//Form group 
+.form-group {
+    display: flex;
+    height: 40px;
+}
+
+.form-group input {
+    height: 100%;
+    width: 170px;
+    padding: 0 10px;
+    font-size: 1.4rem;
+    color: #555;
+    &:focus {
+        outline: none;
+    }
+}
+
+.form-group button {
+    background-color: #000;
+    height: 100%;
+    width: 56px;
+    margin-left: 4px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.form-icon {
+    color: #fff;
+    font-size: 2.6rem;
+}
+
+.license {
+    position: relative;
+    display: inline-block;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #808080;
+    font-size: 1.8rem;
 }

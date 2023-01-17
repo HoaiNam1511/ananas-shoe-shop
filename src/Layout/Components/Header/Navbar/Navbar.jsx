@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
 import config from "../../../../Config";
@@ -9,24 +10,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../../../asset/icon/Logo_Ananas_Header.svg";
 import imageDiscoverYou from "../../../../asset/icon/DiscoverYOU.svg";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
-import { useState } from "react";
 
 const cx = classNames.bind(styles);
 function Navbar() {
     const [showDropMenu, setShowDropMenu] = useState(false);
     let id = 0;
-    // const handeOnMouseOver = (e) => {
-    //     const timeoutId = setTimeout(() => {
-    //         setShowDropMenu(!showDropMenu);
-    //     }, 700);
-    //     return () => {
-    //         clearTimeout(timeoutId);
-    //     };
-    // };
-
-    // const handleOnMouseLeave = (e) => {
-    //     setShowDropMenu(!showDropMenu);
-    // };
 
     const navList = [
         {
@@ -67,8 +55,6 @@ function Navbar() {
                                     <NavLink
                                         to={config.routes.product}
                                         className={cx("dropdown-link")}
-                                        // onMouseOverCapture={handeOnMouseOver}
-                                        // onMouseLeave={handleOnMouseLeave}
                                     >
                                         <span>{item.title}</span>
                                         {/* Only show arrow with index < 3 */}
