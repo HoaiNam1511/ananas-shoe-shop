@@ -1,4 +1,5 @@
 @import '../../../../Components/GlobalStyle/GlobalStyle.scss';
+@import '../../../../scss/mixins';
 $menu-height: 30px;
 .wrapper {
  
@@ -9,6 +10,9 @@ $menu-height: 30px;
     background: #303030;
     justify-content: end;
     padding: 0 60px;
+    @include media-breakpoint-lg() {
+        display: none;
+    }
 }
 
 .menu-item {

@@ -7,9 +7,6 @@ $menu-2_block-margin: 20px;
     min-height: 150px;
     background-color: #555;
     z-index: 1;
-    top: 0;
-    left: 0;
-    right: 0;
     background: #4c4c4c;
     text-align: center;   
     cursor: auto; 
@@ -34,6 +31,7 @@ $menu-2_block-margin: 20px;
     opacity: .5;
     transition: 0.7s;
     &:hover {
+        color: #fff;
         opacity: 1;
     }
 }

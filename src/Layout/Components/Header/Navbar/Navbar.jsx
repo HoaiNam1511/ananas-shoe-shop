@@ -10,16 +10,39 @@ import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../../../asset/icon/Logo_Ananas_Header.svg";
 import imageDiscoverYou from "../../../../asset/icon/DiscoverYOU.svg";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
+import MenuIcon from "@mui/icons-material/Menu";
+import { OtherHouses } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 function Navbar() {
-    const [showDropMenu, setShowDropMenu] = useState(false);
     let id = 0;
+    const [showDropMenu, setShowDropMenu] = useState(false);
 
     const navList = [
         {
             id: id++,
             title: "SẢN PHẨM",
+            children: {
+                header: "SẢN PHẨM",
+                data: [
+                    {
+                        id: id++,
+                        title: "CHO NAM",
+                    },
+                    {
+                        id: id++,
+                        title: "CHO NỮ",
+                    },
+                    {
+                        id: id++,
+                        title: "OUTLET SALE",
+                    },
+                    {
+                        id: id++,
+                        title: "THỜI TRANG VÀ PHỤ KIỆN",
+                    },
+                ],
+            },
         },
         {
             id: id++,
@@ -36,27 +59,74 @@ function Navbar() {
         },
         {
             id: id++,
-            title: "",
+            title: "DiscoverYOU",
         },
     ];
+    const [history, setHistory] = useState([{ data: navList }]);
+    const current = history[history.length - 1];
+    const handleShowMenu = () => {
+        setShowDropMenu((pre) => !pre);
+    };
 
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("navbar")}>
-                <div className={cx("brand")}>
+        <div className={cx("container-fluid px-0", "wrapper")}>
+            <div className={cx("row g-0", "navbar")}>
+                <div
+                    className={cx(
+                        "col-2 col-xl-1 col-lg-2 col-md-2 col-sm-2",
+                        "brand"
+                    )}
+                >
                     <img src={logo} className={cx("logo")} alt="logo" />
                 </div>
 
-                <div className={cx("navbar-nav")}>
-                    <ul className={cx("nav")}>
-                        {navList.map((item, index) => {
+                <div
+                    className={cx("col-xl-8 col-lg-10", "navbar-nav", {
+                        show: showDropMenu,
+                    })}
+                >
+                    <ul className={cx("nav-list")}>
+                        {current.data.map((item, index) => {
                             return (
                                 <li className={cx("dropdown")}>
                                     <NavLink
                                         to={config.routes.product}
                                         className={cx("dropdown-link")}
                                     >
-                                        <span>{item.title}</span>
+                                        {index < current.data.length - 1 && (
+                                            <span
+                                                className={cx("dropdown-title")}
+                                                onClick={(preHistory) =>
+                                                    setHistory((preHistory) => [
+                                                        ...preHistory,
+                                                        item.children,
+                                                    ])
+                                                }
+                                            >
+                                                {item.title}
+                                            </span>
+                                        )}
+                                        {index === current.length - 1 && (
+                                            <>
+                                                <span
+                                                    className={cx(
+                                                        "d-block d-xxl-none d-xl-none d-lg-none",
+                                                        "dropdown-title",
+                                                        "title-hide"
+                                                    )}
+                                                >
+                                                    {item.title}
+                                                </span>
+                                                <img
+                                                    className={cx(
+                                                        "d-none d-xxl-block d-xl-block d-lg-block",
+                                                        "dropdown-image"
+                                                    )}
+                                                    src={imageDiscoverYou}
+                                                    alt=""
+                                                />
+                                            </>
+                                        )}
                                         {/* Only show arrow with index < 3 */}
                                         {index < 3 && (
                                             <>
@@ -71,110 +141,30 @@ function Navbar() {
                                             </>
                                         )}
                                         {/* Last position of navList */}
-                                        {index === navList.length - 1 && (
-                                            <img
-                                                className={cx("dropdown-image")}
-                                                src={imageDiscoverYou}
-                                                alt=""
-                                            />
-                                        )}
                                     </NavLink>
                                     {index === 0 && (
                                         <DropDownMenu
                                             menu1
-                                            show={showDropMenu}
                                             className={cx("dropdown-menu")}
                                         />
                                     )}
                                     {index > 0 && index < 3 && (
                                         <DropDownMenu
-                                            show={showDropMenu}
                                             className={cx("dropdown-menu")}
                                         />
                                     )}
                                 </li>
                             );
                         })}
-                        {/* <li className={cx("dropdown")}>
-                            <NavLink
-                                to={config.routes.product}
-                                className={cx("dropdown-link")}
-                                // onMouseOverCapture={handeOnMouseOver}
-                                // onMouseLeave={handleOnMouseLeave}
-                            >
-                                <span>SẢN PHẨM</span>
-                                <KeyboardArrowDownIcon
-                                    className={cx("dropdown-icon")}
-                                />
-                                <div className={cx("arrow")}></div>
-                            </NavLink>
-
-                            <DropDownMenu
-                                menu1
-                                show={showDropMenu}
-                                className={cx("dropdown-menu")}
-                            />
-                        </li>
-
-                        <li className={cx("dropdown")}>
-                            <NavLink
-                                to={config.routes.product}
-                                className={cx("dropdown-link")}
-                            >
-                                <span>NAM</span>
-                                <KeyboardArrowDownIcon
-                                    className={cx("dropdown-icon")}
-                                />
-                                <div className={cx("arrow")}></div>
-                            </NavLink>
-                            <DropDownMenu
-                                show={showDropMenu}
-                                className={cx("dropdown-menu")}
-                            ></DropDownMenu>
-                        </li>
-
-                        <li className={cx("dropdown")}>
-                            <NavLink
-                                to={config.routes.product}
-                                className={cx("dropdown-link")}
-                            >
-                                <span>NỮ</span>
-                                <KeyboardArrowDownIcon
-                                    className={cx("dropdown-icon")}
-                                />
-                                <div className={cx("arrow")}></div>
-                            </NavLink>
-                            <DropDownMenu
-                                show={showDropMenu}
-                                className={cx("dropdown-menu")}
-                            ></DropDownMenu>
-                        </li>
-
-                        <li className={cx("dropdown")}>
-                            <NavLink
-                                to={config.routes.product}
-                                className={cx("dropdown-link")}
-                            >
-                                <span>SALE OFF</span>
-                            </NavLink>
-                        </li>
-
-                        <li className={cx("dropdown")}>
-                            <NavLink
-                                to={config.routes.product}
-                                className={cx("dropdown-link")}
-                            >
-                                <img
-                                    className={cx("dropdown-image")}
-                                    src={imageDiscoverYou}
-                                    alt=""
-                                />
-                            </NavLink>
-                        </li> */}
                     </ul>
                 </div>
 
-                <div className={cx("navbar-search")}>
+                <div
+                    className={cx(
+                        "col-8 col-xl-3 col-lg-12 col-md-8 col-sm-8",
+                        "navbar-search"
+                    )}
+                >
                     <div className={cx("form-control")}>
                         <div className={cx("icon")}>
                             <SearchIcon className={cx("icon-search")} />
@@ -186,6 +176,13 @@ function Navbar() {
                         />
                     </div>
                 </div>
+
+                <button
+                    onClick={handleShowMenu}
+                    className={cx("col-2 col-md-2 col-sm-2", "btn-menu")}
+                >
+                    <MenuIcon className={cx("menu-icon")} />
+                </button>
             </div>
         </div>
     );
