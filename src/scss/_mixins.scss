@@ -30,36 +30,23 @@
      }
 }
 
+@mixin line-dahsed-custom {
+    background-image: linear-gradient(to right, rgb(117, 117, 117) 33%, rgba(255, 0, 0, 0) 0%);
+    background-position: bottom;
+    background-size: 16px 1.5px;
+    background-repeat: repeat-x;
+}
 
-
-
-
-// @mixin media-breakpoint-sm() { 
-//     @media only screen and (min-width: 576px) { 
-//         @content;
-//      }
-// }
-
-// @mixin media-breakpoint-md() { 
-//     @media only screen and (max-width: 767.98px) {
-//         @content;
-//     }
-// }
-
-// @mixin media-breakpoint-lg() { 
-//     @media only screen and (min-width: 768px) and (max-width: 991.98px) {
-//         @content;
-//     }
-//  }
-
-// @mixin media-breakpoint-xl() { 
-//     @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
-//         @content;
-//     }
-// }
-
-// @mixin media-breakpoint-xxl() { 
-//     @media only screen and (min-width: 1200px) and (max-width: 1399.98px) {
-//         @content;
-//     }
-//  }
+@mixin arrow-rotate-180 {
+    -webkit-transition: .7s all;   
+    -webkit-transition-delay: .2s; 
+    -moz-transition: .7s all;   
+    -moz-transition-delay: .2s; 
+    -ms-transition: .7s all;   
+    -ms-transition-delay: .2s; 
+    -o-transition: .7s all;   
+    -o-transition-delay: .2s; 
+    transition: .7s all;   
+    transition-delay: .2s; 
+    transform: rotate(180deg);
+}

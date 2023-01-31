@@ -11,7 +11,7 @@ import config from "../../../../Config";
 
 const cx = classNames.bind(styles);
 
-function Menu() {
+function Menu({ className }) {
     let id = 0;
     const listMenu = [
         {
@@ -40,7 +40,7 @@ function Menu() {
         },
     ];
     return (
-        <div className={cx("wrapper")}>
+        <div className={cx("wrapper", className)}>
             <ul className={cx("menu")}>
                 {listMenu.map((menu) => {
                     const Icon = menu.icon;

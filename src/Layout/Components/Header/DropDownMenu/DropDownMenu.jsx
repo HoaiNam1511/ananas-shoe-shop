@@ -1,60 +1,17 @@
 import classNames from "classnames/bind";
 import styles from "./DropDownMenu.module.scss";
 import { Link } from "react-router-dom";
-
-import * as categoryService from "../../../../service/categoryService";
-
-import menuNamImg from "../../../../asset/images/menu/Menu_Nam.jpg";
-import menuNuImg from "../../../../asset/images/menu/Menu_Nu.jpg";
-import menuPhuKienImg from "../../../../asset/images/menu/Menu_Phu-kien.jpg";
-import menuSaleImg from "../../../../asset/images/menu/Menu_Sale-off.jpg";
-import { useEffect, useState } from "react";
+import { memo } from "react";
 
 const cx = classNames.bind(styles);
-function DropDownMenu({ className, menu1, menu2 }) {
-    let id = 0;
-    const [categorys, setCategorys] = useState([]);
-    const menu1List = [
-        {
-            id: id++,
-            image: menuNamImg,
-            title: "CHO NAM",
-        },
-        {
-            id: id++,
-            image: menuNuImg,
-            title: "CHO NỮ",
-        },
-        {
-            id: id++,
-            image: menuPhuKienImg,
-            title: "OUTLET SALE",
-        },
-        {
-            id: id++,
-            image: menuSaleImg,
-            title: "THỜI TRANG PHỤ KIỆN",
-        },
-    ];
-
-    const getCategory = async () => {
-        try {
-            const res = await categoryService.getCategory();
-            setCategorys(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        getCategory();
-    }, []);
+function DropDownMenu({ className, menu1, menu2, data = [] }) {
+    const dropDownList = data;
 
     return (
         <div className={cx("wrapper", className)}>
             {menu1 ? (
                 <div className={cx("menu-1")}>
-                    {menu1List.map((menu) => (
+                    {dropDownList[0].children.data.map((menu) => (
                         <Link className={cx("menu-1_item")} key={menu.id}>
                             <img
                                 className={cx("menu-1_img")}
@@ -73,47 +30,31 @@ function DropDownMenu({ className, menu1, menu2 }) {
                         <h3 className={cx("menu-2_header")}>NỔI BẬT</h3>
                         <div className={cx("list")}>
                             <h5 className={cx("title_header")}>Trạng thái</h5>
-                            {categorys
-                                .filter(
-                                    (category) =>
-                                        category.fk_category_group_id == 1
+                            {dropDownList[1].children.data[0].children.data[0].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.category_title}
+                                    </Link>
                                 )
-                                .map((item, index) => {
-                                    if (index < 6) {
-                                        return (
-                                            <>
-                                                <Link
-                                                    className={cx("title")}
-                                                    to=""
-                                                >
-                                                    {item.category_title}
-                                                </Link>
-                                            </>
-                                        );
-                                    }
-                                })}
+                            )}
                         </div>
                         <div className={cx("list")}>
                             <h5 className={cx("title_header")}>Bộ sản phẩm</h5>
-                            {categorys
-                                .filter(
-                                    (category) =>
-                                        category.fk_category_group_id == 4
+                            {dropDownList[1].children.data[0].children.data[1].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.category_title}
+                                    </Link>
                                 )
-                                .map((item, index) => {
-                                    if (index < 6) {
-                                        return (
-                                            <>
-                                                <Link
-                                                    className={cx("title")}
-                                                    to=""
-                                                >
-                                                    {item.category_title}
-                                                </Link>
-                                            </>
-                                        );
-                                    }
-                                })}
+                            )}
                         </div>
                     </div>
                     <div className={cx("menu-2_block")}>
@@ -122,48 +63,32 @@ function DropDownMenu({ className, menu1, menu2 }) {
                             <h5 className={cx("title_header")}>
                                 Dòng sản phẩm
                             </h5>
-                            {categorys
-                                .filter(
-                                    (category) =>
-                                        category.fk_category_group_id == 3
+                            {dropDownList[1].children.data[1].children.data[0].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.category_title}
+                                    </Link>
                                 )
-                                .map((item, index) => {
-                                    if (index < 6) {
-                                        return (
-                                            <>
-                                                <Link
-                                                    className={cx("title")}
-                                                    to=""
-                                                >
-                                                    {item.category_title}
-                                                </Link>
-                                            </>
-                                        );
-                                    }
-                                })}
+                            )}
                         </div>
 
                         <div className={cx("list")}>
                             <h5 className={cx("title_header")}>Style</h5>
-                            {categorys
-                                .filter(
-                                    (category) =>
-                                        category.fk_category_group_id == 2
+                            {dropDownList[1].children.data[1].children.data[1].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.category_title}
+                                    </Link>
                                 )
-                                .map((item, index) => {
-                                    if (index < 6) {
-                                        return (
-                                            <>
-                                                <Link
-                                                    className={cx("title")}
-                                                    to=""
-                                                >
-                                                    {item.category_title}
-                                                </Link>
-                                            </>
-                                        );
-                                    }
-                                })}
+                            )}
                         </div>
                     </div>
 
@@ -173,28 +98,32 @@ function DropDownMenu({ className, menu1, menu2 }) {
                         </h3>
                         <div className={cx("list")}>
                             <h5 className={cx("title_header")}>Nửa trên</h5>
-                            <Link className={cx("title")} to="">
-                                Basic Tee
-                            </Link>
-                            <Link className={cx("title")} to="">
-                                Graphic tee
-                            </Link>
-                            <Link className={cx("title")} to="">
-                                Sweatshirt
-                            </Link>
+                            {dropDownList[1].children.data[2].children.data[0].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.title}
+                                    </Link>
+                                )
+                            )}
                         </div>
 
                         <div className={cx("list")}>
                             <h5 className={cx("title_header")}>Phụ kiện</h5>
-                            <Link className={cx("title")} to="">
-                                Nón
-                            </Link>
-                            <Link className={cx("title")} to="">
-                                Dây giày
-                            </Link>
-                            <Link className={cx("title")} to="">
-                                Vớ
-                            </Link>
+                            {dropDownList[1].children.data[2].children.data[1].children.data.map(
+                                (item) => (
+                                    <Link
+                                        key={item.id}
+                                        className={cx("title")}
+                                        to=""
+                                    >
+                                        {item.title}
+                                    </Link>
+                                )
+                            )}
                         </div>
                     </div>
                 </div>
@@ -208,4 +137,4 @@ function DropDownMenu({ className, menu1, menu2 }) {
     );
 }
 
-export default DropDownMenu;
+export default memo(DropDownMenu);

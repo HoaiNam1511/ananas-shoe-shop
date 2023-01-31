@@ -1,0 +1,97 @@
+@import '../../Components/GlobalStyle/GlobalStyle.scss';
+@import '../../scss/mixins';
+.wrapper {
+    &:hover {
+        cursor: default;
+    }
+
+    &:hover .btn-buy {
+        opacity: 1;
+    }
+}
+
+.card-custom {
+
+}
+
+.card-image {
+    position: relative;
+    color: red;
+}
+
+.image {
+    width: 100%;
+}
+
+.btn-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.wrapper .btn-buy {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 30px;
+    font-size: 1.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+    @include media-breakpoint-md() {
+        display: none;
+    }
+}
+
+.wrapper .btn-favorite {
+    position: relative;
+    right: 0;
+    left: 30%;
+    font-size: 3.6rem;
+    color: $primary-color;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+//Description
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.type {
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    color: $primary-color;
+    font-weight: 400;
+    padding: 16px 0;
+    background-image: linear-gradient(to right, rgb(117, 117, 117) 33%, rgba(255, 0, 0, 0) 0%);
+    background-position: bottom;
+    background-size: 13px 1px;
+    background-repeat: repeat-x;
+}
+
+.name {
+    &:hover {
+        cursor: pointer;
+        color: $primary-color;
+    }
+}
+
+.name, .price {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.color {
+    font-size: 1.6rem;
+    font-weight: 300;
+}
+
+.des-item {
+    padding: 2px 0;
+}

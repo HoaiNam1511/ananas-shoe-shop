@@ -76,7 +76,9 @@ function SlideNew() {
                     }}
                 >
                     {slickList.map((item) => (
-                        <span className={cx("slick-item")}>{item.title}</span>
+                        <span key={item.id} className={cx("slick-item")}>
+                            {item.title}
+                        </span>
                     ))}
                 </div>
             </div>

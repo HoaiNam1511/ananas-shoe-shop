@@ -1,0 +1,55 @@
+@import '../../scss/mixins';
+
+#wrapper {
+    max-width: 1200px;
+}
+
+.wrapper {
+    max-width: 1200px;
+}
+
+.wrapper section {
+    margin-bottom: 20px;
+
+    @include media-breakpoint-xl() {
+        padding: 0 10px;
+    }
+}
+
+.section-title {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+
+    @include media-breakpoint-md() {
+        padding: 26px 0;
+    }
+}
+
+.section-title h2 {
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+}
+
+.section-title h2 span {
+    font-size: 2.4rem;
+    background:#fff; 
+    padding:0 16px; 
+}
+
+.wrapper .card-item {
+    padding: 0 10px;
+    @include media-breakpoint-md() {
+        padding: 0 5px;
+    }
+}
+
+.wrapper .product-grids {
+    margin: 0 -10px;
+    @include media-breakpoint-md() {
+        margin: 0 -5px;
+    }
+}
+

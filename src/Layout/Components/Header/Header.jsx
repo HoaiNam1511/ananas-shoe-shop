@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function Header() {
     return (
         <div className={cx("header")}>
-            <Menu></Menu>
+            <Menu className={cx("header-menu")}></Menu>
             <Navbar></Navbar>
             <SlideNew></SlideNew>
         </div>

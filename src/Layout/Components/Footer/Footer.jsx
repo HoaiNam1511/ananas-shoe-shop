@@ -6,13 +6,17 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import shopImg from "../../../asset/images/footer/Store.svg";
 import brandImg from "../../../asset/images/footer/Logo_Ananas_Footer.svg";
 import licenseImg from "../../../asset/images/footer/icon_bocongthuong.png";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 function Footer() {
+    const [showList, setShowList] = useState([]);
+
     let id = 0;
     const footerList = [
         {
@@ -127,86 +131,153 @@ function Footer() {
             link: "",
         },
     ];
+
+    const handleShowList = (index) => {
+        if (showList.includes(index)) {
+            setShowList((preList) => preList.filter((item) => item !== index));
+        } else {
+            setShowList((preList) => [...preList, index]);
+        }
+    };
     return (
-        <div className={cx("footer")}>
-            <div className={cx("search-shop")}>
-                <img src={shopImg} alt="" />
-                <button className={cx("btn-search-shop")}>TÌM CỬA HÀNG</button>
-            </div>
-            <div className={cx("footer-info")}>
-                <div className={cx("footer-container")}>
-                    {footerList.map((item) => (
-                        <div className={cx("footer-block")}>
-                            <h3 className={cx("footer-list_header")}>
-                                {item.header}
+        <div className={cx("container-fluid gx-0", "wrapper")}>
+            <div className={cx("row gx-0", "footer")}>
+                <div className={cx("col-3", "search-shop")}>
+                    <img src={shopImg} alt="" />
+                    <button className={cx("btn-search-shop")}>
+                        TÌM CỬA HÀNG
+                    </button>
+                </div>
+                <div
+                    className={cx(
+                        "col-12 col-xxl-9 col-xl-9 col-lg-9",
+                        "footer-info"
+                    )}
+                >
+                    <div className={cx("row", "footer-container")}>
+                        {footerList.map((item, index) => (
+                            <div
+                                className={cx(
+                                    "col-12 col-xxl-3 col-xl-3 col-lg-3"
+                                )}
+                                onClick={() => handleShowList(index)}
+                            >
+                                <div
+                                    className={cx(
+                                        "item-menu_mobile",
+                                        "container-dashed-line",
+                                        {
+                                            active: showList.includes(index),
+                                        }
+                                    )}
+                                >
+                                    <h3 className={cx("footer-list_header")}>
+                                        {item.header}
+                                    </h3>
+                                    <KeyboardArrowDownIcon
+                                        className={cx("icon-arrow")}
+                                    ></KeyboardArrowDownIcon>
+                                </div>
+
+                                <div
+                                    className={cx(
+                                        "list",
+                                        "container-dashed-line",
+                                        showList.includes(index)
+                                            ? "show"
+                                            : "hide"
+                                    )}
+                                >
+                                    {item.list.map((itemChildren) => (
+                                        <div className={cx("list-item")}>
+                                            <Link
+                                                className={cx("link")}
+                                                to={itemChildren.to}
+                                            >
+                                                {itemChildren.title}
+                                            </Link>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={cx("row", "footer-container")}>
+                        <div
+                            className={cx("col-12 col-xxl-3 col-xl-3 col-lg-3")}
+                        >
+                            <h3
+                                className={cx(
+                                    "footer-list_header",
+                                    "item-mobile"
+                                )}
+                            >
+                                ANANAS SOCIAL
                             </h3>
-                            <div className={cx("list")}>
-                                {item.list.map((itemChildren) => (
-                                    <div>
-                                        <Link
-                                            className={cx("link")}
-                                            to={itemChildren.to}
-                                        >
-                                            {itemChildren.title}
-                                        </Link>
-                                    </div>
-                                ))}
+
+                            <div className={cx("list", "item-mobile")}>
+                                {socials.map((social) => {
+                                    const Icon = social.icon;
+                                    return (
+                                        <div className={cx("social")}>
+                                            <a
+                                                className={cx("link")}
+                                                href={social.link}
+                                            >
+                                                <Icon
+                                                    className={cx(
+                                                        "social-icon"
+                                                    )}
+                                                ></Icon>
+                                            </a>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                    ))}
-                </div>
-                <div className={cx("footer-container")}>
-                    <div className={cx("footer-block")}>
-                        <h3 className={cx("footer-list_header")}>
-                            ANANAS SOCIAL
-                        </h3>
-
-                        <div className={cx("list")}>
-                            {socials.map((social) => {
-                                const Icon = social.icon;
-                                return (
-                                    <div className={cx("social")}>
-                                        <a
-                                            className={cx("link")}
-                                            href={social.link}
-                                        >
-                                            <Icon
-                                                className={cx("social-icon")}
-                                            ></Icon>
-                                        </a>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                    <div className={cx("footer-block")}>
-                        <h3 className={cx("footer-list_header")}>
-                            ĐĂNG KÍ NHẬN MAIL
-                        </h3>
-                        <div className={cx("list")}>
-                            <div className={cx("social", "form-group")}>
-                                <input type="text" />
-                                <button>
-                                    <ArrowForwardIcon
-                                        className={cx("form-icon")}
-                                    />
-                                </button>
+                        <div
+                            className={cx("col-12 col-xxl-3 col-xl-3 col-lg-3")}
+                        >
+                            <h3
+                                className={cx(
+                                    "footer-list_header",
+                                    "item-mobile"
+                                )}
+                            >
+                                ĐĂNG KÍ NHẬN MAIL
+                            </h3>
+                            <div className={cx("list", "item-mobile")}>
+                                <div className={cx("social", "form-group")}>
+                                    <input type="text" />
+                                    <button>
+                                        <ArrowForwardIcon
+                                            className={cx("form-icon")}
+                                        />
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className={cx("footer-block")}>
-                        <img src={brandImg} alt="" />
+                        <div className={cx("col-6")}>
+                            <img src={brandImg} alt="" />
+                        </div>
                     </div>
-                </div>
-                <div className={cx("footer-container")}>
-                    <div className={cx("footer-block")}>
-                        <img src={licenseImg} alt="license" />
-                    </div>
-                    <div>
-                        <span className={cx("license")}>
-                            Copyright © 2022 Ananas. All rights reserved.
-                        </span>
+                    <div className={cx("row", "footer-container")}>
+                        <div
+                            className={cx("col-12 col-xxl-3 col-xl-3 col-lg-3")}
+                        >
+                            <img src={licenseImg} alt="license" />
+                        </div>
+                        <div
+                            className={cx(
+                                "col-12 col-xxl-9 col-xl-9 col-lg-9",
+                                "license"
+                            )}
+                        >
+                            <span>
+                                Copyright © 2022 Ananas. All rights reserved.
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

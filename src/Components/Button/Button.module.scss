@@ -1,0 +1,12 @@
+@import '../../Components/GlobalStyle/GlobalStyle.scss';
+
+.btn-primary {
+    border: transparent;
+    background-color: $primary-color;
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 0 10px;
+    color: #fff;
+    height: 46px;
+    z-index: 10;
+}
