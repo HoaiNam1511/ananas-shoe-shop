@@ -157,6 +157,7 @@ function Footer() {
                     <div className={cx("row", "footer-container")}>
                         {footerList.map((item, index) => (
                             <div
+                                key={index}
                                 className={cx(
                                     "col-12 col-xxl-3 col-xl-3 col-lg-3"
                                 )}
@@ -188,8 +189,11 @@ function Footer() {
                                             : "hide"
                                     )}
                                 >
-                                    {item.list.map((itemChildren) => (
-                                        <div className={cx("list-item")}>
+                                    {item.list.map((itemChildren, index) => (
+                                        <div
+                                            key={index}
+                                            className={cx("list-item")}
+                                        >
                                             <Link
                                                 className={cx("link")}
                                                 to={itemChildren.to}
@@ -216,10 +220,13 @@ function Footer() {
                             </h3>
 
                             <div className={cx("list", "item-mobile")}>
-                                {socials.map((social) => {
+                                {socials.map((social, index) => {
                                     const Icon = social.icon;
                                     return (
-                                        <div className={cx("social")}>
+                                        <div
+                                            key={index}
+                                            className={cx("social")}
+                                        >
                                             <a
                                                 className={cx("link")}
                                                 href={social.link}

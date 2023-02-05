@@ -45,6 +45,9 @@ $font-size-icon: 2.2rem;
 
 .logo {
     float: right;
+    &:hover {
+        cursor: pointer;
+    }
     @include media-breakpoint-md() {
         width: 45%;
     }

@@ -102,6 +102,7 @@ function SlickSlide({ data }) {
                 <div className={cx("slick-dots")}>
                     {slides.map((slide, index) => (
                         <button
+                            key={index}
                             className={cx("slide-button", {
                                 active: currentSlide === index,
                             })}

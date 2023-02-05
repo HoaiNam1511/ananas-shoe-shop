@@ -43,7 +43,7 @@ $font-size-icon: 2.2rem;
 
     @include media-breakpoint-lg() {
         flex-direction: column;
-        &:nth-last-child(1),   &:nth-last-child(2) {
+        &:nth-last-child(1), &:nth-last-child(2) {
             padding: 0 3%;
         }
     }
@@ -126,19 +126,9 @@ $font-size-icon: 2.2rem;
 
 .show {
     @include media-breakpoint-lg() {
-        animation: growDown 300ms ease-in-out forwards;
-        transform-origin: top center;
+        @include growDownAnimation;
         display: block;
         background-color: #303030;
-    }
-}
-
-@keyframes growDown {
-    0% {
-        transform: scaleY(0)
-    }
-    100% {
-        transform: scaleY(1)
     }
 }
 

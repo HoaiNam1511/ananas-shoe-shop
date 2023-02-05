@@ -7,7 +7,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 
-import config from "../../../../Config";
+import config from "../../../../config";
 
 const cx = classNames.bind(styles);
 

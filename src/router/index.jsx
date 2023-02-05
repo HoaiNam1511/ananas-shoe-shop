@@ -1,4 +1,4 @@
-import config from "../Config";
+import config from "../config";
 import Cart from "../Page/Cart/Cart";
 import Home from "../Page/Home/Home";
 import Product from "../Page/Product/Product";

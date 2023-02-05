@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
-import config from "../../../../Config";
+import config from "../../../../config";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
@@ -369,6 +369,10 @@ function Navbar() {
         };
     }, []);
 
+    const onLogoClick = () => {
+        navigate(config.routes.home);
+    };
+
     return (
         <div className={cx("container-fluid px-0", "wrapper")}>
             <div className={cx("row g-0", "navbar")}>
@@ -378,7 +382,12 @@ function Navbar() {
                         "brand"
                     )}
                 >
-                    <img src={logo} className={cx("logo")} alt="logo" />
+                    <img
+                        src={logo}
+                        className={cx("logo")}
+                        alt="logo"
+                        onClick={onLogoClick}
+                    />
                 </div>
 
                 <div
@@ -402,6 +411,7 @@ function Navbar() {
                                     <div className={cx("header-mobile_title")}>
                                         {history.map((item, index) => (
                                             <span
+                                                key={index}
                                                 className={cx({
                                                     disable:
                                                         history.length > 2 &&
@@ -419,7 +429,7 @@ function Navbar() {
                         )}
                         {currentMenu.data.map((item, index) => {
                             return (
-                                <>
+                                <div key={index}>
                                     {/* List item  */}
                                     <li
                                         key={index}
@@ -532,7 +542,7 @@ function Navbar() {
                                                 </li>
                                             )
                                         )}
-                                </>
+                                </div>
                             );
                         })}
                     </ul>

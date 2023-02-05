@@ -1,5 +1,7 @@
 @import '../../Components/GlobalStyle/GlobalStyle.scss';
 @import '../../scss/mixins';
+
+$btn-container-height: 46px;
 .wrapper {
     &:hover {
         cursor: default;
@@ -21,22 +23,30 @@
 
 .image {
     width: 100%;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .btn-container {
-    position: absolute;
-    bottom: 0;
+    position: relative;
     width: 100%;
+    height: $btn-container-height;
+    bottom: $btn-container-height;
+}
+
+.btn-container .btn-wrapper {
+    position: relative;
 }
 
 .wrapper .btn-buy {
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    padding: 0 30px;
     font-size: 1.8rem;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    width: 144px;
 
     @include media-breakpoint-md() {
         display: none;
@@ -44,9 +54,11 @@
 }
 
 .wrapper .btn-favorite {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     right: 0;
-    left: 30%;
+    left: 80%;
     font-size: 3.6rem;
     color: $primary-color;
 
@@ -60,6 +72,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: calc(-1  * $btn-container-height);
 }
 
 .type {
@@ -89,9 +102,10 @@
 
 .color {
     font-size: 1.6rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .des-item {
+    text-align: center;
     padding: 2px 0;
 }

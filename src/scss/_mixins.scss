@@ -50,3 +50,23 @@
     transition-delay: .2s; 
     transform: rotate(180deg);
 }
+
+@mixin line-dashed {
+    background-color: #fff;
+    background: url(../asset/images/global/bg_divider.png) repeat-x 7px;
+    height: 2px;
+}
+//Animation
+@mixin growDownAnimation {
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top center;
+}
+
+@keyframes growDown {
+    0% {
+        transform: scaleY(0)
+    }
+    100% {
+        transform: scaleY(1)
+    }
+}
