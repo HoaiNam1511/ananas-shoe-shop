@@ -1,0 +1,122 @@
+@import '../../scss/mixins';
+@import '../../Components/GlobalStyle/GlobalStyle.scss';
+.wrapper {
+
+}
+
+.image-container {
+    width: 180px;
+    @include media-breakpoint-md() {
+        width: 28vw;
+    }
+}
+
+.image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.left-content {
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 2.1rem;
+    @include media-breakpoint-md() {
+        font-size: 1.6rem;
+    }
+}
+
+.price {
+    font-size: 1.6rem;
+    color: #808080;
+}
+
+.right-content {
+
+}
+
+.select {
+    max-width: 120px;
+}
+
+
+.item-1 {
+    @include media-breakpoint-md() {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+}
+
+.price-item-1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: $primary-color;
+}
+
+.price-item-1, .status {
+    text-align: right;
+}
+
+.status {
+    color: $primary-color;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.6rem;
+    margin-top: 10px;
+    @include media-breakpoint-md() {
+        margin-top: 0px;
+        font-size: 2.3rem;
+        font-style: normal;
+    }
+}
+
+.item-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-top: 22px;
+    @include media-breakpoint-md() {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}
+
+.button {
+    display: block;
+    border: 1px solid #000;
+    height: 40px;
+    width: 125px;
+}
+
+.button + .button {
+    margin-top: 10px;
+    @include media-breakpoint-md() {
+        margin-left: 10px;
+    }
+}
+
+.button-cart {
+    background-color: transparent;
+}
+
+.button-delete {
+    background-color: #000;
+}
+
+.wrapper .icon {
+    font-size: 2.6rem;
+}

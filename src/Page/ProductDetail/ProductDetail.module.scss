@@ -16,15 +16,12 @@ $margin-padding-btn: 10px;
     padding-left: 10px;
     padding-right: 10px;
     @include media-breakpoint-xl() {
-    //    padding-left: 10px;
-    //    padding-right: 10px;
+
     }
 }
 //Wrapper image slide
 .wrapper-slide {
     margin-right: 40px;
-    overflow: hidden;
-
     @include media-breakpoint-xl() {
         // margin-right: 40px;
     }
@@ -184,4 +181,27 @@ h1 h2 h3 h4 h5 h6 {
 
 .wrapper .title {
     font-size: 1.6rem;
+}
+
+.wrapper .slick {
+    margin-left: -4px;
+    margin-right: -4px;
+}
+
+.wrapper .slick-item {
+    display: inline-block;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.wrapper .image-item {
+    display: inline-block;
+
+}
+
+.wrapper .image-slide {
+    width: 100%;
+    &:hover {
+        cursor: pointer;
+    }
 }

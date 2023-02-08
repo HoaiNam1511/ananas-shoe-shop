@@ -28,7 +28,7 @@ function SelectGrid({ className, data }) {
             </button>
             {show && (
                 <div className={cx("dropdown")}>
-                    <div class={cx("grid-container")}>
+                    <div className={cx("grid-container")}>
                         {listData.map((item, index) => (
                             <div
                                 key={index}

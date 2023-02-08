@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, forwardRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -9,24 +9,46 @@ import styles from "./ProductDetail.module.scss";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Button from "../../Components/Button/Button";
 
-import { selectProductId, selectProductDetail } from "../../redux/selector";
+import {
+    selectProductId,
+    selectProductDetail,
+    selectBreadCrumb,
+} from "../../redux/selector";
 import ImageSlide from "../../Components/ImageSlide/ImageSlide";
 
 import { addProductDetail } from "../../redux/slice/productSlice";
 import SelectGrid from "../../Components/SelectGrid/SelectGrid";
 import PanelGroup from "../../Components/PanelGroup/PanelGroup";
 import imageSize from "../../asset/images/global/Size-chart-1-e1559209680920.jpg";
-import { policy, service } from "../../data/productDetail";
+import {
+    policy,
+    service,
+    colors,
+    qualityList,
+    sizeList,
+} from "../../data/productDetail";
+import Slick from "../../Components/Slick/Slick";
+import Card from "../../Components/Card/Card";
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
     const dispatch = useDispatch();
-    const sizeList = [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
-    const qualityList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const refItemSlick = useRef(null);
 
     const productId = useSelector(selectProductId);
     const productDetail = useSelector(selectProductDetail);
+
     const [showPanel, setShowPanel] = useState();
+
+    const [products, setProducts] = useState([]);
+    const getNewProducts = async () => {
+        const productRes = await productService.getProduct({ limit: 8 });
+        setProducts(productRes.data);
+    };
+
+    useEffect(() => {
+        getNewProducts();
+    }, []);
 
     const getProductDetail = async () => {
         const productRes = await productService.getProductDetail({ productId });
@@ -47,10 +69,9 @@ function ProductDetail() {
 
     function NewlineText(props) {
         const text = props.text;
-        return text.split("\n").map((str) => <p>{str}</p>);
+        return text.split("\n").map((str, index) => <p key={index}>{str}</p>);
     }
 
-    const colors = ["#8a7f53", "#c66e33", "#5f4c40"];
     return (
         <div id="wrapper" className={cx("container-fluid gx-0", "wrapper")}>
             <div className={cx("row gx-0", "detail-container")}>
@@ -87,8 +108,9 @@ function ProductDetail() {
                     </h3>
                     <div className={cx("line-dashed")}></div>
                     <div className={cx("color")}>
-                        {colors.map((color) => (
+                        {colors.map((color, index) => (
                             <span
+                                key={index}
                                 style={{ backgroundColor: color }}
                                 className={cx("color-item")}
                             ></span>
@@ -141,6 +163,7 @@ function ProductDetail() {
                             </Button>
                         </div>
                     </div>
+
                     <div className={cx("row gx-0", "btn-container")}>
                         <div
                             className={cx(
@@ -231,9 +254,24 @@ function ProductDetail() {
                         </div>
                     </div>
                 </div>
+
+                <Slick className={cx("slick")}>
+                    {products.map((product) => (
+                        <div
+                            key={product.id}
+                            ref={refItemSlick}
+                            className={cx(
+                                "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4",
+                                "slick-item"
+                            )}
+                        >
+                            <Card data={product}></Card>
+                        </div>
+                    ))}
+                </Slick>
             </div>
         </div>
     );
 }
 
-export default ProductDetail;
+export default forwardRef(ProductDetail);

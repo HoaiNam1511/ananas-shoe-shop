@@ -65,6 +65,10 @@ $btn-container-height: 46px;
     &:hover {
         cursor: pointer;
     }
+
+    @include media-breakpoint-lg() {
+        font-size: 3.2rem;
+    }
 }
 
 //Description
@@ -73,6 +77,7 @@ $btn-container-height: 46px;
   flex-direction: column;
   align-items: center;
   margin-top: calc(-1  * $btn-container-height);
+  white-space: normal;
 }
 
 .type {
@@ -105,7 +110,12 @@ $btn-container-height: 46px;
     font-weight: 400;
 }
 
-.des-item {
+.wrapper .des-item {
     text-align: center;
     padding: 2px 0;
+    text-transform: lowercase;
+}
+
+.wrapper .des-item {
+    text-transform: capitalize;
 }
