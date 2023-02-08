@@ -5,49 +5,35 @@ import classNames from "classnames/bind";
 import config from "../../config";
 import styles from "./WishList.module.scss";
 import CardStore from "../../Components/CardStore/CardStore";
+import { selectWishListProduct } from "../../redux/selector";
+import { useSelect } from "@mui/base";
 
 const cx = classNames.bind(styles);
 function WishList() {
-    const dispatch = useDispatch();
-    dispatch(addBreadCrumb(10));
-    const fakeData = [
-        {
-            id: 175,
-            product_code: "",
-            product_name: "TRACK 6 TRIPLE BLACK",
-            product_price: 990000,
-            product_sex: "unique",
-            fk_category_status_id: 316,
-            fk_category_style_id: 320,
-            fk_category_line_id: 327,
-            fk_category_collection_id: 328,
-            fk_category_material_id: 335,
-            product_images: [
-                {
-                    id: 1073,
-                    fk_product_id: 175,
-                    image: "1675347727463.jpg",
-                    priority: 2,
-                },
-            ],
-            categorys_title: {
-                collection_title: "Track 6 I.S.E.E",
-                line_title: "Pattas",
-                material_title: "Leather | Da",
-                status_title: "Limited Edition",
-                style_title: "Low Top",
-            },
-        },
-    ];
+    // const wishList = useSelect(selectWishListProduct);
+
+    // const dispatch = useDispatch();
+    // dispatch(addBreadCrumb(wishList.length));
 
     return (
-        <div className={cx("container-fluid", "wrapper")}>
-            <Breadcrumb></Breadcrumb>
+        <div className={cx("container-fluid gx-0", "wrapper")}>
+            {/* <Breadcrumb className={cx("wishlist-breadcrumb")}>
+                sản phẩm
+            </Breadcrumb>
             <div>
-                {fakeData.map((item) => (
-                    <CardStore data={item}></CardStore>
+                {wishList.map((item, index) => (
+                    <>
+                        <CardStore data={item}></CardStore>
+                        <div
+                            className={cx(
+                                index === wishList.length - 1
+                                    ? "black-line"
+                                    : "line"
+                            )}
+                        />
+                    </>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }

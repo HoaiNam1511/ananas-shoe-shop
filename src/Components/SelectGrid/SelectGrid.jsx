@@ -21,8 +21,11 @@ function SelectGrid({ className, data }) {
         setDropDown({ ...dropdown, show: !show });
     };
     return (
-        <div className={cx("wrapper", className)}>
-            <button onClick={handleShowDropdown} className={cx("btn-drop")}>
+        <div className={cx("wrapper")}>
+            <button
+                onClick={handleShowDropdown}
+                className={cx("btn-drop", className)}
+            >
                 <span className={cx("title")}>{itemValue}</span>
                 <KeyboardArrowDownIcon className={cx("icon")} />
             </button>

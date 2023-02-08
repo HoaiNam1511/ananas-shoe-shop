@@ -5,7 +5,11 @@ import Button from "../Button/Button";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addProductId, addBreadCrumb } from "../../redux/slice/productSlice";
+import {
+    addProductId,
+    addBreadCrumb,
+    addWishList,
+} from "../../redux/slice/productSlice";
 
 const cx = classNames.bind(styles);
 function Cart({ className, data }) {
@@ -24,12 +28,12 @@ function Cart({ className, data }) {
         navigate(config.routes.productDetail);
     };
 
+    const handleAddWishList = (product) => {
+        dispatch(addWishList(product));
+    };
     return (
         <div className={cx("wrapper", className)}>
-            <div
-                className={cx("card-custom")}
-                onClick={() => handleCardClick(data?.id)}
-            >
+            <div className={cx("card-custom")}>
                 <div className={cx("card-image")}>
                     <img
                         className={cx("image")}
@@ -37,6 +41,7 @@ function Cart({ className, data }) {
                             config.url.URL_STATIC_FILE +
                             data.product_images[0]?.image
                         }
+                        onClick={() => handleCardClick(data?.id)}
                         onMouseOver={(e) =>
                             (e.currentTarget.src =
                                 config.url.URL_STATIC_FILE +
@@ -52,10 +57,16 @@ function Cart({ className, data }) {
 
                     <div className={cx("btn-container")}>
                         <Button className={cx("btn-buy")}>MUA NGAY</Button>
-                        <FavoriteBorderIcon className={cx("btn-favorite")} />
+                        <FavoriteBorderIcon
+                            className={cx("btn-favorite")}
+                            onClick={() => handleAddWishList(data)}
+                        />
                     </div>
                 </div>
-                <div className={cx("description")}>
+                <div
+                    className={cx("description")}
+                    onClick={() => handleCardClick(data?.id)}
+                >
                     <h3 className={cx("type")}>
                         {data.categorys_title.status_title}
                     </h3>

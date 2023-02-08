@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -9,11 +9,7 @@ import styles from "./ProductDetail.module.scss";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Button from "../../Components/Button/Button";
 
-import {
-    selectProductId,
-    selectProductDetail,
-    selectBreadCrumb,
-} from "../../redux/selector";
+import { selectProductId, selectProductDetail } from "../../redux/selector";
 import ImageSlide from "../../Components/ImageSlide/ImageSlide";
 
 import { addProductDetail } from "../../redux/slice/productSlice";
@@ -274,4 +270,4 @@ function ProductDetail() {
     );
 }
 
-export default forwardRef(ProductDetail);
+export default ProductDetail;

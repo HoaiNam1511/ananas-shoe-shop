@@ -28,14 +28,14 @@ function CardStore({ data }) {
                     />
                 </div>
                 <div className={cx("info")}>
-                    <h3 className={cx("name")}>{data.product_name}</h3>
-                    <h5 className={cx("price")}>
+                    <div className={cx("name")}>{data.product_name}</div>
+                    <div className={cx("price")}>
                         <strong>Giá: </strong>
                         {data.product_price.toLocaleString("it-IT", {
                             style: "currency",
                             currency: "VND",
                         })}
-                    </h5>
+                    </div>
                     <div className={cx("row gx-0")}>
                         <div className={cx("col-6")}>
                             <h3>Size</h3>
@@ -44,7 +44,7 @@ function CardStore({ data }) {
                                 data={sizeList}
                             ></SelectGrid>
                         </div>
-                        <div className={cx("col-6 ")}>
+                        <div className={cx("col-6")}>
                             <h3>Số lượng</h3>
                             <SelectGrid
                                 className={cx("select")}

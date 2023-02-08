@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    productId: 0,
-    productDetail: {},
-    breadcrumb: [],
-};
-
 const productSlice = createSlice({
     name: "product",
-    initialState,
+    initialState: {
+        productId: 0,
+        productDetail: {},
+        breadcrumb: [],
+        wishList: [],
+        objects: [],
+    },
     reducers: {
         addProductId(state, action) {
             state.productId = action.payload;
@@ -21,10 +21,20 @@ const productSlice = createSlice({
         addBreadCrumb(state, action) {
             state.breadcrumb = action.payload;
         },
+
+        addWishList(state, action) {
+            console.log(typeof state.objects);
+            state.objects.push(1);
+            // state.wishList.push(1);
+            // return {
+            //     ...state,
+            //     wishList: [...state.wishList, action.payload],
+            // };
+        },
     },
 });
 //Export action
-export const { addProductId, addProductDetail, addBreadCrumb } =
+export const { addProductId, addProductDetail, addBreadCrumb, addWishList } =
     productSlice.actions;
 
 export default productSlice;
