@@ -1,12 +1,12 @@
 import config from "../../config";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import { addBreadCrumb } from "../../redux/slice/globalSlice";
 import classNames from "classnames/bind";
 import styles from "./WishList.module.scss";
 import CardStore from "../../Components/CardStore/CardStore";
 import { selectWishList } from "../../redux/selector";
 import { useEffect } from "react";
+import { addBreadCrumb } from "../../redux/slice/productSlice";
 
 const cx = classNames.bind(styles);
 function WishList() {
@@ -24,7 +24,7 @@ function WishList() {
             </Breadcrumb>
             <div>
                 {wishList.map((item, index) => (
-                    <div key={item.id}>
+                    <div key={item?.id}>
                         <CardStore
                             className={cx("wishlist-card")}
                             data={item}

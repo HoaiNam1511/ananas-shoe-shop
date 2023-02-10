@@ -48,8 +48,8 @@ function ProductDetail() {
     const [showPanel, setShowPanel] = useState();
     const [products, setProducts] = useState([]);
     const [selectGrid, setSelectGrid] = useState({
-        size: 0,
-        quantity: 0,
+        size: sizeList[0],
+        quantity: quantityList[0],
     });
 
     const getNewProducts = async () => {
@@ -80,7 +80,13 @@ function ProductDetail() {
     };
 
     const handleAddWishList = (product) => {
-        dispatch(addWishList(product));
+        const obj = Object.preventExtensions(product);
+        const newObj = {
+            ...obj,
+            size: selectGrid.size,
+            quantity: selectGrid.quantity,
+        };
+        dispatch(addWishList(newObj));
     };
 
     const handleAddCart = (product) => {
@@ -89,18 +95,13 @@ function ProductDetail() {
             ...obj,
             size: selectGrid.size,
             quantity: selectGrid.quantity,
+            update: false,
         };
         dispatch(addCart(newObj));
     };
 
-    const handleSizeChange = (size) => {
-        // const obj = Object.preventExtensions(productDetail);
-        // const newObj = { ...obj, size: size };
-        setSelectGrid({ ...selectGrid, size: size });
-    };
-
-    const handleQuantityChange = (quantity) => {
-        setSelectGrid({ ...selectGrid, quantity: quantity });
+    const handleSelectGirdChange = (name, value) => {
+        setSelectGrid({ ...selectGrid, [name]: value });
     };
 
     function NewlineText(props) {
@@ -163,7 +164,8 @@ function ProductDetail() {
                         >
                             <h3>SIZE</h3>
                             <SelectGrid
-                                dropClick={handleSizeChange}
+                                name="size"
+                                dropClick={handleSelectGirdChange}
                                 data={sizeList}
                             ></SelectGrid>
                         </div>
@@ -176,7 +178,8 @@ function ProductDetail() {
                         >
                             <h3>SỐ LƯỢNG</h3>
                             <SelectGrid
-                                dropClick={handleQuantityChange}
+                                name="quantity"
+                                dropClick={handleSelectGirdChange}
                                 data={quantityList}
                             ></SelectGrid>
                         </div>

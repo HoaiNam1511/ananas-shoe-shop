@@ -5,17 +5,26 @@ import Button from "../Button/Button";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProductId, addWishList } from "../../redux/slice/productSlice";
+import {
+    addProductId,
+    addWishList,
+    addBreadCrumb,
+} from "../../redux/slice/productSlice";
 
-import { addBreadCrumb } from "../../redux/slice/globalSlice";
 import { selectWishList } from "../../redux/selector";
+import { sizeList, quantityList } from "../../data/productDetail";
 
 const cx = classNames.bind(styles);
 function Cart({ className, data }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const wishList = useSelector(selectWishList);
+    const [selectGrid, setSelectGrid] = useState({
+        size: sizeList[0],
+        quantity: quantityList[0],
+    });
     const handleCardClick = (id) => {
         dispatch(addProductId(id));
         dispatch(
@@ -29,7 +38,13 @@ function Cart({ className, data }) {
     };
 
     const handleAddWishList = (product) => {
-        dispatch(addWishList(product));
+        const obj = Object.preventExtensions(product);
+        const newObj = {
+            ...obj,
+            size: selectGrid.size,
+            quantity: selectGrid.quantity,
+        };
+        dispatch(addWishList(newObj));
     };
 
     return (

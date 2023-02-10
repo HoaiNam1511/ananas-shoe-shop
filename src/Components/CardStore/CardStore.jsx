@@ -1,7 +1,7 @@
 import styles from "./CardStore.module.scss";
 import classNames from "classnames/bind";
+import { useState } from "react";
 import config from "../../config/";
-import { sizeList, qualityList } from "../../data/productDetail";
 import SelectGrid from "../SelectGrid/SelectGrid";
 import Button from "../Button/Button";
 import iconCartButton from "../../asset/images/global/cart_ana.png";
@@ -12,22 +12,31 @@ import {
     addProductId,
     addCart,
     deleteCart,
+    addBreadCrumb,
+    deleteWishList,
+    updateCart,
+    updateWishList,
 } from "../../redux/slice/productSlice";
 
-import { addBreadCrumb } from "../../redux/slice/globalSlice";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectWishList } from "../../redux/selector";
 
+import { quantityList, sizeList } from "../../data/productDetail";
+
 const cx = classNames.bind(styles);
-function CardStore({ data, limit, cart, className }) {
+function CardStore({ data, limit, typeCart, className }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const wishList = useSelector(selectWishList);
-    const typeAdd = "add";
-    const typeAddWishList = "add";
+    const [selectGrid, setSelectGrid] = useState({
+        size: data?.size || sizeList[0],
+        quantity: data?.quantity || quantityList[0],
+    });
+    const typeAddCart = "add";
+    const typeAddWishList = "wishlist";
 
     const handleCardClick = (id) => {
         dispatch(
@@ -41,20 +50,53 @@ function CardStore({ data, limit, cart, className }) {
         navigate(config.routes.productDetail);
     };
 
-    const handleAddProduct = (product, typeProduct) => {
-        if (typeProduct === typeAdd) {
-            dispatch(addCart(product));
+    const handleAddSizeQuantity = ({ name, value }) => {
+        const obj = Object.preventExtensions(data);
+        let newObj;
+        if (name === "") {
+            newObj = {
+                ...obj,
+                size: selectGrid.size,
+                quantity: selectGrid.quantity,
+            };
+        } else {
+            newObj = {
+                ...obj,
+                [name]: value,
+            };
+        }
+        return newObj;
+    };
+
+    const handleAddProduct = (typeProduct) => {
+        const name = "";
+        const value = "";
+        if (typeProduct === typeAddCart) {
+            const newObj = handleAddSizeQuantity({ name, value });
+            dispatch(addCart(newObj));
             navigate(config.routes.cart);
         } else {
-            dispatch(addWishList(product));
+            const newObj = handleAddSizeQuantity({ name, value });
+            dispatch(addWishList(newObj));
+        }
+    };
+
+    const handleSelectGridChange = (name, value) => {
+        setSelectGrid({ ...selectGrid, [name]: value });
+        if (typeCart) {
+            const newObj = handleAddSizeQuantity({ name, value });
+            dispatch(updateCart(newObj));
+        } else {
+            const newObj = handleAddSizeQuantity({ name, value });
+            dispatch(updateWishList(newObj));
         }
     };
 
     const handleDeleteProduct = (product) => {
-        if (cart) {
+        if (typeCart) {
             dispatch(deleteCart(product));
         } else {
-            dispatch(addWishList(product));
+            dispatch(deleteWishList(product));
         }
     };
 
@@ -93,7 +135,7 @@ function CardStore({ data, limit, cart, className }) {
                     </div>
                     {limit && (
                         <Button
-                            onClick={() => handleAddProduct(data, typeAdd)}
+                            onClick={() => handleAddProduct(typeAddCart)}
                             className={cx("button")}
                         >
                             Thêm
@@ -104,7 +146,9 @@ function CardStore({ data, limit, cart, className }) {
                             <div className={cx("col-6", "card-store-select")}>
                                 <h3>Size</h3>
                                 <SelectGrid
-                                    currentValue={data.size}
+                                    name="size"
+                                    dropClick={handleSelectGridChange}
+                                    currentValue={data?.size}
                                     className={cx("select")}
                                     data={sizeList}
                                 ></SelectGrid>
@@ -112,7 +156,9 @@ function CardStore({ data, limit, cart, className }) {
                             <div className={cx("col-6", "card-store-select")}>
                                 <h3>Số lượng</h3>
                                 <SelectGrid
-                                    currentValue={data.quantity}
+                                    name="quantity"
+                                    dropClick={handleSelectGridChange}
+                                    currentValue={data?.quantity}
                                     className={cx("select")}
                                 ></SelectGrid>
                             </div>
@@ -129,7 +175,9 @@ function CardStore({ data, limit, cart, className }) {
                 >
                     <div className={cx("item-1")}>
                         <div className={cx("price-item-1")}>
-                            {data?.product_price.toLocaleString("it-IT", {
+                            {(
+                                data?.quantity * data?.product_price
+                            ).toLocaleString("it-IT", {
                                 style: "currency",
                                 currency: "VND",
                             })}
@@ -142,12 +190,11 @@ function CardStore({ data, limit, cart, className }) {
                             className={cx("button", "button-cart")}
                             onClick={() =>
                                 handleAddProduct(
-                                    data,
-                                    cart ? addCart : typeAddWishList
+                                    typeCart ? typeAddWishList : typeAddCart
                                 )
                             }
                         >
-                            {cart ? (
+                            {typeCart ? (
                                 wishList.find((item) => item.id === data.id) ? (
                                     <FavoriteIcon
                                         className={cx("btn-favorite", "active")}

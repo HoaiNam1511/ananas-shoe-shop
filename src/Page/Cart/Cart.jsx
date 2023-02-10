@@ -1,18 +1,54 @@
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../../redux/selector";
 import CardStore from "../../Components/CardStore/CardStore";
 import Slick from "../../Components/Slick/Slick";
 import Button from "../../Components/Button/Button";
 import { cartSlide } from "../../data/cart";
+import { codeDiscount } from "../../data/cart";
 
 const cx = classNames.bind(styles);
 function Cart() {
     const dispatch = useDispatch();
     const refItem = useRef();
-    const cart = useSelector(selectCart);
+    const cartList = useSelector(selectCart);
+    const [code, setCode] = useState("");
+    const [totalProduct, setTotalProduct] = useState({
+        sumPrice: 0,
+        totalDiscount: 0,
+        totalPrice: 0,
+    });
+    const { sumPrice, totalPrice, totalDiscount } = totalProduct;
+
+    const handleCheckCodeDiscount = () => {
+        codeDiscount.map((codeDiscount, index) => {
+            if (code === codeDiscount) {
+                const discount = (sumPrice / 100) * ((index + 1) * 10);
+                const total = sumPrice - discount;
+                setTotalProduct((pre) => ({
+                    ...pre,
+                    totalDiscount: discount,
+                    totalPrice: total,
+                }));
+            }
+        });
+    };
+
+    useEffect(() => {
+        const price = cartList.reduce(
+            (totalPay, curProduct) =>
+                totalPay + curProduct.product_price * curProduct.quantity,
+            0
+        );
+
+        setTotalProduct((pre) => ({
+            ...pre,
+            sumPrice: price,
+            totalPrice: price,
+        }));
+    }, [cartList]);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -28,25 +64,29 @@ function Cart() {
                         {cartSlide.map((item) => (
                             <div
                                 ref={refItem}
-                                key={item.id}
+                                key={item?.id}
                                 className={cx(
                                     "col-12 col-xxl-6 col-xl-6 col-lg-6 col-md-6",
                                     "slick-item"
                                 )}
                             >
-                                <CardStore data={item} limit cart></CardStore>
+                                <CardStore
+                                    data={item}
+                                    limit
+                                    typeCart
+                                ></CardStore>
                             </div>
                         ))}
                     </Slick>
                     <div className={cx("cart-title-1")}>
                         <span>Giỏ hàng</span>
                     </div>
-                    {cart.map((item, index) => (
+                    {cartList.map((item, index) => (
                         <div key={index}>
-                            <CardStore data={item} cart></CardStore>
+                            <CardStore data={item} typeCart></CardStore>
                             <div
                                 className={cx(
-                                    index === cart.length - 1
+                                    index === cartList.length - 1
                                         ? "black-line"
                                         : "line"
                                 )}
@@ -80,10 +120,15 @@ function Cart() {
                             <h3>Nhập mã khuyến mãi</h3>
                             <div className={cx("group-flex", "form-group")}>
                                 <input
+                                    onChange={(e) => setCode(e.target.value)}
                                     className={cx("form-control", "code-input")}
                                     type="text"
+                                    value={code}
                                 />
-                                <Button className={cx("btn-apply")}>
+                                <Button
+                                    className={cx("btn-apply")}
+                                    onClick={handleCheckCodeDiscount}
+                                >
                                     Áp dụng
                                 </Button>
                             </div>
@@ -92,18 +137,33 @@ function Cart() {
                         <div className={cx("group-item", "price-item")}>
                             <div className={cx("group-flex")}>
                                 <h3>Đơn hàng</h3>
-                                <h3>1000VND</h3>
+                                <h3>
+                                    {sumPrice.toLocaleString("it-IT", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    })}
+                                </h3>
                             </div>
                             <div className={cx("group-flex")}>
                                 <h3>Giảm</h3>
-                                <h3 className={cx("title-discount")}>0 VND</h3>
+                                <h3 className={cx("title-discount")}>
+                                    {totalDiscount.toLocaleString("it-IT", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    })}
+                                </h3>
                             </div>
                         </div>
                         <div className={cx("group-item", "line")}></div>
                         <div className={cx("group-item", "total-item")}>
                             <div className={cx("group-flex", "total-price")}>
                                 <h3>Tạm tính</h3>
-                                <h3>1000 VND</h3>
+                                <h3>
+                                    {totalPrice.toLocaleString("it-IT", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    })}
+                                </h3>
                             </div>
                             <Button className={cx("btn-order")}>
                                 Tiếp tục thanh toán

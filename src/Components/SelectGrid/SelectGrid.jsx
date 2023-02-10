@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const cx = classNames.bind(styles);
 
-function SelectGrid({ className, data, currentValue, dropClick }) {
+function SelectGrid({ className, data, currentValue, dropClick, name }) {
     const listData = data || [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const refDropDown = useRef();
 
@@ -17,7 +17,7 @@ function SelectGrid({ className, data, currentValue, dropClick }) {
 
     const handleDropClick = (item) => {
         setDropDown({ show: !show, itemValue: item });
-        dropClick(item);
+        dropClick(name, item);
     };
 
     const handleShowDropdown = () => {

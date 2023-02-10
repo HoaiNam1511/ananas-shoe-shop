@@ -1,3 +1,13 @@
+export const codeDiscount = [
+    "GIAM10",
+    "GIAM20",
+    "GIAM30",
+    "GIAM40",
+    "GIAM50",
+    "GIAM60",
+    "GIAM70",
+];
+
 export const cartSlide = [
     {
         id: 11110,

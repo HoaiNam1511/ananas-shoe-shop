@@ -7,6 +7,7 @@ const productSlice = createSlice({
         productDetail: {},
         cart: [],
         wishList: [],
+        breadcrumb: [],
     },
     reducers: {
         addProductId(state, action) {
@@ -15,6 +16,10 @@ const productSlice = createSlice({
 
         addProductDetail(state, action) {
             state.productDetail = action.payload;
+        },
+
+        addBreadCrumb(state, action) {
+            state.breadcrumb = action.payload;
         },
 
         addWishList(state, action) {
@@ -29,7 +34,30 @@ const productSlice = createSlice({
             }
         },
 
-        // true === true && true === true
+        updateWishList(state, action) {
+            const cvtArr = state.wishList;
+            let newArr;
+            newArr = cvtArr.map((item) => {
+                if (item.id === action.payload.id) {
+                    return {
+                        ...item,
+                        quantity: action.payload.quantity,
+                        size: action.payload.size,
+                    };
+                } else {
+                    return item;
+                }
+            });
+            state.wishList = newArr;
+        },
+
+        deleteWishList(state, action) {
+            const cvtArr = state.wishList;
+            let newArr;
+            newArr = cvtArr.filter((item) => item.id !== action.payload.id);
+            state.wishList = newArr;
+        },
+
         addCart(state, action) {
             if (
                 state.cart.find(
@@ -40,10 +68,7 @@ const productSlice = createSlice({
             ) {
                 const cvtArr = state.cart;
                 const newArr = cvtArr.map((product) => {
-                    if (
-                        product.id === action.payload.id &&
-                        product.size === action.payload.size
-                    ) {
+                    if (product.id === action.payload.id) {
                         return {
                             ...product,
                             quantity:
@@ -56,10 +81,24 @@ const productSlice = createSlice({
                 });
                 state.cart = newArr;
             } else {
-                // const obj = Object.preventExtensions(action.payload);
-                // const newObj = { ...obj, quantity: 1 };
                 state.cart.push(action.payload);
             }
+        },
+
+        updateCart(state, action) {
+            const cvtArr = state.cart;
+            const newArr = cvtArr.map((product) => {
+                if (product.id === action.payload.id) {
+                    return {
+                        ...product,
+                        quantity: action.payload.quantity,
+                        size: action.payload.size,
+                    };
+                } else {
+                    return product;
+                }
+            });
+            state.cart = newArr;
         },
 
         deleteCart(state, action) {
@@ -83,9 +122,13 @@ const productSlice = createSlice({
 export const {
     addProductId,
     addProductDetail,
+    addBreadCrumb,
     addWishList,
     addCart,
     deleteCart,
+    updateCart,
+    deleteWishList,
+    updateWishList,
 } = productSlice.actions;
 
 export default productSlice;
