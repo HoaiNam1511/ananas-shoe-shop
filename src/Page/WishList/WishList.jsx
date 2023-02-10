@@ -1,29 +1,34 @@
-import { useDispatch } from "react-redux";
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import { addBreadCrumb } from "../../redux/slice/productSlice";
-import classNames from "classnames/bind";
 import config from "../../config";
+import { useDispatch, useSelector } from "react-redux";
+import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
+import { addBreadCrumb } from "../../redux/slice/globalSlice";
+import classNames from "classnames/bind";
 import styles from "./WishList.module.scss";
 import CardStore from "../../Components/CardStore/CardStore";
-import { selectWishListProduct } from "../../redux/selector";
-import { useSelect } from "@mui/base";
+import { selectWishList } from "../../redux/selector";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 function WishList() {
-    // const wishList = useSelect(selectWishListProduct);
+    const dispatch = useDispatch();
+    const wishList = useSelector(selectWishList);
 
-    // const dispatch = useDispatch();
-    // dispatch(addBreadCrumb(wishList.length));
+    useEffect(() => {
+        dispatch(addBreadCrumb([wishList.length]));
+    }, [wishList]);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
-            {/* <Breadcrumb className={cx("wishlist-breadcrumb")}>
+            <Breadcrumb className={cx("wishlist-breadcrumb")}>
                 sản phẩm
             </Breadcrumb>
             <div>
                 {wishList.map((item, index) => (
-                    <>
-                        <CardStore data={item}></CardStore>
+                    <div key={item.id}>
+                        <CardStore
+                            className={cx("wishlist-card")}
+                            data={item}
+                        ></CardStore>
                         <div
                             className={cx(
                                 index === wishList.length - 1
@@ -31,9 +36,9 @@ function WishList() {
                                     : "line"
                             )}
                         />
-                    </>
+                    </div>
                 ))}
-            </div> */}
+            </div>
         </div>
     );
 }

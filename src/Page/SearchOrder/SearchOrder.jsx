@@ -5,8 +5,6 @@ import { selectProductId } from "../../redux/selector";
 
 const cx = classNames.bind(styles);
 function SearchOrder() {
-    const id = useSelector(selectProductId);
-    console.log(id);
     return <div>SearchOrder</div>;
 }
 

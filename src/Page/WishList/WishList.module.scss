@@ -12,6 +12,12 @@
     }
 }
 
+.wishlist-card {
+    @include media-breakpoint-lg() {
+        padding: 0 10px
+    }
+}
+
 .black-line {
     @include line-black-solid;
 }

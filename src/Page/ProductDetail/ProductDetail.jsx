@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import * as productService from "../../service/productService";
 
@@ -9,10 +10,19 @@ import styles from "./ProductDetail.module.scss";
 import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
 import Button from "../../Components/Button/Button";
 
-import { selectProductId, selectProductDetail } from "../../redux/selector";
+import {
+    selectProductId,
+    selectProductDetail,
+    selectWishList,
+    selectCart,
+} from "../../redux/selector";
 import ImageSlide from "../../Components/ImageSlide/ImageSlide";
 
-import { addProductDetail } from "../../redux/slice/productSlice";
+import {
+    addCart,
+    addProductDetail,
+    addWishList,
+} from "../../redux/slice/productSlice";
 import SelectGrid from "../../Components/SelectGrid/SelectGrid";
 import PanelGroup from "../../Components/PanelGroup/PanelGroup";
 import imageSize from "../../asset/images/global/Size-chart-1-e1559209680920.jpg";
@@ -20,7 +30,7 @@ import {
     policy,
     service,
     colors,
-    qualityList,
+    quantityList,
     sizeList,
 } from "../../data/productDetail";
 import Slick from "../../Components/Slick/Slick";
@@ -30,26 +40,32 @@ const cx = classNames.bind(styles);
 function ProductDetail() {
     const dispatch = useDispatch();
     const refItemSlick = useRef(null);
-
     const productId = useSelector(selectProductId);
+    const wishList = useSelector(selectWishList);
     const productDetail = useSelector(selectProductDetail);
+    //const [productDetail, setProductDetail] = useState({});
 
     const [showPanel, setShowPanel] = useState();
-
     const [products, setProducts] = useState([]);
+    const [selectGrid, setSelectGrid] = useState({
+        size: 0,
+        quantity: 0,
+    });
+
     const getNewProducts = async () => {
         const productRes = await productService.getProduct({ limit: 8 });
         setProducts(productRes.data);
     };
 
+    const getProductDetail = async () => {
+        const productRes = await productService.getProductDetail({ productId });
+        //setProductDetail(productRes?.data[0]);
+        dispatch(addProductDetail(productRes?.data[0]));
+    };
+
     useEffect(() => {
         getNewProducts();
     }, []);
-
-    const getProductDetail = async () => {
-        const productRes = await productService.getProductDetail({ productId });
-        dispatch(addProductDetail(productRes.data[0]));
-    };
 
     useEffect(() => {
         getProductDetail();
@@ -61,6 +77,30 @@ function ProductDetail() {
         } else {
             setShowPanel(value);
         }
+    };
+
+    const handleAddWishList = (product) => {
+        dispatch(addWishList(product));
+    };
+
+    const handleAddCart = (product) => {
+        const obj = Object.preventExtensions(product);
+        const newObj = {
+            ...obj,
+            size: selectGrid.size,
+            quantity: selectGrid.quantity,
+        };
+        dispatch(addCart(newObj));
+    };
+
+    const handleSizeChange = (size) => {
+        // const obj = Object.preventExtensions(productDetail);
+        // const newObj = { ...obj, size: size };
+        setSelectGrid({ ...selectGrid, size: size });
+    };
+
+    const handleQuantityChange = (quantity) => {
+        setSelectGrid({ ...selectGrid, quantity: quantity });
     };
 
     function NewlineText(props) {
@@ -83,7 +123,7 @@ function ProductDetail() {
                     )}
                 >
                     <h2 className={cx("title-header")}>
-                        {`${productDetail.product_name} - ${productDetail.categorys_title.style_title} - ${productDetail.categorys_title.material_title}`}
+                        {`${productDetail?.product_name} - ${productDetail?.categorys_title?.style_title} - ${productDetail?.categorys_title?.material_title}`}
                     </h2>
                     <div className={cx("code")}>
                         <span>
@@ -92,12 +132,12 @@ function ProductDetail() {
                         <span>
                             Tình trạng:{" "}
                             <strong>
-                                {productDetail.categorys_title.status_title}
+                                {productDetail?.categorys_title?.status_title}
                             </strong>
                         </span>
                     </div>
                     <h3 className={cx("price")}>
-                        {productDetail.product_price.toLocaleString("it-IT", {
+                        {productDetail?.product_price?.toLocaleString("it-IT", {
                             style: "currency",
                             currency: "VND",
                         })}
@@ -122,7 +162,10 @@ function ProductDetail() {
                             )}
                         >
                             <h3>SIZE</h3>
-                            <SelectGrid data={sizeList}></SelectGrid>
+                            <SelectGrid
+                                dropClick={handleSizeChange}
+                                data={sizeList}
+                            ></SelectGrid>
                         </div>
                         <div
                             className={cx(
@@ -132,7 +175,10 @@ function ProductDetail() {
                             )}
                         >
                             <h3>SỐ LƯỢNG</h3>
-                            <SelectGrid data={qualityList}></SelectGrid>
+                            <SelectGrid
+                                dropClick={handleQuantityChange}
+                                data={quantityList}
+                            ></SelectGrid>
                         </div>
                     </div>
                     <div className={cx("row gx-0", "btn-container")}>
@@ -142,7 +188,10 @@ function ProductDetail() {
                                 "btn-item"
                             )}
                         >
-                            <Button className={cx("btn-add", "black")}>
+                            <Button
+                                className={cx("btn-add", "black")}
+                                onClick={() => handleAddCart(productDetail)}
+                            >
                                 Thêm vào giỏ hàng
                             </Button>
                         </div>
@@ -152,10 +201,21 @@ function ProductDetail() {
                                 "btn-item"
                             )}
                         >
-                            <Button className={cx("btn-add", "black")}>
-                                <FavoriteBorderIcon
-                                    className={cx("btn-favorite")}
-                                />
+                            <Button
+                                className={cx("btn-add", "black")}
+                                onClick={() => handleAddWishList(productDetail)}
+                            >
+                                {wishList.find(
+                                    (item) => item.id === productDetail?.id
+                                ) ? (
+                                    <FavoriteIcon
+                                        className={cx("btn-favorite")}
+                                    />
+                                ) : (
+                                    <FavoriteBorderIcon
+                                        className={cx("btn-favorite")}
+                                    />
+                                )}
                             </Button>
                         </div>
                     </div>
@@ -168,7 +228,7 @@ function ProductDetail() {
                             )}
                         >
                             <Button className={cx("btn-add")}>
-                                Thêm vào giỏ hàng
+                                Thanh toán
                             </Button>
                         </div>
                     </div>
@@ -185,12 +245,12 @@ function ProductDetail() {
                                 <div className={cx("panel-content")}>
                                     <span className={cx("title")}>
                                         <span className={cx("hight-light")}>
-                                            {`Gender: ${productDetail.product_sex}`}
+                                            {`Gender: ${productDetail?.product_sex}`}
                                         </span>{" "}
                                         <br />
                                         Size run: 35 – 46 <br />
                                         <span className={cx("hight-light")}>
-                                            {`Material: ${productDetail.categorys_title.material_title}`}
+                                            {`Material: ${productDetail?.categorys_title?.material_title}`}
                                         </span>{" "}
                                         <br />
                                         Outsole: Rubber <br />

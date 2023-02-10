@@ -3,19 +3,19 @@ import classNames from "classnames/bind";
 import config from "../../config/";
 import Button from "../Button/Button";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {
-    addProductId,
-    addBreadCrumb,
-    addWishList,
-} from "../../redux/slice/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductId, addWishList } from "../../redux/slice/productSlice";
+
+import { addBreadCrumb } from "../../redux/slice/globalSlice";
+import { selectWishList } from "../../redux/selector";
 
 const cx = classNames.bind(styles);
 function Cart({ className, data }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const wishList = useSelector(selectWishList);
     const handleCardClick = (id) => {
         dispatch(addProductId(id));
         dispatch(
@@ -31,6 +31,7 @@ function Cart({ className, data }) {
     const handleAddWishList = (product) => {
         dispatch(addWishList(product));
     };
+
     return (
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
@@ -57,10 +58,17 @@ function Cart({ className, data }) {
 
                     <div className={cx("btn-container")}>
                         <Button className={cx("btn-buy")}>MUA NGAY</Button>
-                        <FavoriteBorderIcon
-                            className={cx("btn-favorite")}
-                            onClick={() => handleAddWishList(data)}
-                        />
+                        {wishList.find((item) => item.id === data.id) ? (
+                            <FavoriteIcon
+                                className={cx("btn-favorite", "active")}
+                                onClick={() => handleAddWishList(data)}
+                            />
+                        ) : (
+                            <FavoriteBorderIcon
+                                className={cx("btn-favorite")}
+                                onClick={() => handleAddWishList(data)}
+                            />
+                        )}
                     </div>
                 </div>
                 <div

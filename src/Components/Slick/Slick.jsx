@@ -9,7 +9,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const cx = classNames.bind(styles);
 
-function Slick({ className, children }) {
+function Slick({ className, children = [], itemShow }) {
     const previous = "pre";
     const next = "next";
 
@@ -32,16 +32,22 @@ function Slick({ className, children }) {
         itemSlick;
 
     const detectResize = () => {
-        const currentImageSize = children[0]?.ref.current.offsetWidth;
-
+        let currentImageSize;
         let itemSlickShowValue = 0;
-        if (window.innerWidth >= 576 && window.innerWidth < 768) {
-            itemSlickShowValue = 3;
-        } else if (window.innerWidth < 576) {
-            itemSlickShowValue = 2;
+        currentImageSize = children[0]?.ref.current.offsetWidth;
+
+        if (itemShow) {
+            itemSlickShowValue = itemShow;
         } else {
-            itemSlickShowValue = 4;
+            if (window.innerWidth >= 576 && window.innerWidth < 768) {
+                itemSlickShowValue = 3;
+            } else if (window.innerWidth < 576) {
+                itemSlickShowValue = 2;
+            } else {
+                itemSlickShowValue = 4;
+            }
         }
+
         setItemSlick({
             itemSlickShow: itemSlickShowValue,
             itemSlickWidth: currentImageSize,

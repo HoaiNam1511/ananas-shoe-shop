@@ -1,25 +1,44 @@
 import styles from "./SelectGrid.module.scss";
 import classNames from "classnames/bind";
+import { useEffect, useRef, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useState } from "react";
 const cx = classNames.bind(styles);
 
-function SelectGrid({ className, data }) {
+function SelectGrid({ className, data, currentValue, dropClick }) {
     const listData = data || [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const refDropDown = useRef();
+
     const [dropdown, setDropDown] = useState({
         show: false,
-        itemValue: listData[0],
+        itemValue: currentValue || listData[0],
     });
 
     const { show, itemValue } = dropdown;
 
-    const handleClick = (item) => {
+    const handleDropClick = (item) => {
         setDropDown({ show: !show, itemValue: item });
+        dropClick(item);
     };
 
     const handleShowDropdown = () => {
         setDropDown({ ...dropdown, show: !show });
     };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                refDropDown.current &&
+                !refDropDown.current.contains(event.target)
+            ) {
+                setDropDown((pre) => ({ ...pre, show: !pre.show }));
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [refDropDown]);
+
     return (
         <div className={cx("wrapper")}>
             <button
@@ -30,15 +49,15 @@ function SelectGrid({ className, data }) {
                 <KeyboardArrowDownIcon className={cx("icon")} />
             </button>
             {show && (
-                <div className={cx("dropdown")}>
+                <div className={cx("dropdown")} ref={refDropDown}>
                     <div className={cx("grid-container")}>
                         {listData.map((item, index) => (
                             <div
                                 key={index}
-                                class={cx("grid-item", {
+                                className={cx("grid-item", {
                                     active: item === itemValue,
                                 })}
-                                onClick={() => handleClick(item)}
+                                onClick={() => handleDropClick(item)}
                             >
                                 {item}
                             </div>

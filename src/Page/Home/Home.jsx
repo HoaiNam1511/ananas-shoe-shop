@@ -5,9 +5,13 @@ import classNames from "classnames/bind";
 import SlickSlide from "../../Components/SlickSlide/SlickSlide";
 import styles from "./Home.module.scss";
 
+import { selectWishList } from "../../redux/selector";
+import { useSelector } from "react-redux";
+
 const cx = classNames.bind(styles);
 function Home() {
     const [products, setProducts] = useState([]);
+    const wishList = useSelector(selectWishList);
     const getNewProducts = async () => {
         const productRes = await productService.getProduct({ limit: 8 });
         setProducts(productRes.data);

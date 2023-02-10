@@ -15,7 +15,7 @@ function ImageSlide({ className }) {
 
     useEffect(() => {
         if (productDetail.product_images?.length > 0) {
-            setImageCurrent(productDetail?.product_images[0].image);
+            setImageCurrent(productDetail?.product_images[0]?.image);
         }
     }, [productDetail]);
     //Image current change
@@ -34,7 +34,7 @@ function ImageSlide({ className }) {
             </div>
 
             <Slick>
-                {productDetail.product_images?.map((item) => (
+                {productDetail?.product_images?.map((item) => (
                     <div
                         key={item.id}
                         ref={refImageSize}
@@ -44,9 +44,9 @@ function ImageSlide({ className }) {
                         )}
                     >
                         <img
-                            onClick={() => onImageClick(item.image)}
+                            onClick={() => onImageClick(item?.image)}
                             className={cx("image-slide")}
-                            src={config.url.URL_STATIC_FILE + item.image}
+                            src={config.url.URL_STATIC_FILE + item?.image}
                             alt="current"
                         />
                     </div>

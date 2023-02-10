@@ -6,7 +6,6 @@ import { selectBreadCrumb } from "../../redux/selector";
 const cx = classNames.bind(styles);
 function Breadcrumb({ className, children }) {
     const breadcrumb = useSelector(selectBreadCrumb);
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("breadcrumb")}>

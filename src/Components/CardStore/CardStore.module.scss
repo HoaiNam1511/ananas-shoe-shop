@@ -5,15 +5,24 @@
 }
 
 .image-container {
-    width: 180px;
-    @include media-breakpoint-md() {
-        width: 28vw;
-    }
+  
+  
 }
 
 .image {
-    width: 100%;
+    @include media-breakpoint-md() {
+        width: 28vw;
+    }
+    width: 180px;
     object-fit: cover;
+}
+
+.wrapper .image-limit {
+    width: 140px;
+
+    @include media-breakpoint-lg() {
+        width: 20vw;
+    }
 }
 
 .left-content {
@@ -48,8 +57,20 @@
 .name {
     font-weight: 700;
     font-size: 2.1rem;
+    &:hover {
+        cursor: pointer;
+    }
+
     @include media-breakpoint-md() {
         font-size: 3.5vw;
+    }
+}
+
+.name-limit {
+    font-size: 1.6rem;
+    white-space: normal;
+    @include media-breakpoint-md() {
+        font-size: 2.5vw;
     }
 }
 
@@ -59,12 +80,15 @@
     @include media-breakpoint-md() {
         font-size: 2.7vw;
     }
+
+    @include media-breakpoint-sm() {
+        font-size: 3vw;
+    }
 }
 
-
-.wrapper .left-content, .wrapper .right-content {
+.price-limit {
     @include media-breakpoint-md() {
-        padding: 0 10px;
+        font-size: 2.2vw;
     }
 }
 
@@ -127,9 +151,8 @@
     }
 }
 
-.button {
+.wrapper .button {
     display: block;
-    border: 1px solid #000;
     height: 40px;
     width: 125px;
     @include media-breakpoint-md() {
@@ -137,6 +160,10 @@
         height: 31px;
         width: 75px;
     }
+}
+
+.wrapper  .card-store-select {
+    padding-right: 10px;
 }
 
 .button + .button {
@@ -147,11 +174,30 @@
     }
 }
 
-.button-cart {
+.wrapper .button-cart {
+    border: 1px solid #000;
     background-color: transparent;
+    color: #000;
 }
 
-.button-delete {
+.wrapper  .active {
+    color: $primary-color;
+}
+
+.wrapper .btn-favorite {
+    font-size: 3.2rem;
+    color: $primary-color;
+  
+    &:hover {
+        cursor: pointer;
+    }
+
+    @include media-breakpoint-lg() {
+        font-size: 2.6rem;
+    }
+}
+
+.wrapper .button-delete {
     background-color: #000;
 }
 

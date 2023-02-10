@@ -8,11 +8,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 
 import config from "../../../../config";
+import { useSelector } from "react-redux";
+import { selectCart, selectWishList } from "../../../../redux/selector";
 
 const cx = classNames.bind(styles);
 
 function Menu({ className }) {
     let id = 0;
+    const wishList = useSelector(selectWishList);
+    const cartList = useSelector(selectCart);
     const listMenu = [
         {
             id: id++,
@@ -28,13 +32,13 @@ function Menu({ className }) {
         },
         {
             id: id++,
-            title: "Yêu thích",
+            title: `Yêu thích (${wishList.length})`,
             icon: FavoriteIcon,
             to: config.routes.wishlist,
         },
         {
             id: id++,
-            title: "Giỏ hàng",
+            title: `Giỏ hàng (${cartList.length})`,
             icon: LocalMallIcon,
             to: config.routes.cart,
         },

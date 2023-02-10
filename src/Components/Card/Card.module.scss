@@ -61,7 +61,7 @@ $btn-container-height: 46px;
     left: 80%;
     font-size: 3.6rem;
     color: $primary-color;
-
+  
     &:hover {
         cursor: pointer;
     }
@@ -69,6 +69,14 @@ $btn-container-height: 46px;
     @include media-breakpoint-lg() {
         font-size: 3.2rem;
     }
+
+    @include media-breakpoint-sm() {
+        left: 74%;
+    }
+}
+
+.wrapper  .active {
+    color: $primary-color;
 }
 
 //Description
