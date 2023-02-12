@@ -7,8 +7,8 @@ import * as productService from "../../service/productService";
 
 import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
-import Breadcrumb from "../../Components/Breadcrumb/Breadcrumb";
-import Button from "../../Components/Button/Button";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Button from "../../components/Button/Button";
 
 import {
     selectProductId,
@@ -16,15 +16,15 @@ import {
     selectWishList,
     selectCart,
 } from "../../redux/selector";
-import ImageSlide from "../../Components/ImageSlide/ImageSlide";
+import ImageSlide from "../../components/ImageSlide/ImageSlide";
 
 import {
     addCart,
     addProductDetail,
     addWishList,
 } from "../../redux/slice/productSlice";
-import SelectGrid from "../../Components/SelectGrid/SelectGrid";
-import PanelGroup from "../../Components/PanelGroup/PanelGroup";
+import SelectGrid from "../../components/SelectGrid/SelectGrid";
+import PanelGroup from "../../components/PanelGroup/PanelGroup";
 import imageSize from "../../asset/images/global/Size-chart-1-e1559209680920.jpg";
 import {
     policy,
@@ -33,8 +33,8 @@ import {
     quantityList,
     sizeList,
 } from "../../data/productDetail";
-import Slick from "../../Components/Slick/Slick";
-import Card from "../../Components/Card/Card";
+import Slick from "../../components/Slick/Slick";
+import Card from "../../components/Card/Card";
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
@@ -167,6 +167,7 @@ function ProductDetail() {
                                 name="size"
                                 dropClick={handleSelectGirdChange}
                                 data={sizeList}
+                                currentValue={selectGrid.size}
                             ></SelectGrid>
                         </div>
                         <div
@@ -181,6 +182,7 @@ function ProductDetail() {
                                 name="quantity"
                                 dropClick={handleSelectGirdChange}
                                 data={quantityList}
+                                currentValue={selectGrid.quantity}
                             ></SelectGrid>
                         </div>
                     </div>
@@ -244,6 +246,7 @@ function ProductDetail() {
                                 })}
                                 show={showPanel === 1}
                                 onClick={() => handleShowPanel(1)}
+                                twoline
                             >
                                 <div className={cx("panel-content")}>
                                     <span className={cx("title")}>
@@ -274,6 +277,7 @@ function ProductDetail() {
                                 })}
                                 show={showPanel === 2}
                                 onClick={() => handleShowPanel(2)}
+                                twoline
                             >
                                 <div className={cx("panel-content")}>
                                     <ul>
@@ -301,6 +305,7 @@ function ProductDetail() {
                                 })}
                                 show={showPanel === 3}
                                 onClick={() => handleShowPanel(3)}
+                                twoline
                             >
                                 <div className={cx("panel-content")}>
                                     {service.map((item, index) => (

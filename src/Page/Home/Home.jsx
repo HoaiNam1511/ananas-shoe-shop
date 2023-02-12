@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import * as productService from "../../service/productService";
-import Card from "../../Components/Card/Card";
+import Card from "../../components/Card/Card";
 import classNames from "classnames/bind";
-import SlickSlide from "../../Components/SlickSlide/SlickSlide";
+import SlickSlide from "../../components/SlickSlide/SlickSlide";
 import styles from "./Home.module.scss";
 
 import { selectWishList } from "../../redux/selector";

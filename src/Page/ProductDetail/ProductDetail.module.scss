@@ -1,4 +1,4 @@
-@import '../../Components/GlobalStyle/GlobalStyle.scss';
+@import '../../components/GlobalStyle/GlobalStyle.scss';
 @import '../../scss/mixins';
 
 $margin-padding-btn: 10px;
@@ -155,16 +155,6 @@ h1 h2 h3 h4 h5 h6 {
 
 .item-panel_header {
     padding: 30px 0;
-}
-
-.active {
-    transition: color .1s;
-    color: $primary-color;
-}
-
-.active svg {
-    transition: .7s all;   
-    transform: rotate(180deg);
 }
 
 .panel-content {

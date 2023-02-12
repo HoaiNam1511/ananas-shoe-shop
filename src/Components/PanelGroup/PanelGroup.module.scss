@@ -1,4 +1,5 @@
 @import '../../scss/mixins';
+@import '../../components/GlobalStyle/GlobalStyle.scss';
 
 .wrapper {
 
@@ -38,22 +39,16 @@
     display: block;
 }
 
+.active {
+    transition: color .1s;
+    color: $primary-color;
+}
 
-  
-// .show  {
-//     -webkit-animation: bounce 300ms none;
-//     animation: bounce 300ms none;
-//     animation-timing-function: ease-in-out;
-//   }
-  
-//   @keyframes bounce {
-//     0% {
-//       transform: translate(0);
-//     }
-//     100% {
-//       transform: translate(1);
-//     }
-//   }
+.active-icon {
+    transition: .7s all;   
+    transform: rotate(180deg);
+    color: $primary-color;
+}
 
 .show {
     @include growDownAnimation;

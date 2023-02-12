@@ -25,6 +25,12 @@ function SelectGrid({ className, data, currentValue, dropClick, name }) {
     };
 
     useEffect(() => {
+        setDropDown({ ...dropdown, itemValue: currentValue });
+    }, [currentValue]);
+
+    console.log(currentValue);
+
+    useEffect(() => {
         function handleClickOutside(event) {
             if (
                 refDropDown.current &&

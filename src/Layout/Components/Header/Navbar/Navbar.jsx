@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
@@ -24,7 +24,11 @@ const cx = classNames.bind(styles);
 function Navbar() {
     let id = 0;
     const navigate = useNavigate();
-    const [showDropMenu, setShowDropMenu] = useState(false);
+    const refNavbarItem = useRef();
+    const [showDropMenu, setShowDropMenu] = useState({
+        mobile: false,
+        desktop: false,
+    });
     const [headerTitle, setHeaderTitle] = useState([]);
     const [categorys, setCategorys] = useState([]);
 
@@ -36,10 +40,6 @@ function Navbar() {
             console.log(err);
         }
     };
-
-    useEffect(() => {
-        getCategory();
-    }, []);
 
     const navList = [
         {
@@ -321,13 +321,22 @@ function Navbar() {
     const [history, setHistory] = useState([{ title: "", data: navList }]);
     const currentMenu = history[history.length - 1];
 
-    const handleShowMenu = () => {
-        setShowDropMenu((pre) => !pre);
+    const onMenuClick = () => {
+        setShowDropMenu({ ...showDropMenu, mobile: !showDropMenu.mobile });
+        if (!showDropMenu.mobile) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
     };
 
-    useEffect(() => {
-        setHistory([{ title: "", data: navList }]);
-    }, [categorys]);
+    const handleShowMenu = () => {
+        onMenuClick();
+    };
+
+    const onLogoClick = () => {
+        navigate(config.routes.home);
+    };
 
     const handleAddChildMenu = (item) => {
         //Open children menu when is mobile
@@ -343,6 +352,7 @@ function Navbar() {
             //navigate page when not have child
             else {
                 navigate(config.routes.product);
+                onMenuClick();
             }
         } else {
             navigate(config.routes.product);
@@ -369,13 +379,20 @@ function Navbar() {
         };
     }, []);
 
-    const onLogoClick = () => {
-        navigate(config.routes.home);
-    };
+    useEffect(() => {
+        setHistory([{ title: "", data: navList }]);
+    }, [categorys]);
+
+    useEffect(() => {
+        getCategory();
+    }, []);
+
+    console.log(showDropMenu);
 
     return (
         <div className={cx("container-fluid px-0", "wrapper")}>
             <div className={cx("row g-0", "navbar")}>
+                {/* Logo */}
                 <div
                     className={cx(
                         "col-2 col-xl-1 col-lg-2 col-md-2 col-sm-2",
@@ -389,15 +406,16 @@ function Navbar() {
                         onClick={onLogoClick}
                     />
                 </div>
-
+                {/* Navbar navigation */}
                 <div
                     className={cx("col-xl-8 col-lg-10", "navbar-nav", {
-                        show: showDropMenu,
+                        show: showDropMenu.mobile,
                     })}
                 >
                     <ul className={cx("nav-list")}>
                         {history.length > 1 && (
                             <li className={cx("dropdown", "dropdown-mobile")}>
+                                {/* Header menu mobile */}
                                 <div
                                     onClick={handleBackMenu}
                                     className={cx(
@@ -429,14 +447,15 @@ function Navbar() {
                         )}
                         {currentMenu.data.map((item, index) => {
                             return (
-                                <div key={index}>
+                                <li key={index}>
                                     {/* List item  */}
-                                    <li
+                                    <div
                                         key={index}
                                         className={cx("dropdown")}
                                         onClick={() => handleAddChildMenu(item)}
                                     >
                                         <div className={cx("dropdown-link")}>
+                                            {/* Header title menu mobile */}
                                             {item.titleHeaderList && (
                                                 <span
                                                     className={cx(
@@ -447,6 +466,7 @@ function Navbar() {
                                                     {item.titleHeaderList}
                                                 </span>
                                             )}
+                                            {/* List title menu mobile and desktop */}
                                             {index <
                                                 currentMenu.data.length - 1 && (
                                                 <span
@@ -482,7 +502,7 @@ function Navbar() {
                                                     />
                                                 </>
                                             )}
-
+                                            {/* If have child will show arrow icon */}
                                             {item.children &&
                                                 !item.titleHeaderList && (
                                                     <>
@@ -500,25 +520,30 @@ function Navbar() {
                                                 )}
                                             {/* Last position of navList */}
                                         </div>
+                                        {/* For pc */}
                                         {index === 0 && (
                                             <DropDownMenu
                                                 menu1
-                                                className={cx("dropdown-menu")}
+                                                className={cx("dropdown-menu", {
+                                                    open: showDropMenu.desktop,
+                                                })}
                                                 data={navList}
                                             />
                                         )}
                                         {index > 0 && index < 3 && (
                                             <DropDownMenu
-                                                className={cx("dropdown-menu")}
+                                                className={cx("dropdown-menu", {
+                                                    open: showDropMenu.desktop,
+                                                })}
                                                 data={navList}
                                             />
                                         )}
-                                    </li>
+                                    </div>
                                     {/* Last list item */}
                                     {item.titleHeaderList &&
                                         item.children.data.map(
                                             (itemChild, index) => (
-                                                <li
+                                                <div
                                                     className={cx("dropdown")}
                                                     onClick={() =>
                                                         handleAddChildMenu(item)
@@ -539,14 +564,21 @@ function Navbar() {
                                                                 itemChild.title}
                                                         </span>
                                                     </div>
-                                                </li>
+                                                </div>
                                             )
                                         )}
-                                </div>
+                                </li>
                             );
                         })}
                     </ul>
-                    <Menu className={cx("menu-mobile")} />
+
+                    <Menu className={cx("menu-mobile")} onClick={onMenuClick} />
+                    <div className={cx("white-line-mobile")}></div>
+                    <div className={cx("menu_description-mobile")}>
+                        <span className={cx("description")}>
+                            MỌI NGƯỜI THƯỜNG GỌI CHÚNG TÔI LÀ <span>DỨA</span> !
+                        </span>
+                    </div>
                 </div>
 
                 <div

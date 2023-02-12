@@ -1,6 +1,6 @@
 import styles from "./CardStore.module.scss";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import config from "../../config/";
 import SelectGrid from "../SelectGrid/SelectGrid";
 import Button from "../Button/Button";
@@ -63,6 +63,7 @@ function CardStore({ data, limit, typeCart, className }) {
             newObj = {
                 ...obj,
                 [name]: value,
+                oldSize: data.size,
             };
         }
         return newObj;

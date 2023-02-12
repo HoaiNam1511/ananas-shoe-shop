@@ -13,7 +13,7 @@ import { selectCart, selectWishList } from "../../../../redux/selector";
 
 const cx = classNames.bind(styles);
 
-function Menu({ className }) {
+function Menu({ className, onClick }) {
     let id = 0;
     const wishList = useSelector(selectWishList);
     const cartList = useSelector(selectCart);
@@ -49,7 +49,11 @@ function Menu({ className }) {
                 {listMenu.map((menu) => {
                     const Icon = menu.icon;
                     return (
-                        <li className={cx("menu-item")} key={menu.id}>
+                        <li
+                            className={cx("menu-item")}
+                            key={menu.id}
+                            onClick={onClick}
+                        >
                             <Icon className={cx("icon")} />
                             <Link className={cx("link")} to={menu.to}>
                                 {menu.title}

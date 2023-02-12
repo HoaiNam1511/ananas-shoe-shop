@@ -99,7 +99,9 @@ $menu-2_block-margin: 20px;
     color: #fff;
     margin-bottom: 20px;
     font-size: 2.2rem;
+    transition: color .2s;
     &:hover {
+        cursor: pointer;
         color: #f15e2c;
     }
 }

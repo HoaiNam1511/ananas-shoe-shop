@@ -87,29 +87,79 @@ const productSlice = createSlice({
 
         updateCart(state, action) {
             const cvtArr = state.cart;
-            const newArr = cvtArr.map((product) => {
-                if (product.id === action.payload.id) {
-                    return {
-                        ...product,
-                        quantity: action.payload.quantity,
-                        size: action.payload.size,
-                    };
-                } else {
-                    return product;
-                }
-            });
-            state.cart = newArr;
+            //2 truong hop
+            //TH1: cong don khi san pham co size trung
+            //TH2: update san pham
+            //Thực hiện cộng dồn product khi sản phẩm trùng
+            // Nếu payload.size === item.size (đã tồn tại sản phẩm =>  thực hiện cộng dồn)
+            // Nếu size !== size payload => trường hợp thay đổi quantity
+            //  item.size === action.payload.size kiem tra co trung voi cart da ton tai
+            //  item.size !== action.payload.oldSize => neu khong bang (da thay doi size)
+            if (
+                cvtArr.find(
+                    (item) =>
+                        item.id === action.payload.id &&
+                        item.size === action.payload.size &&
+                        item.size !== action.payload.oldSize
+                )
+            ) {
+                const newArr = cvtArr.map((product) => {
+                    if (
+                        product.id === action.payload.id &&
+                        product.size === action.payload.size
+                    ) {
+                        return {
+                            ...product,
+                            quantity:
+                                product.quantity + action.payload.quantity,
+                            size: action.payload.size,
+                        };
+                    } else {
+                        return product;
+                    }
+                });
+
+                const newArrFilter = newArr.filter((item) => {
+                    if (
+                        item.id === action.payload.id &&
+                        item.size === action.payload.oldSize
+                    ) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+                state.cart = newArrFilter;
+            }
+            // Thực hiện update sản phẩm
+            else {
+                const newArr = cvtArr.map((product) => {
+                    if (
+                        product.id === action.payload.id &&
+                        product.size === action.payload.oldSize
+                    ) {
+                        return {
+                            ...product,
+                            quantity: action.payload.quantity,
+                            size: action.payload.size,
+                        };
+                    } else {
+                        return product;
+                    }
+                });
+                state.cart = newArr;
+            }
         },
 
         deleteCart(state, action) {
             const cvtArr = state.cart;
             const newArr = cvtArr.filter((item) => {
-                if (item.id === action.payload.id) {
-                    if (item.size === action.payload.size) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                if (
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size
+                ) {
+                    return false;
                 } else {
                     return true;
                 }

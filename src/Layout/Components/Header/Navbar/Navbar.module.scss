@@ -1,4 +1,4 @@
-@import '../../../../Components/GlobalStyle/GlobalStyle.scss';
+@import '../../../../components/GlobalStyle/GlobalStyle.scss';
 @import '../../../../scss/mixins';
 //Navbar logo
 $navbar-height: 100px;
@@ -7,6 +7,7 @@ $search-height: 40px;
 $navbar-height-drop: 60px;
 $font-size-menu: 2.4rem;
 $font-size-icon: 2.2rem;
+$header-mobile: 9vh;
 .wrapper {
     padding: 0;
     margin: 0;
@@ -19,7 +20,6 @@ $font-size-icon: 2.2rem;
     padding: 0 60px;
     height: $navbar-height;
     margin-top: 10px;
-    position: relative;
 
     @include media-breakpoint-xl() {
         height: calc($navbar-height + $navbar-height-drop);
@@ -64,15 +64,23 @@ $font-size-icon: 2.2rem;
         overflow: scroll;
         display: none;
         background-color: #4c4c4c;   
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 13vw;
+        //top: 14vh;
         left: 0;
         right: 0;
         z-index: 100;
-        height: 700px;
+        height: calc(100vh - 11vh);
     }
     @include media-breakpoint-md() {
+        //top: 13vh;
+        top: 16vw;
+        height: calc(100vh - 13vh);
         margin-top: 5px;
+    }
+    @include media-breakpoint-sm() {
+        //top: 11vh;
+        height: calc(100vh - 11vh);
     }
 }
 
@@ -92,18 +100,39 @@ $font-size-icon: 2.2rem;
         height: fit-content;
         flex-direction: column;
         justify-content: start;
-        z-index: 100;
+        z-index: 100te;
         width: 100%;
         padding: 0;
     }
 }
 
+.nav-list > li {
+    list-style: none;
+}
+
+//Dropdown menu
+.dropdown .dropdown-menu {
+    //display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    //opacity: 0;
+    //visibility: hidden;
+    //transition-delay: 1s;
+    // -webkit-transition: opacity 600ms, visibility 600ms;
+    //         transition: opacity 600ms, visibility 600ms;
+    //transition: all .5s ease;
+    @include media-breakpoint-xl() {
+        margin-top: calc(($navbar-height-drop - 1px) * -1);
+    }
+}
+//Dropdown item
+
 .dropdown {
     display: block;
     cursor: pointer;
-    list-style: none;
     margin-top: calc($dropdown-margin / 2);
-    transition-delay: 3s;
     height: calc($navbar-height - $dropdown-margin);
 
     &:hover .dropdown-icon {
@@ -113,8 +142,9 @@ $font-size-icon: 2.2rem;
     }
 
     &:hover .dropdown-menu {
-        transition-delay: 3s;
         display: block;
+        //visibility: visible;
+        //opacity: 1;
     }
 
     &:hover .dropdown-link{
@@ -127,12 +157,14 @@ $font-size-icon: 2.2rem;
         }
     }
 
+
     @include media-breakpoint-lg() {
         display: flex;
         align-items: center;
         margin-top: 0;
         background-color: #4c4c4c;  
         @include line-dahsed-custom;
+     
         &:hover .dropdown-menu {
             display: none;
         }
@@ -147,17 +179,17 @@ $font-size-icon: 2.2rem;
             transition: none;   
             transform: rotate(270deg);
         }
-
-      
     }
 }
+
 
 .dropdown-link {
     position: relative;
     display: inline-block;
     padding: 30px 20px 0px;
     text-decoration: none;
-    height: calc($navbar-height - $dropdown-margin);
+    height: 100%;
+    // height: calc($navbar-height - $dropdown-margin);
     @include media-breakpoint-lg() {
         display: flex;
         justify-content: space-between;
@@ -213,22 +245,45 @@ $font-size-icon: 2.2rem;
 }
 
 //Menu mobile
+.white-line-mobile {
+    @include media-breakpoint-lg() {
+        height: 1px;
+        width: 100%;
+        margin: 10px 0;
+        background-color: #fff;
+    }
+}
+
 .menu-mobile {
     @include media-breakpoint-lg() {
         display: block;
     }
 }
 
-//Dropdown menu
-.dropdown .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    @include media-breakpoint-xl() {
-        margin-top: calc(($navbar-height-drop - 1px) * -1);
+.menu_description-mobile {
+    @include media-breakpoint-lg() {
+        margin-top: 30px;
+        height: 200px;
     }
 }
+
+.description {
+    display: none;
+    @include media-breakpoint-lg() {
+        display: block;
+        text-align: center;
+        background: transparent;
+        color: #808080;
+        font-size: 16px;
+        font-weight: 400;
+        font-style: italic;
+    }
+}
+
+.description span {
+    color: #fff;
+}
+
 
 //Arrow menu -> same with :after
 .arrow {
