@@ -5,12 +5,10 @@ import styles from "./Navbar.module.scss";
 import config from "../../../../config";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-
-import logo from "../../../../asset/icon/Logo_Ananas_Header.svg";
 import imageDiscoverYou from "../../../../asset/icon/DiscoverYOU.svg";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "../Menu/Menu";
 
 import * as categoryService from "../../../../service/categoryService";
@@ -19,12 +17,12 @@ import menuNamImg from "../../../../asset/images/menu/Menu_Nam.jpg";
 import menuNuImg from "../../../../asset/images/menu/Menu_Nu.jpg";
 import menuPhuKienImg from "../../../../asset/images/menu/Menu_Phu-kien.jpg";
 import menuSaleImg from "../../../../asset/images/menu/Menu_Sale-off.jpg";
+import Brand from "./Brand/Brand";
 
 const cx = classNames.bind(styles);
 function Navbar() {
     let id = 0;
     const navigate = useNavigate();
-    const refNavbarItem = useRef();
     const [showDropMenu, setShowDropMenu] = useState({
         mobile: false,
         desktop: false,
@@ -40,6 +38,132 @@ function Navbar() {
             console.log(err);
         }
     };
+
+    const childData = [
+        {
+            id: id++,
+            title: "NỔI BẬT",
+            children: {
+                data: [
+                    {
+                        id: id++,
+                        titleHeaderList: "Sale off",
+                        children: {
+                            data: categorys
+                                .filter((item) => {
+                                    if (item.fk_category_group_id === 1) {
+                                        return true;
+                                    }
+                                })
+                                .slice(0, 5),
+                        },
+                    },
+                    {
+                        titleHeaderList: "Bộ sản phẩm",
+                        children: {
+                            id: id++,
+                            data: categorys
+                                .filter((item) => {
+                                    if (item.fk_category_group_id === 4) {
+                                        return true;
+                                    }
+                                })
+                                .slice(0, 5),
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            id: id++,
+            title: "GIÀY",
+            children: {
+                data: [
+                    {
+                        id: id++,
+                        titleHeaderList: "Dòng sản phẩm",
+                        children: {
+                            data: categorys
+                                .filter((item) => {
+                                    if (item.fk_category_group_id === 3) {
+                                        return true;
+                                    }
+                                })
+                                .slice(0, 5),
+                        },
+                    },
+                    {
+                        titleHeaderList: "Style",
+                        children: {
+                            id: id++,
+                            data: categorys
+                                .filter((item) => {
+                                    if (item.fk_category_group_id === 2) {
+                                        return true;
+                                    }
+                                })
+                                .slice(0, 5),
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            id: id++,
+            title: "THỜI TRANG VÀ PHỤ KIỆN",
+            children: {
+                data: [
+                    {
+                        id: id++,
+                        titleHeaderList: "Nửa trên",
+                        children: {
+                            data: [
+                                {
+                                    id: id++,
+                                    title: "Basic Tee",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Graphic Tee",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Sweatshirt ",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Hoodie ",
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        titleHeaderList: "Phụ kiện",
+                        children: {
+                            data: [
+                                {
+                                    id: id++,
+                                    title: "Nón",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Dây giày",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Vớ",
+                                },
+                                {
+                                    id: id++,
+                                    title: "Ba lô & Túi",
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        },
+    ];
 
     const navList = [
         {
@@ -75,143 +199,7 @@ function Navbar() {
             id: id++,
             title: "NAM",
             children: {
-                data: [
-                    {
-                        id: id++,
-                        title: "NỔI BẬT",
-                        children: {
-                            data: [
-                                {
-                                    id: id++,
-                                    titleHeaderList: "Sale off",
-                                    children: {
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    1
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                                {
-                                    titleHeaderList: "Bộ sản phẩm",
-                                    children: {
-                                        id: id++,
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    4
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        id: id++,
-                        title: "GIÀY",
-                        children: {
-                            data: [
-                                {
-                                    id: id++,
-                                    titleHeaderList: "Dòng sản phẩm",
-                                    children: {
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    3
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                                {
-                                    titleHeaderList: "Style",
-                                    children: {
-                                        id: id++,
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    2
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        id: id++,
-                        title: "THỜI TRANG VÀ PHỤ KIỆN",
-                        children: {
-                            data: [
-                                {
-                                    id: id++,
-                                    titleHeaderList: "Nửa trên",
-                                    children: {
-                                        data: [
-                                            {
-                                                id: id++,
-                                                title: "Basic Tee",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Graphic Tee",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Sweatshirt ",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Hoodie ",
-                                            },
-                                        ],
-                                    },
-                                },
-                                {
-                                    titleHeaderList: "Phụ kiện",
-                                    children: {
-                                        data: [
-                                            {
-                                                id: id++,
-                                                title: "Nón",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Dây giày",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Vớ",
-                                            },
-                                            {
-                                                id: id++,
-                                                title: "Ba lô & Túi",
-                                            },
-                                        ],
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ],
+                data: [...childData],
             },
         },
 
@@ -219,92 +207,7 @@ function Navbar() {
             id: id++,
             title: "NỮ",
             children: {
-                data: [
-                    {
-                        id: id++,
-                        title: "NỔI BẬT",
-                        children: {
-                            data: [
-                                {
-                                    id: id++,
-                                    titleHeaderList: "Sale off",
-                                    children: {
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    1
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                                {
-                                    titleHeaderList: "Bộ sản phẩm",
-                                    children: {
-                                        id: id++,
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    4
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        id: id++,
-                        title: "GIÀY",
-                        children: {
-                            data: [
-                                {
-                                    id: id++,
-                                    titleHeaderList: "Dòng sản phẩm",
-                                    children: {
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    3
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                                {
-                                    titleHeaderList: "Style",
-                                    children: {
-                                        id: id++,
-                                        data: categorys
-                                            .filter((item) => {
-                                                if (
-                                                    item.fk_category_group_id ===
-                                                    2
-                                                ) {
-                                                    return true;
-                                                }
-                                            })
-                                            .slice(0, 5),
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        id: id++,
-                        title: "THỜI TRANG VÀ PHỤ KIỆN",
-                    },
-                ],
+                data: [...childData],
             },
         },
 
@@ -327,15 +230,12 @@ function Navbar() {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
+            setHistory([{ title: "", data: navList }]);
         }
     };
 
     const handleShowMenu = () => {
         onMenuClick();
-    };
-
-    const onLogoClick = () => {
-        navigate(config.routes.home);
     };
 
     const handleAddChildMenu = (item) => {
@@ -387,25 +287,11 @@ function Navbar() {
         getCategory();
     }, []);
 
-    console.log(showDropMenu);
-
     return (
         <div className={cx("container-fluid px-0", "wrapper")}>
-            <div className={cx("row g-0", "navbar")}>
+            <div className={cx("row gx-0", "navbar")}>
                 {/* Logo */}
-                <div
-                    className={cx(
-                        "col-2 col-xl-1 col-lg-2 col-md-2 col-sm-2",
-                        "brand"
-                    )}
-                >
-                    <img
-                        src={logo}
-                        className={cx("logo")}
-                        alt="logo"
-                        onClick={onLogoClick}
-                    />
-                </div>
+                <Brand></Brand>
                 {/* Navbar navigation */}
                 <div
                     className={cx("col-xl-8 col-lg-10", "navbar-nav", {
@@ -428,16 +314,7 @@ function Navbar() {
                                     />
                                     <div className={cx("header-mobile_title")}>
                                         {history.map((item, index) => (
-                                            <span
-                                                key={index}
-                                                className={cx({
-                                                    disable:
-                                                        history.length > 2 &&
-                                                        history.length - 1 !==
-                                                            index &&
-                                                        item.title !== "",
-                                                })}
-                                            >
+                                            <span key={index}>
                                                 {item.title}
                                             </span>
                                         ))}
@@ -599,12 +476,24 @@ function Navbar() {
                     </div>
                 </div>
 
-                <button
+                {/* <div
                     onClick={handleShowMenu}
-                    className={cx("col-2 col-md-2 col-sm-2", "btn-menu")}
+                    className={cx(
+                        "d-block d-lg-none d-flex justify-content-center",
+                        "col-2 col-md-2 col-sm-2"
+                    )}
                 >
                     <MenuIcon className={cx("menu-icon")} />
-                </button>
+                </div> */}
+                <div
+                    onClick={handleShowMenu}
+                    className={cx(
+                        "d-block d-lg-none d-flex justify-content-center",
+                        "col-2 col-md-2 col-sm-2"
+                    )}
+                >
+                    <MenuIcon className={cx("menu-icon")} />
+                </div>
             </div>
         </div>
     );

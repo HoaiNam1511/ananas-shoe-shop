@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as productService from "../../service/productService";
 import Card from "../../components/Card/Card";
 import classNames from "classnames/bind";
-import SlickSlide from "../../components/SlickSlide/SlickSlide";
+import SlideImage from "../../components/SlideImage/SlideImage";
 import styles from "./Home.module.scss";
 
 import { selectWishList } from "../../redux/selector";
 import { useSelector } from "react-redux";
 
+import { slideImagesData } from "../../data/home";
+
 const cx = classNames.bind(styles);
 function Home() {
     const [products, setProducts] = useState([]);
-    const wishList = useSelector(selectWishList);
     const getNewProducts = async () => {
         const productRes = await productService.getProduct({ limit: 8 });
         setProducts(productRes.data);
@@ -23,7 +24,16 @@ function Home() {
 
     return (
         <>
-            <SlickSlide></SlickSlide>
+            <SlideImage timeSlide={30000}>
+                {slideImagesData.map((slide, index) => (
+                    <img
+                        key={index}
+                        className={cx("slide-image")}
+                        src={slide.image}
+                        alt="slide"
+                    ></img>
+                ))}
+            </SlideImage>
             <div id="wrapper" className={cx("container-fluid gx-0", "wrapper")}>
                 <section>
                     <div className={cx("section-title")}>
@@ -36,7 +46,6 @@ function Home() {
                             <Card
                                 key={product.id}
                                 data={product}
-                                //onClick={() => onCardClick(product.id)}
                                 className={cx(
                                     "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
                                     "card-item"

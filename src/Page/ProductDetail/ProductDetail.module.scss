@@ -35,15 +35,25 @@ $margin-padding-btn: 10px;
 .wrapper-detail {
 
 }
+
 h1 h2 h3 h4 h5 h6 {
     padding: 0;
     margin: 0;
 }
+
 .title-header {
     font-size: 2.6rem;
     text-transform: uppercase;
     line-height: 1.4em;
     font-weight: 700;
+
+    @include media-breakpoint-md() {
+        font-size: 2.3rem;
+    }
+
+    @include media-breakpoint-sm() {
+        font-size: 2.1rem;
+    }
 }
 
 .code, .price  {

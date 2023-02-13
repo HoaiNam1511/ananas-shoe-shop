@@ -17,7 +17,7 @@ import { selectWishList } from "../../redux/selector";
 import { sizeList, quantityList } from "../../data/productDetail";
 
 const cx = classNames.bind(styles);
-function Cart({ className, data }) {
+function Cart({ className, data, cardSlick = false }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const wishList = useSelector(selectWishList);
@@ -73,17 +73,18 @@ function Cart({ className, data }) {
 
                     <div className={cx("btn-container")}>
                         <Button className={cx("btn-buy")}>MUA NGAY</Button>
-                        {wishList.find((item) => item.id === data.id) ? (
-                            <FavoriteIcon
-                                className={cx("btn-favorite", "active")}
-                                onClick={() => handleAddWishList(data)}
-                            />
-                        ) : (
-                            <FavoriteBorderIcon
-                                className={cx("btn-favorite")}
-                                onClick={() => handleAddWishList(data)}
-                            />
-                        )}
+                        {!cardSlick &&
+                            (wishList.find((item) => item.id === data.id) ? (
+                                <FavoriteIcon
+                                    className={cx("btn-favorite", "active")}
+                                    onClick={() => handleAddWishList(data)}
+                                />
+                            ) : (
+                                <FavoriteBorderIcon
+                                    className={cx("btn-favorite")}
+                                    onClick={() => handleAddWishList(data)}
+                                />
+                            ))}
                     </div>
                 </div>
                 <div

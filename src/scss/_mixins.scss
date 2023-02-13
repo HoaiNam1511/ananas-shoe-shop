@@ -65,7 +65,7 @@
 //Animation
 @mixin growDownAnimation {
     animation: growDown 500ms ease-in-out forwards;
-    transform-origin: top center;
+    transform-origin: top;
 }
 
 @keyframes growDown {

@@ -9,22 +9,15 @@
 .slide-container {
     position: relative;
     display: flex;
+    width: 100vw;
     max-width: 1920px;
     overflow: hidden;
 }
 
 .slide {
+    width: 100%;
     white-space: nowrap;
     transition: ease 1000ms;
-}
-
-.slide-image {
-    object-fit: cover;
-    width: 100vw;
-    max-width: 1920px;
-    max-height: 100vh;
-    overflow-clip-margin: content-box;
-    overflow: clip;
 }
 
 .slick-dots {

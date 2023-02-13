@@ -9,10 +9,14 @@ import Button from "../../components/Button/Button";
 import { cartSlide } from "../../data/cart";
 import { codeDiscount } from "../../data/cart";
 import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
+import { deleteAllCart } from "../../redux/slice/productSlice";
+import { useNavigate } from "react-router-dom";
+import config from "../../config";
 
 const cx = classNames.bind(styles);
 function Cart() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const refItem = useRef();
     const cartList = useSelector(selectCart);
     const [code, setCode] = useState("");
@@ -50,8 +54,6 @@ function Cart() {
             totalPrice: price,
         }));
     }, [cartList]);
-
-    console.log(cartList);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -101,13 +103,21 @@ function Cart() {
                         ))}
                         <div className={cx("left-bottom-btn")}>
                             <div className={cx("bottom-item")}>
-                                <Button className={cx("bottom-btn")}>
+                                <Button
+                                    className={cx("bottom-btn")}
+                                    onClick={() => dispatch(deleteAllCart())}
+                                >
                                     Xoá hết
                                 </Button>
                             </div>
                             <div className={cx("bottom-item")}>
-                                <Button className={cx("bottom-btn")}>
-                                    Quay lại
+                                <Button
+                                    className={cx("bottom-btn")}
+                                    onClick={() =>
+                                        navigate(config.routes.product)
+                                    }
+                                >
+                                    Quay lại mua hàng
                                 </Button>
                             </div>
                         </div>

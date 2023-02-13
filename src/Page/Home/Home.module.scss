@@ -8,6 +8,15 @@
     max-width: 1200px;
 }
 
+.slide-image {
+    object-fit: cover;
+    width: 100vw;
+    max-width: 1920px;
+    max-height: 100vh;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
 .wrapper section {
     margin-bottom: 20px;
 
@@ -42,9 +51,9 @@
 .wrapper .card-item {
     padding: 0 10px;
     margin-bottom: 40px;
-    @include media-breakpoint-md() {
-        padding: 0 5px;
+    @include media-breakpoint-sm() {
         margin-bottom: 20px;
+        padding: 5px;
     }
 }
 
@@ -55,3 +64,20 @@
     }
 }
 
+
+.box1 {
+    height: 30px;
+    width: 300px;
+    position: relative;
+    text-align: center;
+    &::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        left: 0;
+        right: 0;
+        background-color: red;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

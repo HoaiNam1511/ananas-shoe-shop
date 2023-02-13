@@ -166,6 +166,10 @@ const productSlice = createSlice({
             });
             state.cart = newArr;
         },
+
+        deleteAllCart(state, action) {
+            state.cart = [];
+        },
     },
 });
 //Export action
@@ -179,6 +183,7 @@ export const {
     updateCart,
     deleteWishList,
     updateWishList,
+    deleteAllCart,
 } = productSlice.actions;
 
 export default productSlice;

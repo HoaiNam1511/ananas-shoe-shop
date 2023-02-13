@@ -329,7 +329,7 @@ function ProductDetail() {
                                 "slick-item"
                             )}
                         >
-                            <Card data={product}></Card>
+                            <Card data={product} cardSlick></Card>
                         </div>
                     ))}
                 </Slick>

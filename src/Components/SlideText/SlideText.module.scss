@@ -1,4 +1,4 @@
-@import '../../../../scss/mixins';
+@import '../../scss/mixins';
 .wrapper {
     height: 50px;
     display: flex;
@@ -20,7 +20,7 @@
 }
 
 .slick {
-    max-width: 500px;
+    // max-width: 1920px;
     overflow: hidden;
     text-align: center;
 }
@@ -52,7 +52,7 @@
     }
 }
 
-.slick-icon {
+.wrapper .slick-icon {
     font-size: 2.6rem;
     color: #888;
 }

@@ -6,8 +6,10 @@ import * as categoryService from "../../service/categoryService";
 import imageProduct from "../../asset/images/global/desktop_productlist.jpg";
 import CloseIcon from "@mui/icons-material/Close";
 import { sidebarHeader, sidebar1, sidebar3 } from "../../data/product";
+import * as productService from "../../service/productService";
 import Button from "../../components/Button/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Card from "../../components/Card/Card";
 
 const cx = classNames.bind(styles);
 function Product() {
@@ -15,6 +17,8 @@ function Product() {
     const [showPageGroup, setShowPageGroup] = useState([]);
     const [sidebarChose, setSidebarChose] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
+    const [products, setProducts] = useState([]);
+
     const getCategory = async () => {
         const res = await categoryService.getCategoryClient();
         setCategorys([...res.data, ...sidebar3]);
@@ -36,8 +40,25 @@ function Product() {
         }
     };
 
+    const onBtnFilterClick = () => {
+        if (showSidebar) {
+            document.body.style.overflow = "auto";
+            setShowSidebar(!showSidebar);
+        } else {
+            document.body.style.overflow = "hidden";
+            setShowSidebar(!showSidebar);
+        }
+        setShowSidebar(!showSidebar);
+    };
+
+    const getProduct = async () => {
+        const productRes = await productService.getProduct({ limit: 8 });
+        setProducts(productRes.data);
+    };
+
     useEffect(() => {
         getCategory();
+        getProduct();
     }, []);
 
     return (
@@ -57,7 +78,7 @@ function Product() {
                             </div>
                         ))}
                     </div>
-                    <div className={cx("line-black-solid")}></div>
+                    <div className={cx("line-black-solid")} />
 
                     {/* Group 1 */}
                     <div>
@@ -65,11 +86,16 @@ function Product() {
                             {sidebar1.map((item, index) => (
                                 <li
                                     key={index}
-                                    className={cx("sidebar-item", {
-                                        "active-header": sidebarChose.includes(
-                                            item.title
-                                        ),
-                                    })}
+                                    className={cx(
+                                        "sidebar-item",
+                                        "item-header",
+                                        {
+                                            "active-header":
+                                                sidebarChose.includes(
+                                                    item.title
+                                                ),
+                                        }
+                                    )}
                                     onClick={() =>
                                         onSidebarChoseClick(item.title)
                                     }
@@ -91,10 +117,10 @@ function Product() {
                         className={cx("line-black-solid", "line-hidden")}
                     ></div>
                     {/* Button filter mobile */}
-                    <div className={cx("filter")}>
+                    <div className={cx("d-block d-lg-none d-flex", "filter")}>
                         <Button
                             className={cx("filter-btn")}
-                            onClick={() => setShowSidebar(!showSidebar)}
+                            onClick={onBtnFilterClick}
                         >
                             Chọn
                             <KeyboardArrowDownIcon
@@ -124,30 +150,35 @@ function Product() {
                                 >
                                     {category.category_group_client.map(
                                         (item) => (
-                                            <li
-                                                key={item.id}
-                                                className={cx("sidebar-item", {
-                                                    active: sidebarChose.includes(
+                                            <>
+                                                <li
+                                                    key={item.id}
+                                                    className={cx(
+                                                        "sidebar-item",
+                                                        {
+                                                            active: sidebarChose.includes(
+                                                                item.category_title
+                                                            ),
+                                                        }
+                                                    )}
+                                                    onClick={() =>
+                                                        onSidebarChoseClick(
+                                                            item.category_title
+                                                        )
+                                                    }
+                                                >
+                                                    {item.category_title}
+                                                    {sidebarChose.includes(
                                                         item.category_title
-                                                    ),
-                                                })}
-                                                onClick={() =>
-                                                    onSidebarChoseClick(
-                                                        item.category_title
-                                                    )
-                                                }
-                                            >
-                                                {item.category_title}
-                                                {sidebarChose.includes(
-                                                    item.category_title
-                                                ) && (
-                                                    <CloseIcon
-                                                        className={cx(
-                                                            "icon-sidebar"
-                                                        )}
-                                                    />
-                                                )}
-                                            </li>
+                                                    ) && (
+                                                        <CloseIcon
+                                                            className={cx(
+                                                                "icon-sidebar"
+                                                            )}
+                                                        />
+                                                    )}
+                                                </li>
+                                            </>
                                         )
                                     )}
                                 </ul>
@@ -161,7 +192,23 @@ function Product() {
                         "right-content"
                     )}
                 >
-                    <img className={cx("image")} src={imageProduct} alt="" />
+                    <div className={cx("image")}>
+                        <img src={imageProduct} alt="" />
+                    </div>
+
+                    <div className={cx("row gx-0", "list-product")}>
+                        {products.map((product, index) => (
+                            <Card
+                                key={product.id}
+                                data={product}
+                                //onClick={() => onCardClick(product.id)}
+                                className={cx(
+                                    "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",
+                                    "card-item"
+                                )}
+                            ></Card>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
