@@ -250,10 +250,10 @@
 
 //Left content
 .wrapper .right-content {
-    padding: 0 10px;
+    padding-left: 10px;
     @include media-breakpoint-lg() {
+        padding-left: 0px;
         margin-top: 10px;
-        padding: 0px;
     }
 }
 
@@ -270,16 +270,21 @@
     object-fit: cover;
 }
 
-.wrapper .list-product {
-    margin: 40px -10px 0px;
+.wrapper .product {
     @include media-breakpoint-lg() {
         padding: 0 10px;
     }
 }
 
+.wrapper .list-product {
+    margin: 40px -10px 0px;
+    @include media-breakpoint-lg() {
+        margin: 20px -10px 0px;
+    }
+}
+
 .wrapper .right-content .card-item {
     padding: 0 10px;
-
 }
 
 

@@ -41,17 +41,19 @@ function Home() {
                             <span>SẢN PHẨM MỚI</span>
                         </h2>
                     </div>
-                    <div className={cx("row", "product-grids")}>
-                        {products.map((product, index) => (
-                            <Card
-                                key={product.id}
-                                data={product}
-                                className={cx(
-                                    "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
-                                    "card-item"
-                                )}
-                            ></Card>
-                        ))}
+                    <div className={cx("product")}>
+                        <div className={cx("row gx-0", "product-grids")}>
+                            {products.map((product, index) => (
+                                <Card
+                                    key={product.id}
+                                    data={product}
+                                    className={cx(
+                                        "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
+                                        "card-item"
+                                    )}
+                                ></Card>
+                            ))}
+                        </div>
                     </div>
                 </section>
             </div>

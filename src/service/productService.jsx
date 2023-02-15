@@ -9,3 +9,8 @@ export const getProductDetail = async ({ productId }) => {
     const response = await httpRequest.get(`product/${productId}`);
     return response;
 };
+
+export const getProductFilter = async ({ productFilterId }) => {
+    const response = await httpRequest.post("product/filter", productFilterId);
+    return response;
+};

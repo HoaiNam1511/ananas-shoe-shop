@@ -33,26 +33,41 @@ let sidebarData = [
         category_group_title: "Giá",
         category_group_client: [
             {
+                range: 1,
                 category_title: "300 - 500",
+                from: 300000,
+                to: 500000,
             },
             {
+                range: 2,
                 category_title: "500 - 800",
+                from: 500000,
+                to: 800000,
             },
             {
+                range: 3,
                 category_title: "800 - 1200",
+                from: 800000,
+                to: 1200000,
             },
             {
+                range: 4,
                 category_title: "1200 - 1500",
+                from: 1200000,
+                to: 1500000,
             },
             {
+                range: 5,
                 category_title: "> 1500",
+                from: 1500,
+                to: 10000000,
             },
         ],
     },
 ];
 
 let id = 0;
-export const sidebar3 = sidebarData.reduce((acc, item) => {
+export const sidebar2 = sidebarData.reduce((acc, item) => {
     acc.push({ id: ++id, ...item });
     acc.map((item) => {
         const result = item.category_group_client.reduce((acc1, item1) => {

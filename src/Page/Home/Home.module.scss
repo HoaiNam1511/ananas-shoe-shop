@@ -19,9 +19,8 @@
 
 .wrapper section {
     margin-bottom: 20px;
-
     @include media-breakpoint-xl() {
-        padding: 0 10px;
+        
     }
 }
 
@@ -48,36 +47,22 @@
     padding:0 16px; 
 }
 
-.wrapper .card-item {
-    padding: 0 10px;
-    margin-bottom: 40px;
-    @include media-breakpoint-sm() {
-        margin-bottom: 20px;
-        padding: 5px;
+.wrapper .product {
+    @include media-breakpoint-xl() {
+        padding: 0 10px;
     }
 }
 
 .wrapper .product-grids {
     margin: 0 -10px;
-    @include media-breakpoint-md() {
-        margin: 0 -5px;
+}
+
+.wrapper .card-item {
+    margin-bottom: 40px;
+    padding: 0 10px;
+    @include media-breakpoint-sm() {
+        margin-bottom: 20px;
     }
 }
 
 
-.box1 {
-    height: 30px;
-    width: 300px;
-    position: relative;
-    text-align: center;
-    &::after {
-        content: '';
-        position: absolute;
-        height: 2px;
-        left: 0;
-        right: 0;
-        background-color: red;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-}

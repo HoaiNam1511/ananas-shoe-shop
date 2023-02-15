@@ -5,23 +5,28 @@ import styles from "./Product.module.scss";
 import * as categoryService from "../../service/categoryService";
 import imageProduct from "../../asset/images/global/desktop_productlist.jpg";
 import CloseIcon from "@mui/icons-material/Close";
-import { sidebarHeader, sidebar1, sidebar3 } from "../../data/product";
+import { sidebarHeader, sidebar1, sidebar2 } from "../../data/product";
 import * as productService from "../../service/productService";
 import Button from "../../components/Button/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Card from "../../components/Card/Card";
+import { addPriceRange, addProductFilter } from "../../redux/slice/globalSlice";
+import { selectProductFilter } from "../../redux/selector";
+import { useDispatch, useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 function Product() {
+    const dispatch = useDispatch();
     const [categorys, setCategorys] = useState([]);
     const [showPageGroup, setShowPageGroup] = useState([]);
     const [sidebarChose, setSidebarChose] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
     const [products, setProducts] = useState([]);
+    const productFilterId = useSelector(selectProductFilter);
 
     const getCategory = async () => {
         const res = await categoryService.getCategoryClient();
-        setCategorys([...res.data, ...sidebar3]);
+        setCategorys([...res.data, ...sidebar2]);
     };
 
     const onSidebarClick = (index) => {
@@ -32,11 +37,17 @@ function Product() {
         }
     };
 
-    const onSidebarChoseClick = (value) => {
+    const onSidebarChoseClick = (value, item) => {
         if (!sidebarChose.includes(value)) {
             setSidebarChose([...sidebarChose, value]);
         } else {
             setSidebarChose(sidebarChose.filter((item) => item !== value));
+        }
+
+        if (item.from && item.to) {
+            dispatch(addPriceRange(item));
+        } else {
+            dispatch(addProductFilter(item));
         }
     };
 
@@ -50,6 +61,17 @@ function Product() {
         }
         setShowSidebar(!showSidebar);
     };
+
+    const productFilterFunc = async () => {
+        const resProductFilter = await productService.getProductFilter({
+            productFilterId,
+        });
+        setProducts(resProductFilter.data);
+    };
+
+    useEffect(() => {
+        productFilterFunc();
+    }, [productFilterId]);
 
     const getProduct = async () => {
         const productRes = await productService.getProduct({ limit: 8 });
@@ -128,7 +150,7 @@ function Product() {
                             />
                         </Button>
                         <Button className={cx("filter-btn")}>
-                            120 Sản phẩm
+                            {`${products.length} Sản Phẩm`}
                         </Button>
                     </div>
                     {/* Sidebar all */}
@@ -161,9 +183,16 @@ function Product() {
                                                             ),
                                                         }
                                                     )}
+                                                    // onTouchStart={() =>
+                                                    //     onSidebarChoseClick(
+                                                    //         item.category_title,
+                                                    //         item
+                                                    //     )
+                                                    // }
                                                     onClick={() =>
                                                         onSidebarChoseClick(
-                                                            item.category_title
+                                                            item.category_title,
+                                                            item
                                                         )
                                                     }
                                                 >
@@ -196,18 +225,19 @@ function Product() {
                         <img src={imageProduct} alt="" />
                     </div>
 
-                    <div className={cx("row gx-0", "list-product")}>
-                        {products.map((product, index) => (
-                            <Card
-                                key={product.id}
-                                data={product}
-                                //onClick={() => onCardClick(product.id)}
-                                className={cx(
-                                    "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",
-                                    "card-item"
-                                )}
-                            ></Card>
-                        ))}
+                    <div className={cx("product")}>
+                        <div className={cx("row gx-0", "list-product")}>
+                            {products.map((product, index) => (
+                                <Card
+                                    key={product.id}
+                                    data={product}
+                                    className={cx(
+                                        "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",
+                                        "card-item"
+                                    )}
+                                ></Card>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
