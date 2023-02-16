@@ -11,7 +11,10 @@ import Button from "../../components/Button/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Card from "../../components/Card/Card";
 import { addPriceRange, addProductFilter } from "../../redux/slice/globalSlice";
-import { selectProductFilter } from "../../redux/selector";
+import {
+    selectProductFilter,
+    selectProductFilterAll,
+} from "../../redux/selector";
 import { useDispatch, useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
@@ -19,10 +22,10 @@ function Product() {
     const dispatch = useDispatch();
     const [categorys, setCategorys] = useState([]);
     const [showPageGroup, setShowPageGroup] = useState([]);
-    const [sidebarChose, setSidebarChose] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
     const [products, setProducts] = useState([]);
     const productFilterId = useSelector(selectProductFilter);
+    const productFilterAll = useSelector(selectProductFilterAll);
 
     const getCategory = async () => {
         const res = await categoryService.getCategoryClient();
@@ -37,13 +40,7 @@ function Product() {
         }
     };
 
-    const onSidebarChoseClick = (value, item) => {
-        if (!sidebarChose.includes(value)) {
-            setSidebarChose([...sidebarChose, value]);
-        } else {
-            setSidebarChose(sidebarChose.filter((item) => item !== value));
-        }
-
+    const onSidebarChoseClick = (item) => {
         if (item.from && item.to) {
             dispatch(addPriceRange(item));
         } else {
@@ -69,19 +66,19 @@ function Product() {
         setProducts(resProductFilter.data);
     };
 
-    useEffect(() => {
-        productFilterFunc();
-    }, [productFilterId]);
-
     const getProduct = async () => {
-        const productRes = await productService.getProduct({ limit: 8 });
-        setProducts(productRes.data);
+        // const productRes = await productService.getProduct({ limit: 8 });
+        // setProducts(productRes.data);
     };
 
     useEffect(() => {
         getCategory();
         getProduct();
     }, []);
+
+    useEffect(() => {
+        productFilterFunc();
+    }, [productFilterId]);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -107,23 +104,21 @@ function Product() {
                         <ul className={cx("sidebar-group", "group-1")}>
                             {sidebar1.map((item, index) => (
                                 <li
-                                    key={index}
+                                    key={item.id}
                                     className={cx(
                                         "sidebar-item",
                                         "item-header",
                                         {
                                             "active-header":
-                                                sidebarChose.includes(
-                                                    item.title
+                                                productFilterAll.includes(
+                                                    item.id
                                                 ),
                                         }
                                     )}
-                                    onClick={() =>
-                                        onSidebarChoseClick(item.title)
-                                    }
+                                    onClick={() => onSidebarChoseClick(item.id)}
                                 >
                                     {item.title}
-                                    {sidebarChose.includes(item.title) && (
+                                    {productFilterAll.includes(item.id) && (
                                         <CloseIcon
                                             className={cx(
                                                 "d-none d-lg-block",
@@ -161,6 +156,7 @@ function Product() {
                     >
                         {categorys.map((category, index) => (
                             <PanelGroup
+                                key={index}
                                 className={cx("sidebar")}
                                 header={category.category_group_title}
                                 show={showPageGroup.includes(index)}
@@ -171,43 +167,29 @@ function Product() {
                                     key={category.id}
                                 >
                                     {category.category_group_client.map(
-                                        (item) => (
-                                            <>
-                                                <li
-                                                    key={item.id}
-                                                    className={cx(
-                                                        "sidebar-item",
-                                                        {
-                                                            active: sidebarChose.includes(
-                                                                item.category_title
-                                                            ),
-                                                        }
-                                                    )}
-                                                    // onTouchStart={() =>
-                                                    //     onSidebarChoseClick(
-                                                    //         item.category_title,
-                                                    //         item
-                                                    //     )
-                                                    // }
-                                                    onClick={() =>
-                                                        onSidebarChoseClick(
-                                                            item.category_title,
-                                                            item
-                                                        )
-                                                    }
-                                                >
-                                                    {item.category_title}
-                                                    {sidebarChose.includes(
-                                                        item.category_title
-                                                    ) && (
-                                                        <CloseIcon
-                                                            className={cx(
-                                                                "icon-sidebar"
-                                                            )}
-                                                        />
-                                                    )}
-                                                </li>
-                                            </>
+                                        (item, index) => (
+                                            <li
+                                                key={index}
+                                                className={cx("sidebar-item", {
+                                                    active: productFilterAll.includes(
+                                                        item.id
+                                                    ),
+                                                })}
+                                                onClick={() =>
+                                                    onSidebarChoseClick(item)
+                                                }
+                                            >
+                                                {item.category_title}
+                                                {productFilterAll.includes(
+                                                    item.id
+                                                ) && (
+                                                    <CloseIcon
+                                                        className={cx(
+                                                            "icon-sidebar"
+                                                        )}
+                                                    />
+                                                )}
+                                            </li>
                                         )
                                     )}
                                 </ul>
@@ -229,7 +211,7 @@ function Product() {
                         <div className={cx("row gx-0", "list-product")}>
                             {products.map((product, index) => (
                                 <Card
-                                    key={product.id}
+                                    key={index}
                                     data={product}
                                     className={cx(
                                         "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",

@@ -48,3 +48,9 @@
     font-weight: 500;
 }
 
+.breadcrumb > ul > li:not(:nth-last-child(1)) {
+    cursor: pointer;
+}
+
+
+

@@ -475,16 +475,6 @@ function Navbar() {
                         />
                     </div>
                 </div>
-
-                {/* <div
-                    onClick={handleShowMenu}
-                    className={cx(
-                        "d-block d-lg-none d-flex justify-content-center",
-                        "col-2 col-md-2 col-sm-2"
-                    )}
-                >
-                    <MenuIcon className={cx("menu-icon")} />
-                </div> */}
                 <div
                     onClick={handleShowMenu}
                     className={cx(

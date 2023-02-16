@@ -74,6 +74,7 @@ const productSlice = createSlice({
                             quantity:
                                 product.quantity + action.payload.quantity,
                             size: action.payload.size,
+                            color: action.payload?.color || "",
                         };
                     } else {
                         return product;
@@ -113,6 +114,7 @@ const productSlice = createSlice({
                             quantity:
                                 product.quantity + action.payload.quantity,
                             size: action.payload.size,
+                            color: action.payload.color,
                         };
                     } else {
                         return product;

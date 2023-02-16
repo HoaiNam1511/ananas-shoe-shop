@@ -50,6 +50,7 @@ function ProductDetail() {
     const [selectGrid, setSelectGrid] = useState({
         size: sizeList[0],
         quantity: quantityList[0],
+        color: colors[0].color,
     });
 
     const getNewProducts = async () => {
@@ -95,6 +96,7 @@ function ProductDetail() {
             ...obj,
             size: selectGrid.size,
             quantity: selectGrid.quantity,
+            color: selectGrid.color,
             update: false,
         };
         dispatch(addCart(newObj));
@@ -104,10 +106,18 @@ function ProductDetail() {
         setSelectGrid({ ...selectGrid, [name]: value });
     };
 
+    const handleColorChange = (value) => {
+        console.log("come");
+        console.log(value);
+        setSelectGrid({ ...selectGrid, color: value });
+    };
+
     function NewlineText(props) {
         const text = props.text;
         return text.split("\n").map((str, index) => <p key={index}>{str}</p>);
     }
+
+    console.log(selectGrid);
 
     return (
         <div id="wrapper" className={cx("container-fluid gx-0", "wrapper")}>
@@ -145,11 +155,17 @@ function ProductDetail() {
                     </h3>
                     <div className={cx("line-dashed")}></div>
                     <div className={cx("color")}>
-                        {colors.map((color, index) => (
+                        {colors.map((colorItem, index) => (
                             <span
                                 key={index}
-                                style={{ backgroundColor: color }}
-                                className={cx("color-item")}
+                                style={{ backgroundColor: colorItem.color }}
+                                className={cx("color-item", {
+                                    "color-active":
+                                        selectGrid.color === colorItem.color,
+                                })}
+                                onClick={() =>
+                                    handleColorChange(colorItem.color)
+                                }
                             ></span>
                         ))}
                     </div>
@@ -319,20 +335,27 @@ function ProductDetail() {
                     </div>
                 </div>
 
-                <Slick className={cx("slick")}>
-                    {products.map((product) => (
-                        <div
-                            key={product.id}
-                            ref={refItemSlick}
-                            className={cx(
-                                "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4",
-                                "slick-item"
-                            )}
-                        >
-                            <Card data={product} cardSlick></Card>
-                        </div>
-                    ))}
-                </Slick>
+                <section>
+                    <div className={cx("section-title")}>
+                        <h2>
+                            <span>SẢN PHẨM MỚI</span>
+                        </h2>
+                    </div>
+                    <Slick className={cx("slick")}>
+                        {products.map((product) => (
+                            <div
+                                key={product.id}
+                                ref={refItemSlick}
+                                className={cx(
+                                    "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4",
+                                    "slick-item"
+                                )}
+                            >
+                                <Card data={product} cardSlick></Card>
+                            </div>
+                        ))}
+                    </Slick>
+                </section>
             </div>
         </div>
     );

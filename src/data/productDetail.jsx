@@ -30,4 +30,8 @@ export const service = [
 
 export const sizeList = [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 export const quantityList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-export const colors = ["#8a7f53", "#c66e33", "#5f4c40"];
+export const colors = [
+    { value: 1, color: "#8a7f53" },
+    { value: 2, color: "#c66e33" },
+    { value: 3, color: "#5f4c40" },
+];

@@ -25,15 +25,21 @@ function Cart({ className, data, cardSlick = false }) {
         size: sizeList[0],
         quantity: quantityList[0],
     });
+
     const handleCardClick = (id) => {
         dispatch(addProductId(id));
-        dispatch(
-            addBreadCrumb([
-                "Trang chủ",
-                data.categorys_title.line_title,
-                data.product_name,
-            ])
-        );
+        const breadcrumbList = [
+            { title: "Trang chủ", to: config.routes.home },
+            {
+                title: data.categorys_title.line_title,
+                to: config.routes.product,
+                fk_category_line_id: data.fk_category_line_id,
+            },
+            {
+                title: data.product_name,
+            },
+        ];
+        dispatch(addBreadCrumb(breadcrumbList));
         navigate(config.routes.productDetail);
     };
 

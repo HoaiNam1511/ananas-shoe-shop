@@ -10,6 +10,7 @@ import { cartSlide } from "../../data/cart";
 import { codeDiscount } from "../../data/cart";
 import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
 import { deleteAllCart } from "../../redux/slice/productSlice";
+import { addTotalBill } from "../../redux/slice/globalSlice";
 import { useNavigate } from "react-router-dom";
 import config from "../../config";
 
@@ -21,21 +22,21 @@ function Cart() {
     const cartList = useSelector(selectCart);
     const [code, setCode] = useState("");
     const [totalProduct, setTotalProduct] = useState({
-        sumPrice: 0,
+        totalBill: 0,
         totalDiscount: 0,
-        totalPrice: 0,
+        totalPay: 0,
     });
-    const { sumPrice, totalPrice, totalDiscount } = totalProduct;
+    const { totalBill, totalPay, totalDiscount } = totalProduct;
 
     const handleCheckCodeDiscount = () => {
         codeDiscount.map((codeDiscount, index) => {
             if (code === codeDiscount) {
-                const discount = (sumPrice / 100) * ((index + 1) * 10);
-                const total = sumPrice - discount;
+                const discount = (totalBill / 100) * ((index + 1) * 10);
+                const total = totalBill - discount;
                 setTotalProduct((pre) => ({
                     ...pre,
                     totalDiscount: discount,
-                    totalPrice: total,
+                    totalPay: total,
                 }));
             }
         });
@@ -50,10 +51,15 @@ function Cart() {
 
         setTotalProduct((pre) => ({
             ...pre,
-            sumPrice: price,
-            totalPrice: price,
+            totalBill: price,
+            totalPay: price,
         }));
     }, [cartList]);
+
+    const onPayClick = () => {
+        dispatch(addTotalBill(totalProduct));
+        navigate(config.routes.order);
+    };
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -86,9 +92,7 @@ function Cart() {
                                 </div>
                             ))}
                         </Slick>
-                        <div className={cx("cart-title-1")}>
-                            <span>Giỏ hàng</span>
-                        </div>
+                        <div className={cx("cart-title-1")}>Giỏ hàng</div>
                         {cartList.map((item, index) => (
                             <div key={index}>
                                 <CardStore data={item} typeCart></CardStore>
@@ -159,7 +163,7 @@ function Cart() {
                                 <div className={cx("group-flex")}>
                                     <h3>Đơn hàng</h3>
                                     <h3>
-                                        {sumPrice.toLocaleString("it-IT", {
+                                        {totalBill.toLocaleString("it-IT", {
                                             style: "currency",
                                             currency: "VND",
                                         })}
@@ -182,13 +186,16 @@ function Cart() {
                                 >
                                     <h3>Tạm tính</h3>
                                     <h3>
-                                        {totalPrice.toLocaleString("it-IT", {
+                                        {totalPay.toLocaleString("it-IT", {
                                             style: "currency",
                                             currency: "VND",
                                         })}
                                     </h3>
                                 </div>
-                                <Button className={cx("btn-order")}>
+                                <Button
+                                    className={cx("btn-order")}
+                                    onClick={onPayClick}
+                                >
                                     Tiếp tục thanh toán
                                 </Button>
                             </div>

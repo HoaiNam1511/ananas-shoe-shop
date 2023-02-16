@@ -15,14 +15,17 @@ export const sidebarHeader = [
 
 export const sidebar1 = [
     {
+        id: 1,
         title: "Accessories | Phụ kiện",
         value: "",
     },
     {
+        id: 2,
         title: "Footwear | Lên chân",
         value: "",
     },
     {
+        id: 3,
         title: "Top | Nửa trên",
         value: "",
     },

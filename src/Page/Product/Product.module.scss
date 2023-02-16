@@ -284,7 +284,11 @@
 }
 
 .wrapper .right-content .card-item {
+    margin-bottom: 40px;
     padding: 0 10px;
+    @include media-breakpoint-sm() {
+        margin-bottom: 20px;
+    }
 }
 
 

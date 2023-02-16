@@ -7,6 +7,8 @@ import SearchOrder from "../page/SearchOrder/SearchOrder";
 import Store from "../page/Store/Store";
 import WishList from "../page/WishList/WishList";
 import MainLayout from "../layout/MainLayout/MainLayout";
+import Order from "../page/Order/Order";
+
 export const publicRouter = [
     {
         path: config.routes.home,
@@ -41,6 +43,11 @@ export const publicRouter = [
     {
         path: config.routes.cart,
         component: Cart,
+        layout: MainLayout,
+    },
+    {
+        path: config.routes.order,
+        component: Order,
         layout: MainLayout,
     },
 ];

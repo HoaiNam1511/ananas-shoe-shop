@@ -11,45 +11,58 @@ const globalSlice = createSlice({
             materialId: [],
             priceRange: [],
         },
+        totalBill: {},
     },
     reducers: {
         addProductFilter(state, action) {
-            const addCategoryId = (title) => {
-                if (state.productFilter[title].includes(action.payload.id)) {
-                    state.productFilter[title] = [
-                        ...state.productFilter[title].filter(
-                            (item) => action.payload.id !== item
-                        ),
-                    ];
-                } else {
-                    state.productFilter[title] = [
-                        ...state.productFilter[title],
-                        action.payload.id,
-                    ];
+            if (!action.payload.breadcrumb) {
+                const addCategoryId = (title) => {
+                    if (
+                        state.productFilter[title].includes(action.payload.id)
+                    ) {
+                        state.productFilter[title] = [
+                            ...state.productFilter[title].filter(
+                                (item) => action.payload.id !== item
+                            ),
+                        ];
+                    } else {
+                        state.productFilter[title] = [
+                            ...state.productFilter[title],
+                            action.payload.id,
+                        ];
+                    }
+                };
+
+                switch (action.payload.fk_category_group_id) {
+                    case 1:
+                        addCategoryId("statusId");
+                        break;
+                    case 2:
+                        addCategoryId("styleId");
+                        break;
+                    case 3:
+                        addCategoryId("lineId");
+                        break;
+                    case 4:
+                        addCategoryId("collectionId");
+                        break;
+                    case 5:
+                        addCategoryId("materialId");
+                        break;
+
+                    default:
+                        break;
                 }
-            };
-
-            switch (action.payload.fk_category_group_id) {
-                case 1:
-                    addCategoryId("statusId");
-                    break;
-                case 2:
-                    addCategoryId("styleId");
-                    break;
-                case 3:
-                    addCategoryId("lineId");
-                    break;
-                case 4:
-                    addCategoryId("collectionId");
-                    break;
-                case 5:
-                    addCategoryId("materialId");
-                    break;
-
-                default:
-                    break;
+            } else {
+                state.productFilter.statusId = [];
+                state.productFilter.styleId = [];
+                state.productFilter.collectionId = [];
+                state.productFilter.materialId = [];
+                state.productFilter.priceRange = [];
+                state.productFilter.lineId = [action.payload.id];
             }
         },
+
         addPriceRange(state, action) {
             if (
                 state.productFilter.priceRange.find(
@@ -67,9 +80,14 @@ const globalSlice = createSlice({
                 ];
             }
         },
+
+        addTotalBill(state, action) {
+            state.totalBill = action.payload;
+        },
     },
 });
 //Export action
-export const { addProductFilter, addPriceRange } = globalSlice.actions;
+export const { addProductFilter, addPriceRange, addTotalBill } =
+    globalSlice.actions;
 
 export default globalSlice;
