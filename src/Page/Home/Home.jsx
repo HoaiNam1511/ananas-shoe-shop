@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
 import * as productService from "../../service/productService";
 import Card from "../../components/Card/Card";
 import classNames from "classnames/bind";
 import SlideImage from "../../components/SlideImage/SlideImage";
 import styles from "./Home.module.scss";
-
-import { selectWishList } from "../../redux/selector";
-import { useSelector } from "react-redux";
 
 import { slideImagesData } from "../../data/home";
 

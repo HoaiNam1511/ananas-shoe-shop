@@ -1,13 +1,14 @@
-import config from "../../config";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import classNames from "classnames/bind";
+
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import styles from "./WishList.module.scss";
 import CardStore from "../../components/CardStore/CardStore";
-import { selectWishList } from "../../redux/selector";
-import { useEffect } from "react";
-import { addBreadCrumb } from "../../redux/slice/productSlice";
 import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
+
+import { selectWishList } from "../../redux/selector";
+import { addBreadCrumb } from "../../redux/slice/productSlice";
 
 const cx = classNames.bind(styles);
 function WishList() {

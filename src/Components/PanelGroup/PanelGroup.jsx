@@ -1,6 +1,8 @@
-import styles from "./PanelGroup.module.scss";
 import classNames from "classnames/bind";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import styles from "./PanelGroup.module.scss";
 
 const cx = classNames.bind(styles);
 

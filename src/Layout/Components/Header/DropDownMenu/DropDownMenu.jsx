@@ -1,7 +1,8 @@
-import classNames from "classnames/bind";
-import styles from "./DropDownMenu.module.scss";
-import { Link } from "react-router-dom";
 import { memo } from "react";
+import { Link } from "react-router-dom";
+import classNames from "classnames/bind";
+
+import styles from "./DropDownMenu.module.scss";
 
 const cx = classNames.bind(styles);
 function DropDownMenu({ className, menu1, menu2, data = [] }) {

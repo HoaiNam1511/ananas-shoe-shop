@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
@@ -11,7 +12,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import shopImg from "../../../asset/images/footer/Store.svg";
 import brandImg from "../../../asset/images/footer/Logo_Ananas_Footer.svg";
 import licenseImg from "../../../asset/images/footer/icon_bocongthuong.png";
-import { useState } from "react";
 
 const cx = classNames.bind(styles);
 function Footer() {

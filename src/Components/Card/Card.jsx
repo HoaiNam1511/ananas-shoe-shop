@@ -1,18 +1,19 @@
-import styles from "./Card.module.scss";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+import styles from "./Card.module.scss";
 import config from "../../config/";
 import Button from "../Button/Button";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
     addProductId,
     addWishList,
     addBreadCrumb,
 } from "../../redux/slice/productSlice";
-
 import { selectWishList } from "../../redux/selector";
 import { sizeList, quantityList } from "../../data/productDetail";
 
@@ -20,14 +21,17 @@ const cx = classNames.bind(styles);
 function Cart({ className, data, cardSlick = false }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    //Get wishlist for the heart icon
     const wishList = useSelector(selectWishList);
     const [selectGrid, setSelectGrid] = useState({
         size: sizeList[0],
         quantity: quantityList[0],
     });
-
+    //Handle card click
     const handleCardClick = (id) => {
+        //Dispatch id product
         dispatch(addProductId(id));
+        //Dispatch breadcrumb data
         const breadcrumbList = [
             { title: "Trang chủ", to: config.routes.home },
             {
@@ -40,9 +44,11 @@ function Cart({ className, data, cardSlick = false }) {
             },
         ];
         dispatch(addBreadCrumb(breadcrumbList));
+        //Navigator to the detail
         navigate(config.routes.productDetail);
     };
 
+    //Handle when favorite icon click
     const handleAddWishList = (product) => {
         const obj = Object.preventExtensions(product);
         const newObj = {

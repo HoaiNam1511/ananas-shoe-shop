@@ -1,15 +1,19 @@
-import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import PanelGroup from "../../components/PanelGroup/PanelGroup";
-import styles from "./Product.module.scss";
-import * as categoryService from "../../service/categoryService";
-import imageProduct from "../../asset/images/global/desktop_productlist.jpg";
+import classNames from "classnames/bind";
+
 import CloseIcon from "@mui/icons-material/Close";
-import { sidebarHeader, sidebar1, sidebar2 } from "../../data/product";
-import * as productService from "../../service/productService";
-import Button from "../../components/Button/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import * as categoryService from "../../service/categoryService";
+import * as productService from "../../service/productService";
+
+import imageProduct from "../../asset/images/global/desktop_productlist.jpg";
+import PanelGroup from "../../components/PanelGroup/PanelGroup";
+import Button from "../../components/Button/Button";
+import styles from "./Product.module.scss";
 import Card from "../../components/Card/Card";
+
+import { sidebarHeader, sidebar1, sidebar2 } from "../../data/product";
 import { addPriceRange, addProductFilter } from "../../redux/slice/globalSlice";
 import {
     selectProductFilter,
@@ -27,11 +31,13 @@ function Product() {
     const productFilterId = useSelector(selectProductFilter);
     const productFilterAll = useSelector(selectProductFilterAll);
 
+    //Get category
     const getCategory = async () => {
         const res = await categoryService.getCategoryClient();
         setCategorys([...res.data, ...sidebar2]);
     };
 
+    //Handle show/hide sidebar
     const onSidebarClick = (index) => {
         if (!showPageGroup.includes(index)) {
             setShowPageGroup([...showPageGroup, index]);
@@ -40,6 +46,7 @@ function Product() {
         }
     };
 
+    //Handle sidebar chose
     const onSidebarChoseClick = (item) => {
         if (item.from && item.to) {
             dispatch(addPriceRange(item));
@@ -48,6 +55,7 @@ function Product() {
         }
     };
 
+    //Button filter mobile click
     const onBtnFilterClick = () => {
         if (showSidebar) {
             document.body.style.overflow = "auto";
@@ -59,6 +67,7 @@ function Product() {
         setShowSidebar(!showSidebar);
     };
 
+    //Handle get product filter
     const productFilterFunc = async () => {
         const resProductFilter = await productService.getProductFilter({
             productFilterId,
@@ -74,7 +83,6 @@ function Product() {
         productFilterFunc();
     }, [productFilterId]);
 
-    console.log(sidebar2);
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
             <div className={cx("row gx-0", "content")}>

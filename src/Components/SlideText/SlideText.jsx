@@ -14,6 +14,7 @@ function SlideNew({ children, className }) {
     const timeoutRef = useRef();
 
     const handleChangeSlick = (value = nextValue) => {
+        //Handle previous click
         if (value === preValue) {
             //If current position is first will change to last position
             currentPosition === 0

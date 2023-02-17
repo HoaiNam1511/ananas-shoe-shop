@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
-import styles from "./Header.module.scss";
 
+import styles from "./Header.module.scss";
 import Menu from "./Menu/Menu";
 import Navbar from "./Navbar/Navbar";
 import SlideNew from "../../../components/SlideText/SlideText";

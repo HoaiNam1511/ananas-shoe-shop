@@ -1,19 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./Breadcrumb.module.scss";
 import classNames from "classnames/bind";
+
+import styles from "./Breadcrumb.module.scss";
 import { selectBreadCrumb } from "../../redux/selector";
 import { addProductFilter } from "../../redux/slice/globalSlice";
-import { useNavigate } from "react-router-dom";
-import config from "../../config";
 
 const cx = classNames.bind(styles);
 function Breadcrumb({ className, children }) {
     const dispatch = useDispatch();
     const navigator = useNavigate();
+    //Get breadcrumb from redux
     const breadcrumb = useSelector(selectBreadCrumb);
 
+    //Handle breadcrumb when click
     const onBreadcrumbClick = (item) => {
         if (item?.to) {
+            //If have category_line_id will navigator to product with line id
             if (item?.fk_category_line_id) {
                 dispatch(
                     addProductFilter({

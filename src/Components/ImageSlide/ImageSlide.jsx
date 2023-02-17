@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
-import styles from "./ImageSlide.module.scss";
+import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import classNames from "classnames/bind";
+
 import config from "../../config";
+import Slick from "../Slick/Slick";
+import styles from "./ImageSlide.module.scss";
 
 import { selectProductDetail } from "../../redux/selector";
-import { useSelector } from "react-redux";
-import Slick from "../Slick/Slick";
 
 const cx = classNames.bind(styles);
 function ImageSlide({ className }) {
@@ -13,12 +14,14 @@ function ImageSlide({ className }) {
     const productDetail = useSelector(selectProductDetail);
     const [imageCurrent, setImageCurrent] = useState();
 
+    //Set main image
     useEffect(() => {
         if (productDetail.product_images?.length > 0) {
             setImageCurrent(productDetail?.product_images[0]?.image);
         }
     }, [productDetail]);
-    //Image current change
+
+    //Set image current when click image
     const onImageClick = (image) => {
         setImageCurrent(image);
     };

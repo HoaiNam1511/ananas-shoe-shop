@@ -1,14 +1,14 @@
-import { useEffect, useState, useRef } from "react";
-import { selectProductDetail } from "../../redux/selector";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styles from "./Slick.module.scss";
 import classNames from "classnames/bind";
 
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const cx = classNames.bind(styles);
+import { selectProductDetail } from "../../redux/selector";
+import styles from "./Slick.module.scss";
 
+const cx = classNames.bind(styles);
 function Slick({ className, children = [], itemShow }) {
     const previous = "pre";
     const next = "next";
@@ -37,8 +37,10 @@ function Slick({ className, children = [], itemShow }) {
         currentImageSize = children[0]?.ref.current.offsetWidth;
 
         if (itemShow) {
+            //Quantity slick item show
             itemSlickShowValue = itemShow;
         } else {
+            //Default slick item show
             if (window.innerWidth >= 576 && window.innerWidth < 768) {
                 itemSlickShowValue = 3;
             } else if (window.innerWidth < 576) {
@@ -58,8 +60,11 @@ function Slick({ className, children = [], itemShow }) {
         });
     };
 
+    //Handle when button slick click
     const onArrowBtnClick = (navigationValue) => {
+        //Handle previous click
         if (navigationValue === previous && currentPosition > 0) {
+            //If the currentPosition >= itemSlickWidth * itemSlickShow: currentPosition = translate previous 100%
             if (currentPosition >= itemSlickWidth * itemSlickShow) {
                 setItemSlickChange((pre) => ({
                     ...pre,
@@ -67,21 +72,29 @@ function Slick({ className, children = [], itemShow }) {
                         pre.currentPosition - itemSlickWidth * itemSlickShow,
                     currentIndex: pre.currentIndex - 1,
                 }));
-            } else {
+            }
+            //If the currentPosition < itemSlickWidth * itemSlickShow: translate previous = translate previous widthItem *
+            else {
                 setItemSlickChange((pre) => ({
                     ...pre,
                     currentPosition:
-                        pre.currentPosition + totalFloat * -itemSlickWidth,
+                        //pre.currentPosition + totalFloat * -itemSlickWidth,
+                        pre.currentPosition - totalFloat * itemSlickWidth,
                 }));
             }
-        } else if (navigationValue === next && currentPosition < maxSlick) {
+        }
+        //Handle next click
+        else if (navigationValue === next && currentPosition < maxSlick) {
+            //If currentIndex === totalInt: translation = totalFloat * itemSlickWidth
             if (currentIndex === totalInt) {
                 setItemSlickChange((pre) => ({
                     ...pre,
                     currentPosition:
                         pre.currentPosition + totalFloat * itemSlickWidth,
                 }));
-            } else {
+            }
+            //If currentIndex < totalInt: translation = itemSlickWidth * itemSlickShow
+            else {
                 setItemSlickChange((pre) => ({
                     ...pre,
                     currentPosition:
@@ -98,6 +111,7 @@ function Slick({ className, children = [], itemShow }) {
         detectResize();
     }, [productDetail, children]);
 
+    //Handle resize: responsive
     useEffect(() => {
         window.addEventListener("resize", detectResize);
         return () => {

@@ -9,23 +9,24 @@ import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import Button from "../../components/Button/Button";
+import ImageSlide from "../../components/ImageSlide/ImageSlide";
+import Slick from "../../components/Slick/Slick";
+import Card from "../../components/Card/Card";
+import SelectGrid from "../../components/SelectGrid/SelectGrid";
+import PanelGroup from "../../components/PanelGroup/PanelGroup";
+import imageSize from "../../asset/images/global/Size-chart-1-e1559209680920.jpg";
 
 import {
     selectProductId,
     selectProductDetail,
     selectWishList,
-    selectCart,
 } from "../../redux/selector";
-import ImageSlide from "../../components/ImageSlide/ImageSlide";
 
 import {
     addCart,
     addProductDetail,
     addWishList,
 } from "../../redux/slice/productSlice";
-import SelectGrid from "../../components/SelectGrid/SelectGrid";
-import PanelGroup from "../../components/PanelGroup/PanelGroup";
-import imageSize from "../../asset/images/global/Size-chart-1-e1559209680920.jpg";
 import {
     policy,
     service,
@@ -33,8 +34,6 @@ import {
     quantityList,
     sizeList,
 } from "../../data/productDetail";
-import Slick from "../../components/Slick/Slick";
-import Card from "../../components/Card/Card";
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
@@ -43,8 +42,6 @@ function ProductDetail() {
     const productId = useSelector(selectProductId);
     const wishList = useSelector(selectWishList);
     const productDetail = useSelector(selectProductDetail);
-    //const [productDetail, setProductDetail] = useState({});
-
     const [showPanel, setShowPanel] = useState();
     const [products, setProducts] = useState([]);
     const [selectGrid, setSelectGrid] = useState({
@@ -53,24 +50,18 @@ function ProductDetail() {
         color: colors[0].color,
     });
 
+    //Product slide
     const getNewProducts = async () => {
         const productRes = await productService.getProduct({ limit: 8 });
         setProducts(productRes.data);
     };
 
+    //Handle get info product detail
     const getProductDetail = async () => {
         const productRes = await productService.getProductDetail({ productId });
         //setProductDetail(productRes?.data[0]);
         dispatch(addProductDetail(productRes?.data[0]));
     };
-
-    useEffect(() => {
-        getNewProducts();
-    }, []);
-
-    useEffect(() => {
-        getProductDetail();
-    }, [productId]);
 
     const handleShowPanel = (value) => {
         if (showPanel === value) {
@@ -117,7 +108,13 @@ function ProductDetail() {
         return text.split("\n").map((str, index) => <p key={index}>{str}</p>);
     }
 
-    console.log(selectGrid);
+    useEffect(() => {
+        getNewProducts();
+    }, []);
+
+    useEffect(() => {
+        getProductDetail();
+    }, [productId]);
 
     return (
         <div id="wrapper" className={cx("container-fluid gx-0", "wrapper")}>

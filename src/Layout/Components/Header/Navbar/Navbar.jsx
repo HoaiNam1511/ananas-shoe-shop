@@ -34,6 +34,7 @@ function Navbar() {
     const [categorys, setCategorys] = useState([]);
     const [searchKey, setSearchKey] = useState("");
 
+    //Get category for navbar
     const getCategory = async () => {
         try {
             const res = await categoryService.getCategory();
@@ -225,7 +226,9 @@ function Navbar() {
         },
     ];
 
+    //History is the all menu
     const [history, setHistory] = useState([{ title: "", data: navList }]);
+    //Current menu
     const currentMenu = history[history.length - 1];
 
     const onMenuClick = () => {
@@ -263,13 +266,17 @@ function Navbar() {
         }
     };
 
+    //Handle back menu
     const handleBackMenu = () => {
+        //Slice menu
         setHistory((preHistory) => preHistory.slice(0, preHistory.length - 1));
+        //Slice header menu
         setHeaderTitle((preHeaderTitle) =>
             preHeaderTitle.slice(0, preHeaderTitle.length - 1)
         );
     };
 
+    //Handle search
     const onSearchClick = () => {
         dispatch(addSearch(searchKey));
         navigate(config.routes.search);

@@ -12,6 +12,7 @@ function SlideImage({ children, className, timeSlide }) {
     const nextValue = "next";
     const previousValue = "pre";
 
+    //Handle when click dots slide
     const handleSelectCurrentSlide = (index) => {
         setCurrentSlide(index);
     };
@@ -22,6 +23,7 @@ function SlideImage({ children, className, timeSlide }) {
         }
     };
 
+    //Handle timer image slide
     useEffect(() => {
         resetTimeout();
         timeoutRef.current = setTimeout(
@@ -78,6 +80,7 @@ function SlideImage({ children, className, timeSlide }) {
                 >
                     <KeyboardArrowRightIcon className={cx("arrow-icon")} />
                 </button>
+
                 <div className={cx("slick-dots")}>
                     {children.map((slide, index) => (
                         <button

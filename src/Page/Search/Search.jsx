@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import classNames from "classnames/bind";
-import styles from "./Search.module.scss";
+
 import * as productService from "../../service/productService";
+
+import config from "../../config";
+import styles from "./Search.module.scss";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
-import config from "../../config";
-import { useSelector } from "react-redux";
 import { selectSearchKey } from "../../redux/selector";
 
 const cx = classNames.bind(styles);
 function Search() {
-    const [products, setProducts] = useState([]);
     const navigate = useNavigate();
     const search = useSelector(selectSearchKey);
+    const [products, setProducts] = useState([]);
+
     const getNewProducts = async () => {
         const productRes = await productService.getProductFind({
             search,

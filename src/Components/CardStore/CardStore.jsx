@@ -1,12 +1,18 @@
-import styles from "./CardStore.module.scss";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import styles from "./CardStore.module.scss";
 import config from "../../config/";
 import SelectGrid from "../SelectGrid/SelectGrid";
 import Button from "../Button/Button";
 import iconCartButton from "../../asset/images/global/cart_ana.png";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useNavigate } from "react-router-dom";
+
 import {
     addWishList,
     addProductId,
@@ -17,13 +23,7 @@ import {
     updateCart,
     updateWishList,
 } from "../../redux/slice/productSlice";
-
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
-import { useDispatch, useSelector } from "react-redux";
 import { selectWishList } from "../../redux/selector";
-
 import { quantityList, sizeList } from "../../data/productDetail";
 
 const cx = classNames.bind(styles);
@@ -38,6 +38,7 @@ function CardStore({ data, limit, typeCart, className }) {
     const typeAddCart = "add";
     const typeAddWishList = "wishlist";
 
+    //Navigator to the detail when card click
     const handleCardClick = (id) => {
         dispatch(
             addBreadCrumb([
@@ -50,16 +51,20 @@ function CardStore({ data, limit, typeCart, className }) {
         navigate(config.routes.productDetail);
     };
 
+    //Handle add size and quantity
     const handleAddSizeQuantity = ({ name, value }) => {
         const obj = Object.preventExtensions(data);
         let newObj;
+        //If name === "" -> DropdownGrid not change -> will add initial size and quantity
         if (name === "") {
             newObj = {
                 ...obj,
                 size: selectGrid.size,
                 quantity: selectGrid.quantity,
             };
-        } else {
+        }
+        //If name !== "" -> DropdownGrid is change -> set the value change
+        else {
             newObj = {
                 ...obj,
                 [name]: value,
@@ -69,9 +74,11 @@ function CardStore({ data, limit, typeCart, className }) {
         return newObj;
     };
 
+    //Handle add wishlist or product to cart
     const handleAddProduct = (typeProduct) => {
         const name = "";
         const value = "";
+        //If type is cart -> add to cart
         if (typeProduct === typeAddCart) {
             const newObj = handleAddSizeQuantity({ name, value });
             dispatch(addCart(newObj));
@@ -82,6 +89,7 @@ function CardStore({ data, limit, typeCart, className }) {
         }
     };
 
+    //Handle update wishlist or product to cart
     const handleSelectGridChange = (name, value) => {
         setSelectGrid({ ...selectGrid, [name]: value });
         if (typeCart) {
@@ -93,6 +101,7 @@ function CardStore({ data, limit, typeCart, className }) {
         }
     };
 
+    //Handle delete product
     const handleDeleteProduct = (product) => {
         if (typeCart) {
             dispatch(deleteCart(product));

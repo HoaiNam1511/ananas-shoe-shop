@@ -24,51 +24,11 @@ function Order() {
         customerAddress: "",
     });
 
-    const [location, setLocation] = useState({
+    const [address, setAddress] = useState({
         provinces: [],
         districts: [],
         wards: [],
     });
-
-    const getLocation = async () => {
-        const resLocal = await globalService.getLocation();
-        setLocation((prevLocation) => ({
-            ...prevLocation,
-            provinces: resLocal.data,
-        }));
-    };
-
-    const onSelectChange = (e) => {
-        const address = e.target.name;
-        const filterLocal = location[address].find(
-            (local) => local.codename === e.target.value
-        );
-        //Set districts
-        if (address === "provinces") {
-            setLocation((prevLocation) => ({
-                ...prevLocation,
-                districts: filterLocal.districts,
-                wards: [],
-            }));
-            //Set set wards
-        } else if (address === "districts") {
-            console.log(filterLocal);
-            setLocation((prevLocation) => ({
-                ...prevLocation,
-                wards: filterLocal.wards,
-            }));
-        }
-    };
-
-    useEffect(() => {
-        getLocation();
-    }, []);
-
-    useEffect(() => {
-        setTotalPay(
-            totalBillOrder.totalBill - totalBillOrder.totalDiscount + shiping
-        );
-    }, [carts]);
 
     Validator({
         form: "#customer-info",
@@ -79,6 +39,47 @@ function Order() {
             Validator.isEmail("#customerEmail"),
         ],
     });
+
+    //Get data address
+    const getAddressData = async () => {
+        const resLocal = await globalService.getAddress();
+        setAddress((prevLocation) => ({
+            ...prevLocation,
+            provinces: resLocal.data,
+        }));
+    };
+
+    const onSelectAddressChange = (e) => {
+        const aria = e.target.name;
+        const filterLocal = address[aria].find(
+            (local) => local.codename === e.target.value
+        );
+        //Set districts
+        if (aria === "provinces") {
+            setAddress((prevLocation) => ({
+                ...prevLocation,
+                districts: filterLocal.districts,
+                wards: [],
+            }));
+            //Set set wards
+        } else if (aria === "districts") {
+            console.log(filterLocal);
+            setAddress((prevLocation) => ({
+                ...prevLocation,
+                wards: filterLocal.wards,
+            }));
+        }
+    };
+
+    useEffect(() => {
+        getAddressData();
+    }, []);
+
+    useEffect(() => {
+        setTotalPay(
+            totalBillOrder.totalBill - totalBillOrder.totalDiscount + shiping
+        );
+    }, [carts]);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -116,12 +117,14 @@ function Order() {
                                 <div className={cx("form-group")}>
                                     <select
                                         name="provinces"
-                                        onChange={(e) => onSelectChange(e)}
+                                        onChange={(e) =>
+                                            onSelectAddressChange(e)
+                                        }
                                     >
                                         <option value="">
                                             Tỉnh/ Thành Phố
                                         </option>
-                                        {location.provinces.map((province) => (
+                                        {address.provinces.map((province) => (
                                             <option
                                                 key={province.code}
                                                 value={province.codename}
@@ -137,10 +140,12 @@ function Order() {
                                 <div className={cx("form-group", "flex-item")}>
                                     <select
                                         name="districts"
-                                        onChange={(e) => onSelectChange(e)}
+                                        onChange={(e) =>
+                                            onSelectAddressChange(e)
+                                        }
                                     >
                                         <option value="">Quận/ Huyện</option>
-                                        {location.districts.map((province) => (
+                                        {address.districts.map((province) => (
                                             <option
                                                 key={province.code}
                                                 value={province.codename}
@@ -154,10 +159,12 @@ function Order() {
                                 <div className={cx("form-group", "flex-item")}>
                                     <select
                                         name="wards"
-                                        onChange={(e) => onSelectChange(e)}
+                                        onChange={(e) =>
+                                            onSelectAddressChange(e)
+                                        }
                                     >
                                         <option value="">Phường/ Xã</option>
-                                        {location.wards.map((province) => (
+                                        {address.wards.map((province) => (
                                             <option
                                                 key={province.code}
                                                 value={province.codename}

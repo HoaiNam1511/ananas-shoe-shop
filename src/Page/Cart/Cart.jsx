@@ -1,18 +1,19 @@
-import classNames from "classnames/bind";
-import styles from "./Cart.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCart } from "../../redux/selector";
+import { useNavigate } from "react-router-dom";
+import classNames from "classnames/bind";
+
+import styles from "./Cart.module.scss";
 import CardStore from "../../components/CardStore/CardStore";
 import Slick from "../../components/Slick/Slick";
 import Button from "../../components/Button/Button";
-import { cartSlide } from "../../data/cart";
-import { codeDiscount } from "../../data/cart";
+import config from "../../config";
 import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
+
+import { selectCart } from "../../redux/selector";
+import { cartSlide, codeDiscount } from "../../data/cart";
 import { deleteAllCart } from "../../redux/slice/productSlice";
 import { addTotalBill } from "../../redux/slice/globalSlice";
-import { useNavigate } from "react-router-dom";
-import config from "../../config";
 
 const cx = classNames.bind(styles);
 function Cart() {
@@ -28,6 +29,7 @@ function Cart() {
     });
     const { totalBill, totalPay, totalDiscount } = totalProduct;
 
+    //Handle code discount
     const handleCheckCodeDiscount = () => {
         codeDiscount.map((codeDiscount, index) => {
             if (code === codeDiscount) {
@@ -40,6 +42,12 @@ function Cart() {
                 }));
             }
         });
+    };
+
+    //Handle pay
+    const onPayClick = () => {
+        dispatch(addTotalBill(totalProduct));
+        navigate(config.routes.order);
     };
 
     useEffect(() => {
@@ -55,11 +63,6 @@ function Cart() {
             totalPay: price,
         }));
     }, [cartList]);
-
-    const onPayClick = () => {
-        dispatch(addTotalBill(totalProduct));
-        navigate(config.routes.order);
-    };
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
