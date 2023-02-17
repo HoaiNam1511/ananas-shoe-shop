@@ -7,6 +7,7 @@ export const selectCart = (state) => state.productReducer.cart;
 //Global
 export const selectTotalBill = (state) => state.globalReducer.totalBill;
 export const selectProductFilter = (state) => state.globalReducer.productFilter;
+export const selectSearchKey = (state) => state.globalReducer.searchKey;
 
 export const selectProductFilterAll = (state) => [
     ...state.globalReducer.productFilter.statusId,

@@ -14,3 +14,8 @@ export const getProductFilter = async ({ productFilterId }) => {
     const response = await httpRequest.post("product/filter", productFilterId);
     return response;
 };
+
+export const getProductFind = async ({ search }) => {
+    const response = await httpRequest.get(`product/find?search=${search}`);
+    return response;
+};

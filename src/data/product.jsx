@@ -77,7 +77,8 @@ export const sidebar2 = sidebarData.reduce((acc, item) => {
             acc1.push({ id: ++id, ...item1 });
             return acc1;
         }, []);
-        return { ...item, result };
+
+        return { ...item, category_group_client: result };
     });
     return acc;
 }, []);

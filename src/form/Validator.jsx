@@ -11,8 +11,10 @@ export function Validator(options) {
     //Element form
     const formElement = document.querySelector(options.form);
     //Function when mouse out input
+    //Buoc 3: xu ly moi khi element blur ra ngoai
     function validate(inputElement, rule) {
         const errorMessage = rule.test(inputElement.value);
+        //Tu input quay ve element cha lay warning element theo nhom
         const warningElement = inputElement.parentElement.querySelector(
             options.warningElement
         );
@@ -28,6 +30,7 @@ export function Validator(options) {
     }
 
     if (formElement) {
+        //Buoc 2: Lap cac element va ham test
         options.rules.forEach((rule) => {
             //Element input
             const inputElement = formElement.querySelector(rule.selector);
@@ -41,6 +44,8 @@ export function Validator(options) {
         });
     }
 }
+
+//Buoc 1
 //Empty
 Validator.isRequired = function (selector) {
     return {

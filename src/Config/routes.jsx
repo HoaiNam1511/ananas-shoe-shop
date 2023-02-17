@@ -5,7 +5,8 @@ const routes = {
     wishlist: "/your-wishlist",
     cart: "/your-cart",
     stores: "/stores",
-    searchOrder: "/search-order",
     order: "/order",
+    searchOrder: "/search-order",
+    search: "/search",
 };
 export default routes;

@@ -18,17 +18,21 @@ import menuNuImg from "../../../../asset/images/menu/Menu_Nu.jpg";
 import menuPhuKienImg from "../../../../asset/images/menu/Menu_Phu-kien.jpg";
 import menuSaleImg from "../../../../asset/images/menu/Menu_Sale-off.jpg";
 import Brand from "./Brand/Brand";
+import { useDispatch } from "react-redux";
+import { addSearch } from "../../../../redux/slice/globalSlice";
 
 const cx = classNames.bind(styles);
 function Navbar() {
     let id = 0;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [showDropMenu, setShowDropMenu] = useState({
         mobile: false,
         desktop: false,
     });
     const [headerTitle, setHeaderTitle] = useState([]);
     const [categorys, setCategorys] = useState([]);
+    const [searchKey, setSearchKey] = useState("");
 
     const getCategory = async () => {
         try {
@@ -266,6 +270,11 @@ function Navbar() {
         );
     };
 
+    const onSearchClick = () => {
+        dispatch(addSearch(searchKey));
+        navigate(config.routes.search);
+    };
+
     const detectResize = () => {
         if (window.innerWidth >= 992) {
             setHistory((preHistory) => preHistory.slice(0, 1));
@@ -465,13 +474,15 @@ function Navbar() {
                     )}
                 >
                     <div className={cx("form-control")}>
-                        <div className={cx("icon")}>
+                        <div className={cx("icon")} onClick={onSearchClick}>
                             <SearchIcon className={cx("icon-search")} />
                         </div>
                         <input
                             className={cx("search-input")}
                             type="text"
                             placeholder="Tìm kiếm "
+                            value={searchKey}
+                            onChange={(e) => setSearchKey(e.target.value)}
                         />
                     </div>
                 </div>

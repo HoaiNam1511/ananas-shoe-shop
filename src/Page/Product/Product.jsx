@@ -66,20 +66,15 @@ function Product() {
         setProducts(resProductFilter.data);
     };
 
-    const getProduct = async () => {
-        // const productRes = await productService.getProduct({ limit: 8 });
-        // setProducts(productRes.data);
-    };
-
     useEffect(() => {
         getCategory();
-        getProduct();
     }, []);
 
     useEffect(() => {
         productFilterFunc();
     }, [productFilterId]);
 
+    console.log(sidebar2);
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
             <div className={cx("row gx-0", "content")}>
@@ -159,7 +154,9 @@ function Product() {
                                 key={index}
                                 className={cx("sidebar")}
                                 header={category.category_group_title}
-                                show={showPageGroup.includes(index)}
+                                show={
+                                    showPageGroup.includes(index) ? false : true
+                                }
                                 onClick={() => onSidebarClick(index)}
                             >
                                 <ul

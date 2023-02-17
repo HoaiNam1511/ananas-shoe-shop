@@ -12,6 +12,7 @@ const globalSlice = createSlice({
             priceRange: [],
         },
         totalBill: {},
+        searchKey: "",
     },
     reducers: {
         addProductFilter(state, action) {
@@ -82,12 +83,18 @@ const globalSlice = createSlice({
         },
 
         addTotalBill(state, action) {
+            const objPayload = JSON.stringify(action.payload);
+            sessionStorage.setItem("totalBill", objPayload);
             state.totalBill = action.payload;
+        },
+
+        addSearch(state, action) {
+            state.searchKey = action.payload;
         },
     },
 });
 //Export action
-export const { addProductFilter, addPriceRange, addTotalBill } =
+export const { addProductFilter, addPriceRange, addTotalBill, addSearch } =
     globalSlice.actions;
 
 export default globalSlice;

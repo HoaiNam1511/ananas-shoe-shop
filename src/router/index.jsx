@@ -8,6 +8,7 @@ import Store from "../page/Store/Store";
 import WishList from "../page/WishList/WishList";
 import MainLayout from "../layout/MainLayout/MainLayout";
 import Order from "../page/Order/Order";
+import Search from "../page/Search/Search";
 
 export const publicRouter = [
     {
@@ -48,6 +49,11 @@ export const publicRouter = [
     {
         path: config.routes.order,
         component: Order,
+        layout: MainLayout,
+    },
+    {
+        path: config.routes.search,
+        component: Search,
         layout: MainLayout,
     },
 ];

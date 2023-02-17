@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./Order.module.scss";
 import Button from "../../components/Button/Button";
-import { selectCart, selectTotalBill } from "../../redux/selector";
+import { selectCart } from "../../redux/selector";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { inputGroup } from "../../data/order";
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function Order() {
     const shiping = 60000;
     const carts = useSelector(selectCart);
-    const totalBillOrder = useSelector(selectTotalBill);
+    const totalBillOrder = JSON.parse(sessionStorage.getItem("totalBill"));
     const [totalPay, setTotalPay] = useState(0);
     const [customerInfo, setCustomerInfo] = useState({
         customerName: "",
@@ -321,7 +321,10 @@ function Order() {
                                     {totalPay.toLocaleString()}
                                 </h3>
                             </div>
-                            <Button className={cx("btn-order")}>
+                            <Button
+                                className={cx("btn-order")}
+                                onClick={() => alert("Đặt hàng thành công !")}
+                            >
                                 Hoàn tất đặt hàng
                             </Button>
                         </div>

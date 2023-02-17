@@ -104,14 +104,20 @@ h1 h2 h3 h4 h5 h6 {
 
 .color-active {
     &::after {
-        content: "\2713";
+        content: "";
         font-size: 1.6rem;
         position: absolute;
-        left: 50%;
-        top: 50%;
+        left: 35%;
+        top: 10%;
         transform: translate(-50%, -50%);
         font-weight: 700;
         color: #fff;
+        height: 18px;
+        width: 9px;
+        transform: rotate(45deg);
+        border: 3px solid #fff;
+        border-top: transparent;
+        border-left: transparent;
     }
 }
 
