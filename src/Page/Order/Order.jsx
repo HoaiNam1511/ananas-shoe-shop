@@ -66,7 +66,7 @@ function Order() {
 
     useEffect(() => {
         setTotalPay(
-            totalBillOrder.totalBill - totalBillOrder.totalDiscount - shiping
+            totalBillOrder.totalBill - totalBillOrder.totalDiscount + shiping
         );
     }, [carts]);
 
