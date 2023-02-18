@@ -16,6 +16,7 @@ import {
 } from "../../redux/slice/productSlice";
 import { selectWishList } from "../../redux/selector";
 import { sizeList, quantityList } from "../../data/productDetail";
+import { accordionActionsClasses } from "@mui/material";
 
 const cx = classNames.bind(styles);
 function Cart({ className, data, cardSlick = false }) {
@@ -104,18 +105,18 @@ function Cart({ className, data, cardSlick = false }) {
                     onClick={() => handleCardClick(data?.id)}
                 >
                     <h3 className={cx("type")}>
-                        {data.categorys_title.status_title}
+                        {data?.categorys_title?.status_title}
                     </h3>
                     <h3 className={cx("des-item", "name")}>
                         {data.product_name.toLowerCase() +
                             " - " +
-                            data.categorys_title.style_title.toLowerCase()}
+                            data?.categorys_title?.style_title.toLowerCase()}
                     </h3>
                     <h3 className={cx("des-item", "color")}>
-                        {data.categorys_title.material_title.toLowerCase()}
+                        {data?.categorys_title?.material_title.toLowerCase()}
                     </h3>
                     <h3 className={cx("des-item", "price")}>
-                        {data.product_price.toLocaleString("it-IT", {
+                        {data?.product_price?.toLocaleString("it-IT", {
                             style: "currency",
                             currency: "VND",
                         })}

@@ -1,4 +1,4 @@
 const url = {
-    URL_STATIC_FILE: "http://localhost:8080/images/",
+    URL_STATIC_FILE: "http://localhost:3306/images/",
 };
 export default url;

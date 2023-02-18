@@ -20,6 +20,8 @@ function Home() {
         getNewProducts();
     }, []);
 
+    console.log(products);
+
     return (
         <>
             <SlideImage timeSlide={30000}>

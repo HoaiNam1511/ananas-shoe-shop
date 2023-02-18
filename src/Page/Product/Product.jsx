@@ -83,6 +83,8 @@ function Product() {
         productFilterFunc();
     }, [productFilterId]);
 
+    console.log(products);
+
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
             <div className={cx("row gx-0", "content")}>
