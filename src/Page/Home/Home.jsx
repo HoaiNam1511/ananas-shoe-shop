@@ -35,8 +35,6 @@ function Home() {
         getOldProduct();
     }, []);
 
-    console.log(products);
-
     return (
         <>
             <SlideImage timeSlide={30000}>
