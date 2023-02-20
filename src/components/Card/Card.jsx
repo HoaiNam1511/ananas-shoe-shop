@@ -59,7 +59,7 @@ function Cart({ className, data, cardSlick = false }) {
         };
         dispatch(addWishList(newObj));
     };
-    console.log(process.env.URL_STATIC_FILE);
+
     return (
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
@@ -84,7 +84,10 @@ function Cart({ className, data, cardSlick = false }) {
                         alt="demo"
                     />
 
-                    <div className={cx("btn-container")}>
+                    <div
+                        className={cx("btn-container")}
+                        onClick={() => handleCardClick(data?.id)}
+                    >
                         <Button className={cx("btn-buy")}>MUA NGAY</Button>
                         {!cardSlick &&
                             (wishList.find((item) => item.id === data.id) ? (

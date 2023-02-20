@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
@@ -53,4 +54,4 @@ function Breadcrumb({ className, children }) {
     );
 }
 
-export default Breadcrumb;
+export default memo(Breadcrumb);

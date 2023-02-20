@@ -1,10 +1,10 @@
+import { useEffect, memo } from "react";
 import { useRef, useState } from "react";
 import classNames from "classnames/bind";
 import style from "./SlideText.module.scss";
 
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { useEffect } from "react";
 
 const cx = classNames.bind(style);
 function SlideNew({ children, className }) {
@@ -89,4 +89,4 @@ function SlideNew({ children, className }) {
     );
 }
 
-export default SlideNew;
+export default memo(SlideNew);

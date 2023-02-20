@@ -79,25 +79,22 @@ function Product() {
 
     //Handle get product filter
     const productFilterFunc = async () => {
+        const resProductFilter = await productService.getProductFilter({
+            productFilterId,
+            limit: 9,
+            offset: 0,
+        });
+        setProducts((preProduct) => [...resProductFilter.data]);
+    };
+
+    const btnShowMore = async () => {
         const productLength = products.length;
-        if (productFilterAll.length || productFilterAll.length === 0) {
-            const resProductFilter = await productService.getProductFilter({
-                productFilterId,
-                limit: 9,
-                offset: 0,
-            });
-            setProducts((preProduct) => [...resProductFilter.data]);
-        } else {
-            const resProductFilter = await productService.getProductFilter({
-                productFilterId,
-                limit: 9,
-                offset: productLength,
-            });
-            setProducts((preProduct) => [
-                ...preProduct,
-                ...resProductFilter.data,
-            ]);
-        }
+        const resProductFilter = await productService.getProductFilter({
+            productFilterId,
+            limit: 9,
+            offset: productLength,
+        });
+        setProducts((preProduct) => [...preProduct, ...resProductFilter.data]);
     };
 
     const onHeaderSidebarClick = (item, index) => {
@@ -305,7 +302,7 @@ function Product() {
                             "btn-show-more"
                         )}
                         onClick={() => {
-                            setAddMoreProduct(!addMoreProduct);
+                            btnShowMore();
                         }}
                     >
                         XEM THÊM

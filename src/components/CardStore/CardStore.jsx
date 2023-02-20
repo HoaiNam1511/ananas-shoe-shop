@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { useDispatch, useSelector } from "react-redux";
@@ -230,4 +230,4 @@ function CardStore({ data, limit, typeCart, className }) {
         </div>
     );
 }
-export default CardStore;
+export default memo(CardStore);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useSelector } from "react-redux";
 import classNames from "classnames/bind";
 
@@ -9,7 +9,7 @@ import { selectProductDetail } from "../../redux/selector";
 import styles from "./Slick.module.scss";
 
 const cx = classNames.bind(styles);
-function Slick({ className, children = [], itemShow }) {
+function Slick({ className, children = [], itemShow, slickImage }) {
     const previous = "pre";
     const next = "next";
 
@@ -107,7 +107,9 @@ function Slick({ className, children = [], itemShow }) {
 
     //Update the total
     useEffect(() => {
-        setItemSlickChange({ currentPosition: 0, currentIndex: 1 });
+        if (slickImage) {
+            setItemSlickChange({ currentPosition: 0, currentIndex: 1 });
+        }
         detectResize();
     }, [productDetail, children]);
 
@@ -151,4 +153,4 @@ function Slick({ className, children = [], itemShow }) {
     );
 }
 
-export default Slick;
+export default memo(Slick);

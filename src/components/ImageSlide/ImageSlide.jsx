@@ -1,8 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 import { useSelector } from "react-redux";
 import classNames from "classnames/bind";
 
-import config from "../../config";
 import Slick from "../Slick/Slick";
 import styles from "./ImageSlide.module.scss";
 
@@ -36,7 +35,7 @@ function ImageSlide({ className }) {
                 />
             </div>
 
-            <Slick>
+            <Slick slickImage>
                 {productDetail?.product_images?.map((item) => (
                     <div
                         key={item.id}
@@ -61,4 +60,4 @@ function ImageSlide({ className }) {
         </div>
     );
 }
-export default ImageSlide;
+export default memo(ImageSlide);
