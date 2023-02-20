@@ -4,7 +4,7 @@ function MainLayout({ children }) {
     return (
         <div>
             <Header></Header>
-            <div>{children}</div>
+            <div style={{ minHeight: "500px" }}>{children}</div>
             <Footer></Footer>
         </div>
     );

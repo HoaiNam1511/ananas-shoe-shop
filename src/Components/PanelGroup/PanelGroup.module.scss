@@ -57,6 +57,6 @@
 }
 
 .show {
-    @include growDownAnimation;
+    // @include growDownAnimation;
     display: block; 
 }

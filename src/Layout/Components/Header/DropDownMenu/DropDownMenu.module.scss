@@ -122,6 +122,10 @@ $menu-2_block-margin: 20px;
     &:hover {
         color: #f15e2c;
     }
+
+    &:focus ~ .wrapper{
+        display: none;
+    }
 }
 
 .title_header, .title  {

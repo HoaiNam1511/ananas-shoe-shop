@@ -14,22 +14,32 @@ import styles from "./Product.module.scss";
 import Card from "../../components/Card/Card";
 
 import { sidebarHeader, sidebar1, sidebar2 } from "../../data/product";
-import { addPriceRange, addProductFilter } from "../../redux/slice/globalSlice";
+import {
+    addPriceRange,
+    addProductFilter,
+    addGender,
+} from "../../redux/slice/globalSlice";
 import {
     selectProductFilter,
     selectProductFilterAll,
+    selectPriceRange,
+    selectGender,
 } from "../../redux/selector";
 import { useDispatch, useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 function Product() {
     const dispatch = useDispatch();
+    const gender = useSelector(selectGender);
     const [categorys, setCategorys] = useState([]);
     const [showPageGroup, setShowPageGroup] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
+    const [addMoreProduct, setAddMoreProduct] = useState(false);
     const [products, setProducts] = useState([]);
+    const [activeHeaderSidebar, setActiveHeaderSidebar] = useState(gender);
     const productFilterId = useSelector(selectProductFilter);
     const productFilterAll = useSelector(selectProductFilterAll);
+    const priceRange = useSelector(selectPriceRange);
 
     //Get category
     const getCategory = async () => {
@@ -69,10 +79,30 @@ function Product() {
 
     //Handle get product filter
     const productFilterFunc = async () => {
-        const resProductFilter = await productService.getProductFilter({
-            productFilterId,
-        });
-        setProducts(resProductFilter.data);
+        const productLength = products.length;
+        if (productFilterAll.length) {
+            const resProductFilter = await productService.getProductFilter({
+                productFilterId,
+                limit: 9,
+                offset: 0,
+            });
+            setProducts((preProduct) => [...resProductFilter.data]);
+        } else {
+            const resProductFilter = await productService.getProductFilter({
+                productFilterId,
+                limit: 9,
+                offset: productLength,
+            });
+            setProducts((preProduct) => [
+                ...preProduct,
+                ...resProductFilter.data,
+            ]);
+        }
+    };
+
+    const onHeaderSidebarClick = (item, index) => {
+        setActiveHeaderSidebar(item.gender);
+        dispatch(addGender(item.gender));
     };
 
     useEffect(() => {
@@ -81,7 +111,11 @@ function Product() {
 
     useEffect(() => {
         productFilterFunc();
-    }, [productFilterId]);
+    }, [productFilterId, addMoreProduct]);
+
+    useEffect(() => {
+        setActiveHeaderSidebar(gender);
+    }, [gender]);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -95,7 +129,16 @@ function Product() {
                     {/* Sidebar header */}
                     <div className={cx("sidebar", "sidebar-header")}>
                         {sidebarHeader.map((item, index) => (
-                            <div key={index} className={cx("header-title")}>
+                            <div
+                                key={index}
+                                onClick={() =>
+                                    onHeaderSidebarClick(item, index)
+                                }
+                                className={cx("header-title", {
+                                    "active-header":
+                                        activeHeaderSidebar === item.gender,
+                                })}
+                            >
                                 {item.title}
                             </div>
                         ))}
@@ -112,15 +155,15 @@ function Product() {
                                         "sidebar-item",
                                         "item-header",
                                         {
-                                            "active-header":
+                                            "active-sidebar-header":
                                                 productFilterAll.includes(
                                                     item.id
                                                 ),
                                         }
                                     )}
-                                    onClick={() => onSidebarChoseClick(item.id)}
+                                    onClick={() => onSidebarChoseClick(item)}
                                 >
-                                    {item.title}
+                                    {item.category_title}
                                     {productFilterAll.includes(item.id) && (
                                         <CloseIcon
                                             className={cx(
@@ -136,70 +179,97 @@ function Product() {
                     <div
                         className={cx("line-black-solid", "line-hidden")}
                     ></div>
-                    {/* Button filter mobile */}
-                    <div className={cx("d-block d-lg-none d-flex", "filter")}>
-                        <Button
-                            className={cx("filter-btn")}
-                            onClick={onBtnFilterClick}
+                    <div className={cx("filter-container")}>
+                        {/* Button filter mobile */}
+                        <div
+                            className={cx("d-block d-lg-none d-flex", "filter")}
                         >
-                            Chọn
-                            <KeyboardArrowDownIcon
-                                className={cx({ rotate180: showSidebar })}
-                            />
-                        </Button>
-                        <Button className={cx("filter-btn")}>
-                            {`${products.length} Sản Phẩm`}
-                        </Button>
-                    </div>
-                    {/* Sidebar all */}
-                    <div
-                        className={cx("sidebar-content", {
-                            "show-sidebar": showSidebar,
-                        })}
-                    >
-                        {categorys.map((category, index) => (
-                            <PanelGroup
-                                key={index}
-                                className={cx("sidebar")}
-                                header={category.category_group_title}
-                                show={
-                                    showPageGroup.includes(index) ? false : true
-                                }
-                                onClick={() => onSidebarClick(index)}
+                            <Button
+                                className={cx("filter-btn")}
+                                onClick={onBtnFilterClick}
                             >
-                                <ul
-                                    className={cx("sidebar-group")}
-                                    key={category.id}
+                                Chọn
+                                <KeyboardArrowDownIcon
+                                    className={cx({ rotate180: showSidebar })}
+                                />
+                            </Button>
+                            <Button className={cx("filter-btn")}>
+                                {`${products.length} Sản Phẩm`}
+                            </Button>
+                        </div>
+                        {/* Sidebar all */}
+                        <div
+                            className={cx("sidebar-content", {
+                                "show-sidebar": showSidebar,
+                            })}
+                        >
+                            {categorys.map((category, index) => (
+                                <PanelGroup
+                                    key={index}
+                                    className={cx("sidebar")}
+                                    header={category.category_group_title}
+                                    show={
+                                        showPageGroup.includes(index)
+                                            ? false
+                                            : true
+                                    }
+                                    onClick={() => onSidebarClick(index)}
                                 >
-                                    {category.category_group_client.map(
-                                        (item, index) => (
-                                            <li
-                                                key={index}
-                                                className={cx("sidebar-item", {
-                                                    active: productFilterAll.includes(
-                                                        item.id
-                                                    ),
-                                                })}
-                                                onClick={() =>
-                                                    onSidebarChoseClick(item)
-                                                }
-                                            >
-                                                {item.category_title}
-                                                {productFilterAll.includes(
-                                                    item.id
-                                                ) && (
+                                    <ul
+                                        className={cx("sidebar-group")}
+                                        key={category.id}
+                                    >
+                                        {category.category_group_client.map(
+                                            (item, index) => (
+                                                <li
+                                                    key={index}
+                                                    className={cx(
+                                                        "sidebar-item",
+                                                        {
+                                                            active:
+                                                                productFilterAll.includes(
+                                                                    item.id
+                                                                ) ||
+                                                                priceRange.find(
+                                                                    (item1) =>
+                                                                        item.range ===
+                                                                        item1.range
+                                                                ),
+                                                        }
+                                                    )}
+                                                    onClick={() =>
+                                                        onSidebarChoseClick(
+                                                            item
+                                                        )
+                                                    }
+                                                >
+                                                    {item.category_title}
+
                                                     <CloseIcon
                                                         className={cx(
-                                                            "icon-sidebar"
+                                                            "icon-sidebar",
+                                                            {
+                                                                "icon-sidebar-active":
+                                                                    productFilterAll.includes(
+                                                                        item.id
+                                                                    ) ||
+                                                                    priceRange.find(
+                                                                        (
+                                                                            item1
+                                                                        ) =>
+                                                                            item.range ===
+                                                                            item1.range
+                                                                    ),
+                                                            }
                                                         )}
                                                     />
-                                                )}
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </PanelGroup>
-                        ))}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </PanelGroup>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <div
@@ -226,6 +296,18 @@ function Product() {
                             ))}
                         </div>
                     </div>
+
+                    <Button
+                        className={cx(
+                            "col-6 col-xxl-4 col-xl-5 col-lg-4",
+                            "btn-show-more"
+                        )}
+                        onClick={() => {
+                            setAddMoreProduct(!addMoreProduct);
+                        }}
+                    >
+                        XEM THÊM
+                    </Button>
                 </div>
             </div>
         </div>

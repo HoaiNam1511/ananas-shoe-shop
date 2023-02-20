@@ -1,12 +1,19 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
+import { useDispatch } from "react-redux";
 
 import styles from "./DropDownMenu.module.scss";
+import { addProductFilter } from "../../../../redux/slice/globalSlice";
 
 const cx = classNames.bind(styles);
 function DropDownMenu({ className, menu1, menu2, data = [] }) {
     const dropDownList = data;
+    const dispatch = useDispatch();
+
+    const onDropdownItemClick = (item) => {
+        dispatch(addProductFilter(item));
+    };
 
     return (
         <div className={cx("wrapper", className)}>
@@ -36,7 +43,9 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                                     <Link
                                         key={item.id}
                                         className={cx("title")}
-                                        to=""
+                                        onClick={() =>
+                                            onDropdownItemClick(item)
+                                        }
                                     >
                                         {item.category_title}
                                     </Link>
@@ -50,7 +59,9 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                                     <Link
                                         key={item.id}
                                         className={cx("title")}
-                                        to=""
+                                        onClick={() =>
+                                            onDropdownItemClick(item)
+                                        }
                                     >
                                         {item.category_title}
                                     </Link>
@@ -69,7 +80,9 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                                     <Link
                                         key={item.id}
                                         className={cx("title")}
-                                        to=""
+                                        onClick={() =>
+                                            onDropdownItemClick(item)
+                                        }
                                     >
                                         {item.category_title}
                                     </Link>
@@ -84,7 +97,9 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                                     <Link
                                         key={item.id}
                                         className={cx("title")}
-                                        to=""
+                                        onClick={() =>
+                                            onDropdownItemClick(item)
+                                        }
                                     >
                                         {item.category_title}
                                     </Link>
@@ -101,11 +116,7 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                             <h5 className={cx("title_header")}>Nửa trên</h5>
                             {dropDownList[1].children.data[2].children.data[0].children.data.map(
                                 (item) => (
-                                    <Link
-                                        key={item.id}
-                                        className={cx("title")}
-                                        to=""
-                                    >
+                                    <Link key={item.id} className={cx("title")}>
                                         {item.title}
                                     </Link>
                                 )
@@ -116,11 +127,7 @@ function DropDownMenu({ className, menu1, menu2, data = [] }) {
                             <h5 className={cx("title_header")}>Phụ kiện</h5>
                             {dropDownList[1].children.data[2].children.data[1].children.data.map(
                                 (item) => (
-                                    <Link
-                                        key={item.id}
-                                        className={cx("title")}
-                                        to=""
-                                    >
+                                    <Link key={item.id} className={cx("title")}>
                                         {item.title}
                                     </Link>
                                 )

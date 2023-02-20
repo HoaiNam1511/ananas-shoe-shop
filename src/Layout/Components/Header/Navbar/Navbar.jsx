@@ -19,13 +19,19 @@ import menuPhuKienImg from "../../../../asset/images/menu/Menu_Phu-kien.jpg";
 import menuSaleImg from "../../../../asset/images/menu/Menu_Sale-off.jpg";
 import Brand from "./Brand/Brand";
 import { useDispatch } from "react-redux";
-import { addSearch } from "../../../../redux/slice/globalSlice";
+import {
+    addProductFilter,
+    addSearch,
+    addDropdownHideShow,
+    addGender,
+} from "../../../../redux/slice/globalSlice";
 
 const cx = classNames.bind(styles);
 function Navbar() {
     let id = 0;
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const [showDropMenu, setShowDropMenu] = useState({
         mobile: false,
         desktop: false,
@@ -174,6 +180,7 @@ function Navbar() {
         {
             id: id++,
             title: "SẢN PHẨM",
+            gender: "",
             children: {
                 data: [
                     {
@@ -203,6 +210,7 @@ function Navbar() {
         {
             id: id++,
             title: "NAM",
+            gender: "male",
             children: {
                 data: [...childData],
             },
@@ -211,14 +219,16 @@ function Navbar() {
         {
             id: id++,
             title: "NỮ",
+            gender: "female",
             children: {
                 data: [...childData],
             },
         },
 
         {
-            id: id++,
+            id: 318,
             title: "SALE OFF",
+            fk_category_group_id: 1,
         },
         {
             id: id++,
@@ -258,12 +268,16 @@ function Navbar() {
             }
             //navigate page when not have child
             else {
+                dispatch(addProductFilter(item));
                 navigate(config.routes.product);
                 onMenuClick();
             }
-        } else {
-            navigate(config.routes.product);
+        } else if (item.gender) {
+            dispatch(addGender(item.gender));
+        } else if (item.fk_category_group_id) {
+            dispatch(addProductFilter(item));
         }
+        navigate(config.routes.product);
     };
 
     //Handle back menu
@@ -437,9 +451,12 @@ function Navbar() {
                                         item.children.data.map(
                                             (itemChild, index) => (
                                                 <div
+                                                    key={index}
                                                     className={cx("dropdown")}
                                                     onClick={() =>
-                                                        handleAddChildMenu(item)
+                                                        handleAddChildMenu(
+                                                            itemChild
+                                                        )
                                                     }
                                                 >
                                                     <div

@@ -15,4 +15,12 @@ export const selectProductFilterAll = (state) => [
     ...state.globalReducer.productFilter.lineId,
     ...state.globalReducer.productFilter.collectionId,
     ...state.globalReducer.productFilter.materialId,
+    ...state.globalReducer.productFilter.headerId,
+    ...state.globalReducer.productFilter.gender,
 ];
+
+export const selectPriceRange = (state) =>
+    state.globalReducer.productFilter.priceRange;
+
+export const selectDropdownShow = (state) => state.globalReducer.dropdownShow;
+export const selectGender = (state) => state.globalReducer.productFilter.gender;

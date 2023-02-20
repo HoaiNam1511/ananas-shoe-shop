@@ -1,7 +1,16 @@
 import { httpRequest } from "../util/httpRequest";
 
-export const getProduct = async ({ sortBy, orderBy, limit }) => {
-    const response = await httpRequest.get(`product?limit=${limit}`);
+export const getNewProduct = async ({ sortBy, orderBy, limit }) => {
+    const response = await httpRequest.get(
+        `product?limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+    );
+    return response;
+};
+
+export const getOldProduct = async ({ sortBy, orderBy, limit }) => {
+    const response = await httpRequest.get(
+        `product?limit=${limit}&sortBy=${sortBy}&orderBy=${orderBy}`
+    );
     return response;
 };
 
@@ -10,8 +19,12 @@ export const getProductDetail = async ({ productId }) => {
     return response;
 };
 
-export const getProductFilter = async ({ productFilterId }) => {
-    const response = await httpRequest.post("product/filter", productFilterId);
+export const getProductFilter = async ({ productFilterId, limit, offset }) => {
+    const response = await httpRequest.post(
+        // `product/filter`,
+        `product/filter?limit=${limit}&offset=${offset}`,
+        productFilterId
+    );
     return response;
 };
 

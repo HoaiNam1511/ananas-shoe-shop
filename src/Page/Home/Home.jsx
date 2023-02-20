@@ -10,14 +10,29 @@ import { slideImagesData } from "../../data/home";
 
 const cx = classNames.bind(styles);
 function Home() {
-    const [products, setProducts] = useState([]);
-    const getNewProducts = async () => {
-        const productRes = await productService.getProduct({ limit: 8 });
-        setProducts(productRes.data);
+    const [newProducts, setNewProducts] = useState([]);
+    const [oldProducts, setOldProducts] = useState([]);
+    const getNewProduct = async () => {
+        const productRes = await productService.getNewProduct({
+            limit: 8,
+            sortBy: "id",
+            orderBy: "DESC",
+        });
+        setNewProducts(productRes.data);
+    };
+
+    const getOldProduct = async () => {
+        const productRes = await productService.getOldProduct({
+            limit: 8,
+            sortBy: "id",
+            orderBy: "ASC",
+        });
+        setOldProducts(productRes.data);
     };
 
     useEffect(() => {
-        getNewProducts();
+        getNewProduct();
+        getOldProduct();
     }, []);
 
     return (
@@ -41,7 +56,29 @@ function Home() {
                     </div>
                     <div className={cx("product")}>
                         <div className={cx("row gx-0", "product-grids")}>
-                            {products.map((product, index) => (
+                            {newProducts.map((product, index) => (
+                                <Card
+                                    key={product.id}
+                                    data={product}
+                                    className={cx(
+                                        "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
+                                        "card-item"
+                                    )}
+                                ></Card>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div className={cx("section-title")}>
+                        <h2>
+                            <span>SẢN PHẨM NỔI BẬT</span>
+                        </h2>
+                    </div>
+                    <div className={cx("product")}>
+                        <div className={cx("row gx-0", "product-grids")}>
+                            {oldProducts.map((product, index) => (
                                 <Card
                                     key={product.id}
                                     data={product}

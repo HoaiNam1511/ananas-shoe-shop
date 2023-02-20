@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 
+import * as productService from "../../service/productService";
+
 import styles from "./Cart.module.scss";
 import CardStore from "../../components/CardStore/CardStore";
 import Slick from "../../components/Slick/Slick";
@@ -22,6 +24,7 @@ function Cart() {
     const refItem = useRef();
     const cartList = useSelector(selectCart);
     const [code, setCode] = useState("");
+    const [productRecoment, setProductRecomment] = useState([]);
     const [totalProduct, setTotalProduct] = useState({
         totalBill: 0,
         totalDiscount: 0,
@@ -50,6 +53,15 @@ function Cart() {
         navigate(config.routes.order);
     };
 
+    const getRecommentProduct = async () => {
+        const res = await productService.getOldProduct({
+            limit: 8,
+            sortBy: "product_name",
+            orderBy: "DESC",
+        });
+        setProductRecomment(res.data);
+    };
+
     useEffect(() => {
         const price = cartList.reduce(
             (totalPay, curProduct) =>
@@ -63,6 +75,10 @@ function Cart() {
             totalPay: price,
         }));
     }, [cartList]);
+
+    useEffect(() => {
+        getRecommentProduct();
+    }, []);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -78,7 +94,7 @@ function Cart() {
                             Bạn có cần thêm ?
                         </div>
                         <Slick itemShow={1} className={cx("cart-slick")}>
-                            {cartSlide.map((item) => (
+                            {productRecoment.map((item) => (
                                 <div
                                     ref={refItem}
                                     key={item?.id}

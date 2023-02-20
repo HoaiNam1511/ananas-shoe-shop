@@ -52,7 +52,11 @@ function ProductDetail() {
 
     //Product slide
     const getNewProducts = async () => {
-        const productRes = await productService.getProduct({ limit: 8 });
+        const productRes = await productService.getNewProduct({
+            limit: 8,
+            sortBy: "id",
+            orderBy: "DESC",
+        });
         setProducts(productRes.data);
     };
 

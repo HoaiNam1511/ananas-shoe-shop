@@ -1,33 +1,33 @@
 export const sidebarHeader = [
     {
         title: "Tất cả",
-        value: "",
+        gender: "",
     },
     {
         title: "Nam",
-        value: "",
+        gender: "male",
     },
     {
         title: "Nữ",
-        value: "",
+        gender: "female",
     },
 ];
 
 export const sidebar1 = [
     {
-        id: 1,
-        title: "Accessories | Phụ kiện",
-        value: "",
+        id: 3161,
+        fk_category_group_id: 100,
+        category_title: "Accessories | Phụ kiện",
     },
     {
-        id: 2,
-        title: "Footwear | Lên chân",
-        value: "",
+        id: 3162,
+        fk_category_group_id: 100,
+        category_title: "Footwear | Lên chân",
     },
     {
-        id: 3,
-        title: "Top | Nửa trên",
-        value: "",
+        id: 3163,
+        fk_category_group_id: 100,
+        category_title: "Top | Nửa trên",
     },
 ];
 
@@ -71,14 +71,17 @@ let sidebarData = [
 
 let id = 0;
 export const sidebar2 = sidebarData.reduce((acc, item) => {
-    acc.push({ id: ++id, ...item });
-    acc.map((item) => {
-        const result = item.category_group_client.reduce((acc1, item1) => {
-            acc1.push({ id: ++id, ...item1 });
-            return acc1;
-        }, []);
-
-        return { ...item, category_group_client: result };
+    acc.push({
+        ...item,
+        id: ++id,
+        category_group_client: item.category_group_client.reduce(
+            (acc1, item1) => {
+                acc1.push({ id: ++id + 1000, ...item1 });
+                return acc1;
+            },
+            []
+        ),
     });
+
     return acc;
 }, []);

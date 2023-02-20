@@ -9,10 +9,13 @@ const globalSlice = createSlice({
             lineId: [],
             collectionId: [],
             materialId: [],
+            headerId: [],
             priceRange: [],
+            gender: "",
         },
         totalBill: {},
         searchKey: "",
+        dropdownShow: false,
     },
     reducers: {
         addProductFilter(state, action) {
@@ -50,7 +53,9 @@ const globalSlice = createSlice({
                     case 5:
                         addCategoryId("materialId");
                         break;
-
+                    case 100:
+                        addCategoryId("headerId");
+                        break;
                     default:
                         break;
                 }
@@ -82,6 +87,10 @@ const globalSlice = createSlice({
             }
         },
 
+        addGender(state, action) {
+            state.productFilter.gender = action.payload;
+        },
+
         addTotalBill(state, action) {
             const objPayload = JSON.stringify(action.payload);
             sessionStorage.setItem("totalBill", objPayload);
@@ -91,10 +100,20 @@ const globalSlice = createSlice({
         addSearch(state, action) {
             state.searchKey = action.payload;
         },
+
+        addDropdownHideShow(state, action) {
+            state.dropdownShow = !state.dropdownShow;
+        },
     },
 });
 //Export action
-export const { addProductFilter, addPriceRange, addTotalBill, addSearch } =
-    globalSlice.actions;
+export const {
+    addProductFilter,
+    addPriceRange,
+    addTotalBill,
+    addSearch,
+    addDropdownHideShow,
+    addGender,
+} = globalSlice.actions;
 
 export default globalSlice;
