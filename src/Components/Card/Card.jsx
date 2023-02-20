@@ -59,7 +59,7 @@ function Cart({ className, data, cardSlick = false }) {
         };
         dispatch(addWishList(newObj));
     };
-
+    console.log(process.env.URL_STATIC_FILE);
     return (
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
@@ -67,18 +67,18 @@ function Cart({ className, data, cardSlick = false }) {
                     <img
                         className={cx("image")}
                         src={
-                            config.url.URL_STATIC_FILE +
+                            process.env.REACT_APP_URL_STATIC_FILE +
                             data.product_images[0]?.image
                         }
                         onClick={() => handleCardClick(data?.id)}
                         onMouseOver={(e) =>
                             (e.currentTarget.src =
-                                config.url.URL_STATIC_FILE +
+                                process.env.REACT_APP_URL_STATIC_FILE +
                                 data.product_images[1]?.image)
                         }
                         onMouseOut={(e) =>
                             (e.currentTarget.src =
-                                config.url.URL_STATIC_FILE +
+                                process.env.REACT_APP_URL_STATIC_FILE +
                                 data.product_images[0]?.image)
                         }
                         alt="demo"

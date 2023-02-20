@@ -31,7 +31,7 @@ function ImageSlide({ className }) {
             <div className={cx("main-image")}>
                 <img
                     className={cx("image")}
-                    src={config.url.URL_STATIC_FILE + imageCurrent}
+                    src={process.env.REACT_APP_URL_STATIC_FILE + imageCurrent}
                     alt="current"
                 />
             </div>
@@ -49,7 +49,10 @@ function ImageSlide({ className }) {
                         <img
                             onClick={() => onImageClick(item?.image)}
                             className={cx("image-slide")}
-                            src={config.url.URL_STATIC_FILE + item?.image}
+                            src={
+                                process.env.REACT_APP_URL_STATIC_FILE +
+                                item?.image
+                            }
                             alt="current"
                         />
                     </div>

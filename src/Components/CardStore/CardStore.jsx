@@ -123,7 +123,7 @@ function CardStore({ data, limit, typeCart, className }) {
                         onClick={() => handleCardClick(data.id)}
                         className={cx("image", { "image-limit": limit })}
                         src={
-                            config.url.URL_STATIC_FILE +
+                            process.env.REACT_APP_URL_STATIC_FILE +
                             data?.product_images[0].image
                         }
                         alt=""
