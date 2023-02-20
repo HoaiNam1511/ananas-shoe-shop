@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const httpRequest = axios.create({
-    baseURL: "http://localhost:8080/",
+    baseURL: "https://ananas-shoe-shop.onrender.com/",
     withCredentials: true,
 });
 

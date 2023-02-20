@@ -1,4 +1,4 @@
 const url = {
-    URL_STATIC_FILE: "http://localhost:8080/images/",
+    URL_STATIC_FILE: "https://ananas-shoe-shop.onrender.com",
 };
 export default url;
