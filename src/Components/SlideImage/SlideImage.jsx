@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import classNames from "classnames/bind";
 import styles from "./SlideImage.module.scss";
 
@@ -97,4 +97,4 @@ function SlideImage({ children, className, timeSlide }) {
     );
 }
 
-export default SlideImage;
+export default memo(SlideImage);
