@@ -80,7 +80,7 @@ function Product() {
     //Handle get product filter
     const productFilterFunc = async () => {
         const productLength = products.length;
-        if (productFilterAll.length) {
+        if (productFilterAll.length || productFilterAll.length === 0) {
             const resProductFilter = await productService.getProductFilter({
                 productFilterId,
                 limit: 9,

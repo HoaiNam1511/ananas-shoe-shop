@@ -16,6 +16,7 @@ export const selectProductFilterAll = (state) => [
     ...state.globalReducer.productFilter.collectionId,
     ...state.globalReducer.productFilter.materialId,
     ...state.globalReducer.productFilter.headerId,
+    ...state.globalReducer.productFilter.priceRange,
     ...state.globalReducer.productFilter.gender,
 ];
 
