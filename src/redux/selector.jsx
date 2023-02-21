@@ -4,8 +4,8 @@ export const selectProductDetail = (state) =>
 export const selectBreadCrumb = (state) => state.productReducer.breadcrumb;
 export const selectWishList = (state) => state.productReducer.wishList;
 export const selectCart = (state) => state.productReducer.cart;
+export const selectTotalBill = (state) => state.productReducer.totalBill;
 //Global
-export const selectTotalBill = (state) => state.globalReducer.totalBill;
 export const selectProductFilter = (state) => state.globalReducer.productFilter;
 export const selectSearchKey = (state) => state.globalReducer.searchKey;
 

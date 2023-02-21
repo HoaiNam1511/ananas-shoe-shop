@@ -84,23 +84,30 @@ function Cart({ className, data, cardSlick = false }) {
                         alt="demo"
                     />
 
-                    <div
-                        className={cx("btn-container")}
-                        onClick={() => handleCardClick(data?.id)}
-                    >
-                        <Button className={cx("btn-buy")}>MUA NGAY</Button>
-                        {!cardSlick &&
-                            (wishList.find((item) => item.id === data.id) ? (
-                                <FavoriteIcon
-                                    className={cx("btn-favorite", "active")}
-                                    onClick={() => handleAddWishList(data)}
-                                />
-                            ) : (
-                                <FavoriteBorderIcon
-                                    className={cx("btn-favorite")}
-                                    onClick={() => handleAddWishList(data)}
-                                />
-                            ))}
+                    <div className={cx("btn-container")}>
+                        {!cardSlick && (
+                            <>
+                                <Button
+                                    className={cx("btn-buy")}
+                                    onClick={() => handleCardClick(data?.id)}
+                                >
+                                    MUA NGAY
+                                </Button>
+                                {wishList.find(
+                                    (item) => item.id === data.id
+                                ) ? (
+                                    <FavoriteIcon
+                                        className={cx("btn-favorite", "active")}
+                                        onClick={() => handleAddWishList(data)}
+                                    />
+                                ) : (
+                                    <FavoriteBorderIcon
+                                        className={cx("btn-favorite")}
+                                        onClick={() => handleAddWishList(data)}
+                                    />
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
                 <div

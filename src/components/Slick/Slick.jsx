@@ -111,7 +111,11 @@ function Slick({ className, children = [], itemShow, slickImage }) {
             setItemSlickChange({ currentPosition: 0, currentIndex: 1 });
         }
         detectResize();
-    }, [productDetail, children]);
+    }, [productDetail]);
+
+    useEffect(() => {
+        detectResize();
+    }, [children]);
 
     //Handle resize: responsive
     useEffect(() => {

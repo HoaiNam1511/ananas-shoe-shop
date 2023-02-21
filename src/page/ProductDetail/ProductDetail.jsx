@@ -65,6 +65,7 @@ function ProductDetail() {
         const productRes = await productService.getProductDetail({ productId });
         //setProductDetail(productRes?.data[0]);
         dispatch(addProductDetail(productRes?.data[0]));
+        window.scrollTo(0, 0);
     };
 
     const handleShowPanel = (value) => {
@@ -102,8 +103,6 @@ function ProductDetail() {
     };
 
     const handleColorChange = (value) => {
-        console.log("come");
-        console.log(value);
         setSelectGrid({ ...selectGrid, color: value });
     };
 
