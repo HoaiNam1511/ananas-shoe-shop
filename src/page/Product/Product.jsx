@@ -126,9 +126,7 @@ function Product() {
     const btnShowMore = async () => {
         const productLength = products.productList.length;
         setLoading({ ...loading, btnLoading: true });
-        setTimeout(() => {
-            getProduct(productLength);
-        }, 3000);
+        getProduct(productLength);
     };
 
     const onHeaderSidebarClick = (item, index) => {
