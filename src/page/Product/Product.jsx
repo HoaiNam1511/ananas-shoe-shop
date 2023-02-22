@@ -85,37 +85,38 @@ function Product() {
     };
 
     const getProduct = async (offsetValue) => {
-        try {
-            const resProductFilter = await productService.getProductFilter({
-                productFilterId,
-                limit: 9,
-                offset: offsetValue,
-            });
+        const resProductFilter = await productService.getProductFilter({
+            productFilterId,
+            limit: 9,
+            offset: offsetValue,
+        });
 
-            if (offsetValue === 0) {
-                setProducts((preProduct) => ({
-                    productList: [...resProductFilter.data.productRow],
-                    total: resProductFilter.data.total,
-                }));
-            } else {
-                setProducts((preProduct) => ({
-                    productList: [
-                        ...preProduct.productList,
-                        ...resProductFilter.data.productRow,
-                    ],
-                    total: resProductFilter.data.total,
-                }));
-            }
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setLoading({ productLoading: false });
+        if (offsetValue === 0) {
+            setProducts((preProduct) => ({
+                productList: [...resProductFilter.data.productRow],
+                total: resProductFilter.data.total,
+            }));
+        } else {
+            setProducts((preProduct) => ({
+                productList: [
+                    ...preProduct.productList,
+                    ...resProductFilter.data.productRow,
+                ],
+                total: resProductFilter.data.total,
+            }));
         }
+        // try {
+
+        // } catch (err) {
+        //     console.log(err);
+        // } finally {
+        //     // setLoading({ productLoading: false });
+        // }
     };
 
     //Handle get product filter
     const productFilterFunc = async () => {
-        setLoading({ productLoading: true });
+        // setLoading({ productLoading: true });
         getProduct(0);
     };
 
