@@ -19,9 +19,7 @@
 
 .wrapper section {
     margin-bottom: 20px;
-    @include media-breakpoint-xl() {
-        
-    }
+
 }
 
 .section-title {
@@ -48,6 +46,7 @@
 }
 
 .wrapper .product {
+    min-height: 55vh;
     @include media-breakpoint-xl() {
         padding: 0 10px;
     }
@@ -63,6 +62,12 @@
     @include media-breakpoint-sm() {
         margin-bottom: 20px;
     }
+}
+
+.loading {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 

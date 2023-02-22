@@ -34,6 +34,7 @@ import {
     quantityList,
     sizeList,
 } from "../../data/productDetail";
+import Loading from "../../components/Loading/Loading";
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
@@ -49,15 +50,28 @@ function ProductDetail() {
         quantity: quantityList[0],
         color: colors[0].color,
     });
+    const [loading, setLoading] = useState({
+        productLoading: false,
+    });
+    const { productLoading } = loading;
 
     //Product slide
     const getNewProducts = async () => {
-        const productRes = await productService.getNewProduct({
-            limit: 8,
-            sortBy: "id",
-            orderBy: "DESC",
-        });
-        setProducts(productRes.data);
+        try {
+            const productRes = await productService.getNewProduct({
+                limit: 8,
+                sortBy: "id",
+                orderBy: "DESC",
+            });
+            setProducts(productRes.data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading({
+                ...loading,
+                productLoading: false,
+            });
+        }
     };
 
     //Handle get info product detail
@@ -65,6 +79,7 @@ function ProductDetail() {
         const productRes = await productService.getProductDetail({ productId });
         //setProductDetail(productRes?.data[0]);
         dispatch(addProductDetail(productRes?.data[0]));
+        window.scrollTo(0, 0);
     };
 
     const handleShowPanel = (value) => {
@@ -102,8 +117,6 @@ function ProductDetail() {
     };
 
     const handleColorChange = (value) => {
-        console.log("come");
-        console.log(value);
         setSelectGrid({ ...selectGrid, color: value });
     };
 
@@ -113,6 +126,10 @@ function ProductDetail() {
     }
 
     useEffect(() => {
+        setLoading({
+            ...loading,
+            productLoading: true,
+        });
         getNewProducts();
     }, []);
 
@@ -342,20 +359,25 @@ function ProductDetail() {
                             <span>SẢN PHẨM MỚI</span>
                         </h2>
                     </div>
-                    <Slick className={cx("slick")}>
-                        {products.map((product) => (
-                            <div
-                                key={product.id}
-                                ref={refItemSlick}
-                                className={cx(
-                                    "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4",
-                                    "slick-item"
-                                )}
-                            >
-                                <Card data={product} cardSlick></Card>
-                            </div>
-                        ))}
-                    </Slick>
+
+                    {!productLoading ? (
+                        <Slick className={cx("slick")}>
+                            {products.map((product) => (
+                                <div
+                                    key={product.id}
+                                    ref={refItemSlick}
+                                    className={cx(
+                                        "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4",
+                                        "slick-item"
+                                    )}
+                                >
+                                    <Card data={product} cardSlick></Card>
+                                </div>
+                            ))}
+                        </Slick>
+                    ) : (
+                        <Loading className={cx("loading")}></Loading>
+                    )}
                 </section>
             </div>
         </div>

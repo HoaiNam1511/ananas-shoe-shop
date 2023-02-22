@@ -111,7 +111,11 @@ function Slick({ className, children = [], itemShow, slickImage }) {
             setItemSlickChange({ currentPosition: 0, currentIndex: 1 });
         }
         detectResize();
-    }, [productDetail, children]);
+    }, [productDetail]);
+
+    useEffect(() => {
+        detectResize();
+    }, [children]);
 
     //Handle resize: responsive
     useEffect(() => {
@@ -121,6 +125,7 @@ function Slick({ className, children = [], itemShow, slickImage }) {
         };
     }, []);
 
+    console.log(itemSlickWidth, itemSlickShow, maxSlick, totalInt, totalFloat);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("row gx-0", "slick-slide", className)}>

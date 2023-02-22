@@ -8,6 +8,7 @@ const productSlice = createSlice({
         cart: [],
         wishList: [],
         breadcrumb: [],
+        totalBill: {},
     },
     reducers: {
         addProductId(state, action) {
@@ -32,6 +33,12 @@ const productSlice = createSlice({
             } else {
                 state.wishList.push(action.payload);
             }
+        },
+
+        addTotalBill(state, action) {
+            // const objPayload = JSON.stringify(action.payload);
+            // sessionStorage.setItem("totalBill", objPayload);
+            state.totalBill = action.payload;
         },
 
         updateWishList(state, action) {
@@ -186,6 +193,7 @@ export const {
     deleteWishList,
     updateWishList,
     deleteAllCart,
+    addTotalBill,
 } = productSlice.actions;
 
 export default productSlice;

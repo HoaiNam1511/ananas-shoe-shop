@@ -15,7 +15,7 @@ import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
 import { selectCart } from "../../redux/selector";
 import { cartSlide, codeDiscount } from "../../data/cart";
 import { deleteAllCart } from "../../redux/slice/productSlice";
-import { addTotalBill } from "../../redux/slice/globalSlice";
+import { addTotalBill } from "../../redux/slice/productSlice";
 
 const cx = classNames.bind(styles);
 function Cart() {

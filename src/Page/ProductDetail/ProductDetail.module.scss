@@ -211,7 +211,7 @@ h1 h2 h3 h4 h5 h6 {
     display: inline-block;
     padding-left: 4px;
     padding-right: 4px;
-    margin-bottom: 40px;
+
     @include media-breakpoint-sm() {
         margin-bottom: 20px;
     }
@@ -227,6 +227,10 @@ h1 h2 h3 h4 h5 h6 {
     &:hover {
         cursor: pointer;
     }
+}
+
+.wrapper section {
+    margin-bottom: 40px;
 }
 
 .section-title {
@@ -250,5 +254,11 @@ h1 h2 h3 h4 h5 h6 {
     font-size: 2.4rem;
     background:#fff; 
     padding:0 16px; 
+}
+
+.loading {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 

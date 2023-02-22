@@ -1,9 +1,10 @@
-import classNames from "classnames/bind";
-import styles from "./Order.module.scss";
-import Button from "../../components/Button/Button";
-import { selectCart } from "../../redux/selector";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import classNames from "classnames/bind";
+
+import styles from "./Order.module.scss";
+import Button from "../../components/Button/Button";
+import { selectCart, selectTotalBill } from "../../redux/selector";
 import { inputGroup } from "../../data/order";
 import * as globalService from "../../service/globalService";
 import CheckboxCustom from "./CheckboxCustom/CheckboxCustom";
@@ -15,7 +16,7 @@ const cx = classNames.bind(styles);
 function Order() {
     const shiping = 60000;
     const carts = useSelector(selectCart);
-    const totalBillOrder = JSON.parse(sessionStorage.getItem("totalBill"));
+    const totalBillOrder = useSelector(selectTotalBill);
     const [totalPay, setTotalPay] = useState(0);
     const [customerInfo, setCustomerInfo] = useState({
         customerName: "",
@@ -63,7 +64,6 @@ function Order() {
             }));
             //Set set wards
         } else if (aria === "districts") {
-            console.log(filterLocal);
             setAddress((prevLocation) => ({
                 ...prevLocation,
                 wards: filterLocal.wards,

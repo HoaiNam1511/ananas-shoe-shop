@@ -26,6 +26,7 @@ import {
     selectGender,
 } from "../../redux/selector";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../components/Loading/Loading";
 
 const cx = classNames.bind(styles);
 function Product() {
@@ -35,7 +36,14 @@ function Product() {
     const [showPageGroup, setShowPageGroup] = useState([]);
     const [showSidebar, setShowSidebar] = useState(false);
     const [addMoreProduct, setAddMoreProduct] = useState(false);
-    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState({
+        productLoading: false,
+        btnLoading: false,
+    });
+    const [products, setProducts] = useState({
+        productList: [],
+        total: 0,
+    });
     const [activeHeaderSidebar, setActiveHeaderSidebar] = useState(gender);
     const productFilterId = useSelector(selectProductFilter);
     const productFilterAll = useSelector(selectProductFilterAll);
@@ -77,34 +85,55 @@ function Product() {
         setShowSidebar(!showSidebar);
     };
 
+    //Get product filter
+    const getProduct = async (offsetValue) => {
+        try {
+            const resProductFilter = await productService.getProductFilter({
+                productFilterId,
+                limit: 9,
+                offset: offsetValue,
+            });
+
+            if (offsetValue === 0) {
+                //Filter product
+                setProducts((preProduct) => ({
+                    productList: [...resProductFilter.data.productRow],
+                    total: resProductFilter.data.total,
+                }));
+            } else {
+                //Show more product
+                setProducts((preProduct) => ({
+                    productList: [
+                        ...preProduct.productList,
+                        ...resProductFilter.data.productRow,
+                    ],
+                    total: resProductFilter.data.total,
+                }));
+            }
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading({ productLoading: false, btnLoading: false });
+        }
+    };
+
     //Handle get product filter
     const productFilterFunc = async () => {
-        const resProductFilter = await productService.getProductFilter({
-            productFilterId,
-            limit: 9,
-            offset: 0,
-        });
-        setProducts((preProduct) => [...resProductFilter.data]);
+        setLoading({ ...loading, productLoading: true });
+        getProduct(0);
     };
 
     const btnShowMore = async () => {
-        const productLength = products.length;
-        const resProductFilter = await productService.getProductFilter({
-            productFilterId,
-            limit: 9,
-            offset: productLength,
-        });
-        setProducts((preProduct) => [...preProduct, ...resProductFilter.data]);
+        const productLength = products.productList.length;
+        setLoading({ ...loading, btnLoading: true });
+
+        getProduct(productLength);
     };
 
     const onHeaderSidebarClick = (item, index) => {
         setActiveHeaderSidebar(item.gender);
         dispatch(addGender(item.gender));
     };
-
-    useEffect(() => {
-        getCategory();
-    }, []);
 
     useEffect(() => {
         productFilterFunc();
@@ -114,7 +143,9 @@ function Product() {
         setActiveHeaderSidebar(gender);
     }, [gender]);
 
-    console.log(products);
+    useEffect(() => {
+        getCategory();
+    }, []);
 
     return (
         <div className={cx("container-fluid gx-0", "wrapper")}>
@@ -193,7 +224,7 @@ function Product() {
                                 />
                             </Button>
                             <Button className={cx("filter-btn")}>
-                                {`${products.length} Sản Phẩm`}
+                                {`${products.total} Sản Phẩm`}
                             </Button>
                         </div>
                         {/* Sidebar all */}
@@ -282,18 +313,24 @@ function Product() {
                     </div>
 
                     <div className={cx("product")}>
-                        <div className={cx("row gx-0", "list-product")}>
-                            {products.map((product, index) => (
-                                <Card
-                                    key={index}
-                                    data={product}
-                                    className={cx(
-                                        "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",
-                                        "card-item"
-                                    )}
-                                ></Card>
-                            ))}
-                        </div>
+                        {!loading.productLoading ? (
+                            <div className={cx("row gx-0", "list-product")}>
+                                {products.productList.map((product, index) => (
+                                    <Card
+                                        key={index}
+                                        data={product}
+                                        className={cx(
+                                            "col-6 col-xxl-4 col-xl-4 col-lg-4 col-md-4",
+                                            "card-item"
+                                        )}
+                                    ></Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <Loading
+                                className={cx("loading-product")}
+                            ></Loading>
+                        )}
                     </div>
 
                     <Button
@@ -306,6 +343,9 @@ function Product() {
                         }}
                     >
                         XEM THÊM
+                        {loading.btnLoading && (
+                            <Loading className={cx("btn-loading")}></Loading>
+                        )}
                     </Button>
                 </div>
             </div>

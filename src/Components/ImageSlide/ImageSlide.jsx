@@ -25,12 +25,13 @@ function ImageSlide({ className }) {
         setImageCurrent(image);
     };
 
+    console.log("slick image");
     return (
         <div className={cx("wrapper", className)}>
             <div className={cx("main-image")}>
                 <img
                     className={cx("image")}
-                    src={process.env.REACT_APP_URL_STATIC_FILE + imageCurrent}
+                    src={process.env?.REACT_APP_URL_STATIC_FILE + imageCurrent}
                     alt="current"
                 />
             </div>
