@@ -38,6 +38,7 @@ function Product() {
     const [addMoreProduct, setAddMoreProduct] = useState(false);
     const [loading, setLoading] = useState({
         productLoading: false,
+        btnLoading: false,
     });
     const [products, setProducts] = useState({
         productList: [],
@@ -84,6 +85,7 @@ function Product() {
         setShowSidebar(!showSidebar);
     };
 
+    //Get product filter
     const getProduct = async (offsetValue) => {
         try {
             const resProductFilter = await productService.getProductFilter({
@@ -93,11 +95,13 @@ function Product() {
             });
 
             if (offsetValue === 0) {
+                //Filter product
                 setProducts((preProduct) => ({
                     productList: [...resProductFilter.data.productRow],
                     total: resProductFilter.data.total,
                 }));
             } else {
+                //Show more product
                 setProducts((preProduct) => ({
                     productList: [
                         ...preProduct.productList,
@@ -109,19 +113,22 @@ function Product() {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoading({ productLoading: false });
+            setLoading({ productLoading: false, btnLoading: false });
         }
     };
 
     //Handle get product filter
     const productFilterFunc = async () => {
-        setLoading({ productLoading: true });
+        setLoading({ ...loading, productLoading: true });
         getProduct(0);
     };
 
     const btnShowMore = async () => {
         const productLength = products.productList.length;
-        getProduct(productLength);
+        setLoading({ ...loading, btnLoading: true });
+        setTimeout(() => {
+            getProduct(productLength);
+        }, 3000);
     };
 
     const onHeaderSidebarClick = (item, index) => {
@@ -307,9 +314,9 @@ function Product() {
                     </div>
 
                     <div className={cx("product")}>
-                        <div className={cx("row gx-0", "list-product")}>
-                            {!loading.productLoading ? (
-                                products.productList.map((product, index) => (
+                        {!loading.productLoading ? (
+                            <div className={cx("row gx-0", "list-product")}>
+                                {products.productList.map((product, index) => (
                                     <Card
                                         key={index}
                                         data={product}
@@ -318,11 +325,13 @@ function Product() {
                                             "card-item"
                                         )}
                                     ></Card>
-                                ))
-                            ) : (
-                                <Loading></Loading>
-                            )}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <Loading
+                                className={cx("loading-product")}
+                            ></Loading>
+                        )}
                     </div>
 
                     <Button
@@ -335,6 +344,9 @@ function Product() {
                         }}
                     >
                         XEM THÊM
+                        {loading.btnLoading && (
+                            <Loading className={cx("btn-loading")}></Loading>
+                        )}
                     </Button>
                 </div>
             </div>

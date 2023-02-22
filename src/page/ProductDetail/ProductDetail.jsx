@@ -376,7 +376,7 @@ function ProductDetail() {
                             ))}
                         </Slick>
                     ) : (
-                        <Loading></Loading>
+                        <Loading className={cx("loading")}></Loading>
                     )}
                 </section>
             </div>

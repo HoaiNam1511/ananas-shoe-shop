@@ -1,16 +1,14 @@
-.wrapper {
-    text-align: center;
-}
+
 
 .loading {
-    position: relative;
+    position: absolute;
     border: 3px solid #333;
     border-top: 3px solid transparent;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     animation: spin 1s linear infinite;
-    display: inline-block;
+    display: block;
   }
   
 @keyframes spin {
