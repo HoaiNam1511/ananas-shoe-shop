@@ -7,30 +7,60 @@ import SlideImage from "../../components/SlideImage/SlideImage";
 import styles from "./Home.module.scss";
 
 import { slideImagesData } from "../../data/home";
+import Loading from "../../components/Loading/Loading";
 
 const cx = classNames.bind(styles);
 function Home() {
     const [newProducts, setNewProducts] = useState([]);
     const [oldProducts, setOldProducts] = useState([]);
+    const [loading, setLoading] = useState({
+        newProductLoading: false,
+        oldProductLoading: false,
+    });
+
+    const { newProductLoading, oldProductLoading } = loading;
+
     const getNewProduct = async () => {
-        const productRes = await productService.getNewProduct({
-            limit: 8,
-            sortBy: "id",
-            orderBy: "DESC",
-        });
-        setNewProducts(productRes.data);
+        try {
+            const productRes = await productService.getNewProduct({
+                limit: 8,
+                sortBy: "id",
+                orderBy: "DESC",
+            });
+            setNewProducts(productRes.data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading((pre) => ({
+                ...pre,
+                newProductLoading: false,
+            }));
+        }
     };
 
     const getOldProduct = async () => {
-        const productRes = await productService.getOldProduct({
-            limit: 8,
-            sortBy: "id",
-            orderBy: "ASC",
-        });
-        setOldProducts(productRes.data);
+        try {
+            const productRes = await productService.getOldProduct({
+                limit: 8,
+                sortBy: "id",
+                orderBy: "ASC",
+            });
+            setOldProducts(productRes.data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading((pre) => ({
+                ...pre,
+                oldProductLoading: false,
+            }));
+        }
     };
 
     useEffect(() => {
+        setLoading({
+            newProductLoading: true,
+            oldProductLoading: true,
+        });
         getNewProduct();
         getOldProduct();
     }, []);
@@ -47,6 +77,7 @@ function Home() {
                     ></img>
                 ))}
             </SlideImage>
+
             <div id="wrapper" className={cx("container-fluid gx-0", "wrapper")}>
                 <section>
                     <div className={cx("section-title")}>
@@ -55,18 +86,22 @@ function Home() {
                         </h2>
                     </div>
                     <div className={cx("product")}>
-                        <div className={cx("row gx-0", "product-grids")}>
-                            {newProducts.map((product, index) => (
-                                <Card
-                                    key={product.id}
-                                    data={product}
-                                    className={cx(
-                                        "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
-                                        "card-item"
-                                    )}
-                                ></Card>
-                            ))}
-                        </div>
+                        {!newProductLoading ? (
+                            <div className={cx("row gx-0", "product-grids")}>
+                                {newProducts.map((product, index) => (
+                                    <Card
+                                        key={product.id}
+                                        data={product}
+                                        className={cx(
+                                            "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
+                                            "card-item"
+                                        )}
+                                    ></Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <Loading></Loading>
+                        )}
                     </div>
                 </section>
 
@@ -77,18 +112,22 @@ function Home() {
                         </h2>
                     </div>
                     <div className={cx("product")}>
-                        <div className={cx("row gx-0", "product-grids")}>
-                            {oldProducts.map((product, index) => (
-                                <Card
-                                    key={product.id}
-                                    data={product}
-                                    className={cx(
-                                        "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
-                                        "card-item"
-                                    )}
-                                ></Card>
-                            ))}
-                        </div>
+                        {!oldProductLoading ? (
+                            <div className={cx("row gx-0", "product-grids")}>
+                                {oldProducts.map((product, index) => (
+                                    <Card
+                                        key={product.id}
+                                        data={product}
+                                        className={cx(
+                                            "col-6 col-xxl-3 col-xl-3 col-lg-3 col-md-4",
+                                            "card-item"
+                                        )}
+                                    ></Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <Loading></Loading>
+                        )}
                     </div>
                 </section>
             </div>

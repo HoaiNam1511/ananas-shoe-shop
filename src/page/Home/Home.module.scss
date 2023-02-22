@@ -19,7 +19,7 @@
 
 .wrapper section {
     margin-bottom: 20px;
-    min-height: 60vh;
+
 }
 
 .section-title {
@@ -46,6 +46,7 @@
 }
 
 .wrapper .product {
+    min-height: 55vh;
     @include media-breakpoint-xl() {
         padding: 0 10px;
     }
