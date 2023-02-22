@@ -126,6 +126,7 @@ function Product() {
     const btnShowMore = async () => {
         const productLength = products.productList.length;
         setLoading({ ...loading, btnLoading: true });
+
         getProduct(productLength);
     };
 
