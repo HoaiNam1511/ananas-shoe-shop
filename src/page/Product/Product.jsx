@@ -109,13 +109,13 @@ function Product() {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoading({ ...loading, productLoading: false });
+            setLoading({ productLoading: false });
         }
     };
 
     //Handle get product filter
     const productFilterFunc = async () => {
-        setLoading({ ...loading, productLoading: true });
+        setLoading({ productLoading: true });
         getProduct(0);
     };
 
