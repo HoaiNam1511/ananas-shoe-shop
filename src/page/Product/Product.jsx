@@ -123,10 +123,10 @@ function Product() {
         getProduct(0);
     };
 
+    //Add more product
     const btnShowMore = async () => {
         const productLength = products.productList.length;
         setLoading({ ...loading, btnLoading: true });
-
         getProduct(productLength);
     };
 
@@ -135,14 +135,17 @@ function Product() {
         dispatch(addGender(item.gender));
     };
 
+    //Get product
     useEffect(() => {
         productFilterFunc();
     }, [productFilterId, addMoreProduct]);
 
+    //Set active header
     useEffect(() => {
         setActiveHeaderSidebar(gender);
     }, [gender]);
 
+    //Get category
     useEffect(() => {
         getCategory();
     }, []);

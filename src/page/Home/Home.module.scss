@@ -47,6 +47,7 @@
 
 .wrapper .product {
     min-height: 55vh;
+    text-align: center;
     @include media-breakpoint-xl() {
         padding: 0 10px;
     }

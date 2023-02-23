@@ -31,6 +31,7 @@ function Order() {
         wards: [],
     });
 
+    //Validator form user
     Validator({
         form: "#customer-info",
         warningElement: "#warning-message",

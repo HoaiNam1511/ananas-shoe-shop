@@ -20,6 +20,7 @@ function Home() {
 
     const { newProductLoading, oldProductLoading } = loading;
 
+    //Get new product
     const getNewProduct = async () => {
         try {
             const productRes = await productService.getNewProduct({
@@ -38,6 +39,7 @@ function Home() {
         }
     };
 
+    //Get old product
     const getOldProduct = async () => {
         try {
             const productRes = await productService.getOldProduct({
@@ -56,6 +58,7 @@ function Home() {
         }
     };
 
+    //Fetch product
     useEffect(() => {
         setLoading({
             newProductLoading: true,

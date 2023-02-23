@@ -82,6 +82,7 @@ function ProductDetail() {
         window.scrollTo(0, 0);
     };
 
+    //Show panel group
     const handleShowPanel = (value) => {
         if (showPanel === value) {
             setShowPanel(null);
@@ -90,6 +91,7 @@ function ProductDetail() {
         }
     };
 
+    //Add wishlist
     const handleAddWishList = (product) => {
         const obj = Object.preventExtensions(product);
         const newObj = {
@@ -100,6 +102,7 @@ function ProductDetail() {
         dispatch(addWishList(newObj));
     };
 
+    //Add cart
     const handleAddCart = (product) => {
         const obj = Object.preventExtensions(product);
         const newObj = {
@@ -112,14 +115,17 @@ function ProductDetail() {
         dispatch(addCart(newObj));
     };
 
+    //Handle set value when grid change
     const handleSelectGirdChange = (name, value) => {
         setSelectGrid({ ...selectGrid, [name]: value });
     };
 
+    //Handle color change
     const handleColorChange = (value) => {
         setSelectGrid({ ...selectGrid, color: value });
     };
 
+    //Function drop line
     function NewlineText(props) {
         const text = props.text;
         return text.split("\n").map((str, index) => <p key={index}>{str}</p>);
@@ -376,7 +382,9 @@ function ProductDetail() {
                             ))}
                         </Slick>
                     ) : (
-                        <Loading className={cx("loading")}></Loading>
+                        <div style={{ margin: "auto" }}>
+                            <Loading className={cx("loading")}></Loading>
+                        </div>
                     )}
                 </section>
             </div>

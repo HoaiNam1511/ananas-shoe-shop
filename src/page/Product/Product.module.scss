@@ -291,8 +291,19 @@
 }
 
 .wrapper .product {
+    text-align: center;
+    min-height: 1200px;
     @include media-breakpoint-lg() {
         padding: 0 10px;
+        min-height: 900px;
+    }
+
+    @include media-breakpoint-md() {
+        min-height: 800px;
+    }
+    
+    @include media-breakpoint-sm() {
+        min-height: 700px;
     }
 }
 
@@ -305,8 +316,10 @@
 
 .loading-product {
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    // left: 50%;
+    // transform: translateX(-50%);
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 20px;
 }
 

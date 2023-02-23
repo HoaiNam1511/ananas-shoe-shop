@@ -1,5 +1,4 @@
 
-
 .loading {
     position: absolute;
     border: 3px solid #333;
@@ -8,7 +7,7 @@
     width: 30px;
     height: 30px;
     animation: spin 1s linear infinite;
-    display: block;
+    display: inline-block;
   }
   
 @keyframes spin {
