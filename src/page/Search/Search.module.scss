@@ -24,7 +24,7 @@
     }
 }
 
-.product-container {
+.product {
     margin-left: -10px;
     margin-right: -10px;
 }
@@ -38,14 +38,12 @@
     }
 }
 
-.btn-back {
+
+.btn-show-more {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 10px;
-    height: 80px;
-    font-size: 2.3rem;
-    width: 416px;
-    margin-bottom: 40px;
-    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
