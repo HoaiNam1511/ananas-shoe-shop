@@ -35,6 +35,8 @@ function PanelGroup({
                 {children}
             </div>
             <div className={cx("line")}></div>
+            <div className={cx("box1")}></div>
+            <div className={cx("box2")}></div>
         </div>
     );
 }

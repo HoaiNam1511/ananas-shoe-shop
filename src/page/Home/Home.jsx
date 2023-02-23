@@ -103,7 +103,7 @@ function Home() {
                                 ))}
                             </div>
                         ) : (
-                            <Loading className={cx("loading")}></Loading>
+                            <Loading></Loading>
                         )}
                     </div>
                 </section>
@@ -129,7 +129,7 @@ function Home() {
                                 ))}
                             </div>
                         ) : (
-                            <Loading className={cx("loading")}></Loading>
+                            <Loading></Loading>
                         )}
                     </div>
                 </section>
