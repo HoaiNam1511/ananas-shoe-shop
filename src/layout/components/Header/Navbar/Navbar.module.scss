@@ -46,7 +46,8 @@ $dropdown-delay: .7s;
     width: auto;
 
     @include media-breakpoint-lg() {
-        overflow: scroll;
+        overflow: hidden;
+        overflow-y: scroll;
         opacity: 0;
         visibility: hidden;
         background-color: #4c4c4c;   
@@ -142,7 +143,6 @@ $dropdown-delay: .7s;
             display: none;
         }
     }
-
 
     @include media-breakpoint-lg() {
         display: flex;
