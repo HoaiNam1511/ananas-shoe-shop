@@ -11,11 +11,11 @@ import Slick from "../../components/Slick/Slick";
 import Button from "../../components/Button/Button";
 import config from "../../config";
 import EmptyProduct from "../../components/EmptyProduct/EmptyProduct";
+import Loading from "../../components/Loading/Loading";
 
 import { selectCart } from "../../redux/selector";
-import { cartSlide, codeDiscount } from "../../data/cart";
-import { deleteAllCart } from "../../redux/slice/productSlice";
-import { addTotalBill } from "../../redux/slice/productSlice";
+import { codeDiscount } from "../../data/cart";
+import { deleteAllCart, addTotalBill } from "../../redux/slice/productSlice";
 
 const cx = classNames.bind(styles);
 function Cart() {
@@ -25,6 +25,9 @@ function Cart() {
     const cartList = useSelector(selectCart);
     const [code, setCode] = useState("");
     const [productRecoment, setProductRecomment] = useState([]);
+    const [loading, setLoading] = useState({
+        productLoading: false,
+    });
     const [totalProduct, setTotalProduct] = useState({
         totalBill: 0,
         totalDiscount: 0,
@@ -54,12 +57,18 @@ function Cart() {
     };
 
     const getRecommentProduct = async () => {
-        const res = await productService.getOldProduct({
-            limit: 8,
-            sortBy: "product_name",
-            orderBy: "DESC",
-        });
-        setProductRecomment(res.data);
+        try {
+            const res = await productService.getOldProduct({
+                limit: 8,
+                sortBy: "product_name",
+                orderBy: "DESC",
+            });
+            setProductRecomment(res.data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading({ productLoading: false });
+        }
     };
 
     useEffect(() => {
@@ -77,6 +86,7 @@ function Cart() {
     }, [cartList]);
 
     useEffect(() => {
+        setLoading({ productLoading: true });
         getRecommentProduct();
     }, []);
 
@@ -93,24 +103,30 @@ function Cart() {
                         <div className={cx("cart-title")}>
                             Bạn có cần thêm ?
                         </div>
-                        <Slick itemShow={1} className={cx("cart-slick")}>
-                            {productRecoment.map((item) => (
-                                <div
-                                    ref={refItem}
-                                    key={item?.id}
-                                    className={cx(
-                                        "col-12 col-xxl-6 col-xl-6 col-lg-6 col-md-6",
-                                        "slick-item"
-                                    )}
-                                >
-                                    <CardStore
-                                        data={item}
-                                        limit
-                                        typeCart
-                                    ></CardStore>
-                                </div>
-                            ))}
-                        </Slick>
+                        {!loading.productLoading ? (
+                            <Slick itemShow={1} className={cx("cart-slick")}>
+                                {productRecoment.map((item) => (
+                                    <div
+                                        ref={refItem}
+                                        key={item?.id}
+                                        className={cx(
+                                            "col-12 col-xxl-6 col-xl-6 col-lg-6 col-md-6",
+                                            "slick-item"
+                                        )}
+                                    >
+                                        <CardStore
+                                            data={item}
+                                            limit
+                                            typeCart
+                                        ></CardStore>
+                                    </div>
+                                ))}
+                            </Slick>
+                        ) : (
+                            <div className={cx("slick-loading")}>
+                                <Loading></Loading>
+                            </div>
+                        )}
                         <div className={cx("cart-title-1")}>Giỏ hàng</div>
                         {cartList.map((item, index) => (
                             <div key={index}>

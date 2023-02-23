@@ -35,10 +35,13 @@ import {
     sizeList,
 } from "../../data/productDetail";
 import Loading from "../../components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
+import config from "../../config";
 
 const cx = classNames.bind(styles);
 function ProductDetail() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const refItemSlick = useRef(null);
     const productId = useSelector(selectProductId);
     const wishList = useSelector(selectWishList);
@@ -113,6 +116,11 @@ function ProductDetail() {
             update: false,
         };
         dispatch(addCart(newObj));
+    };
+
+    const handlePayment = (product) => {
+        handleAddCart(product);
+        navigate(config.routes.cart);
     };
 
     //Handle set value when grid change
@@ -272,7 +280,10 @@ function ProductDetail() {
                                 "btn-item"
                             )}
                         >
-                            <Button className={cx("btn-add")}>
+                            <Button
+                                className={cx("btn-add")}
+                                onClick={() => handlePayment(productDetail)}
+                            >
                                 Thanh toán
                             </Button>
                         </div>
