@@ -64,7 +64,7 @@ function Cart({ className, data, cardSlick = false }) {
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
                 <div className={cx("card-image")}>
-                    <img
+                    {/* <img
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
@@ -82,7 +82,7 @@ function Cart({ className, data, cardSlick = false }) {
                                 data.product_images[0]?.image)
                         }
                         alt="demo"
-                    />
+                    /> */}
 
                     <div className={cx("btn-container")}>
                         {!cardSlick && (

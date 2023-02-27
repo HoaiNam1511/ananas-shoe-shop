@@ -25,7 +25,6 @@ function ImageSlide({ className }) {
         setImageCurrent(image);
     };
 
-    console.log("slick image");
     return (
         <div className={cx("wrapper", className)}>
             <div className={cx("main-image")}>

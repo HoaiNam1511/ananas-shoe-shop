@@ -125,7 +125,6 @@ function Slick({ className, children = [], itemShow, slickImage }) {
         };
     }, []);
 
-    console.log(itemSlickWidth, itemSlickShow, maxSlick, totalInt, totalFloat);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("row gx-0", "slick-slide", className)}>
