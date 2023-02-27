@@ -64,51 +64,47 @@ function Cart({ className, data, cardSlick = false }) {
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
                 <div className={cx("card-image")}>
-                    {/* <img
+                    <img
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
                             data.product_images[0]?.image
                         }
                         onClick={() => handleCardClick(data?.id)}
-                        onMouseOver={(e) =>
-                            (e.currentTarget.src =
-                                process.env.REACT_APP_URL_STATIC_FILE +
-                                data.product_images[1]?.image)
-                        }
-                        onMouseOut={(e) =>
-                            (e.currentTarget.src =
-                                process.env.REACT_APP_URL_STATIC_FILE +
-                                data.product_images[0]?.image)
-                        }
                         alt="demo"
-                    /> */}
-
-                    <div className={cx("btn-container")}>
-                        {!cardSlick && (
-                            <>
-                                <Button
-                                    className={cx("btn-buy")}
-                                    onClick={() => handleCardClick(data?.id)}
-                                >
-                                    MUA NGAY
-                                </Button>
-                                {wishList.find(
-                                    (item) => item.id === data.id
-                                ) ? (
-                                    <FavoriteIcon
-                                        className={cx("btn-favorite", "active")}
-                                        onClick={() => handleAddWishList(data)}
-                                    />
-                                ) : (
-                                    <FavoriteBorderIcon
-                                        className={cx("btn-favorite")}
-                                        onClick={() => handleAddWishList(data)}
-                                    />
-                                )}
-                            </>
-                        )}
-                    </div>
+                    />
+                    <img
+                        className={cx("image")}
+                        src={
+                            process.env.REACT_APP_URL_STATIC_FILE +
+                            data.product_images[1]?.image
+                        }
+                        onClick={() => handleCardClick(data?.id)}
+                        alt="demo"
+                    />
+                </div>
+                <div className={cx("btn-container")}>
+                    {!cardSlick && (
+                        <>
+                            <Button
+                                className={cx("btn-buy")}
+                                onClick={() => handleCardClick(data?.id)}
+                            >
+                                MUA NGAY
+                            </Button>
+                            {wishList.find((item) => item.id === data.id) ? (
+                                <FavoriteIcon
+                                    className={cx("btn-favorite", "active")}
+                                    onClick={() => handleAddWishList(data)}
+                                />
+                            ) : (
+                                <FavoriteBorderIcon
+                                    className={cx("btn-favorite")}
+                                    onClick={() => handleAddWishList(data)}
+                                />
+                            )}
+                        </>
+                    )}
                 </div>
                 <div
                     className={cx("description")}
