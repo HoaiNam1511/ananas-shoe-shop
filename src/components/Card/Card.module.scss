@@ -43,6 +43,9 @@ $btn-container-height: 46px;
     bottom: 0;
     right: 0;
     display: block;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .btn-container {
