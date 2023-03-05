@@ -72,6 +72,7 @@ function Cart({ className, data, cardSlick = false }) {
                         }
                         onClick={() => handleCardClick(data?.id)}
                         alt="demo"
+                        effect="blur"
                     />
                     <LazyLoadImage
                         className={cx("image")}
@@ -81,6 +82,7 @@ function Cart({ className, data, cardSlick = false }) {
                         }
                         onClick={() => handleCardClick(data?.id)}
                         alt="demo"
+                        effect="blur"
                     />
                 </div>
                 <div className={cx("btn-container")}>
