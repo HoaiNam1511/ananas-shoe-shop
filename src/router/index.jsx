@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import config from "../config";
+
 // import Cart from "../page/Cart/Cart";
 // import Home from "../page/Home/Home";
 // import Product from "../page/Product/Product";

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import classNames from "classnames/bind";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -16,7 +17,6 @@ import {
 } from "../../redux/slice/productSlice";
 import { selectWishList } from "../../redux/selector";
 import { sizeList, quantityList } from "../../data/productDetail";
-import { accordionActionsClasses } from "@mui/material";
 
 const cx = classNames.bind(styles);
 function Cart({ className, data, cardSlick = false }) {
@@ -64,7 +64,7 @@ function Cart({ className, data, cardSlick = false }) {
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
                 <div className={cx("card-image")}>
-                    <img
+                    <LazyLoadImage
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
@@ -73,7 +73,7 @@ function Cart({ className, data, cardSlick = false }) {
                         onClick={() => handleCardClick(data?.id)}
                         alt="demo"
                     />
-                    <img
+                    <LazyLoadImage
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
