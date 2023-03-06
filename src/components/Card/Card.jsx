@@ -64,7 +64,7 @@ function Cart({ className, data, cardSlick = false }) {
         <div className={cx("wrapper", className)}>
             <div className={cx("card-custom")}>
                 <div className={cx("card-image")}>
-                    <LazyLoadImage
+                    <img
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
@@ -73,7 +73,7 @@ function Cart({ className, data, cardSlick = false }) {
                         onClick={() => handleCardClick(data?.id)}
                         alt="demo"
                     />
-                    <LazyLoadImage
+                    <img
                         className={cx("image")}
                         src={
                             process.env.REACT_APP_URL_STATIC_FILE +
